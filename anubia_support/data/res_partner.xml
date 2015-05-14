@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="1">
+
+        <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            ADDING ANUBÍA AS PARTNER (Company and Technical Support user)
+
+            - New partner (company) with all the Anubía contact information.
+            - New partner (non company) associated with Technical Support user.
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <!-- Add Anubía (Company) as partner -->
+        <record model="res.partner" id="anubia_company">
+            <field name="name">Anubia, Soluciones en la Nube, SL</field>
+            <field name="company_id" eval="None"/>
+            <field name="image" type="base64" file="anubia_support/static/src/img/anubia_company.png" />
+            <field name="customer" eval="False"/>
+            <field name="supplier" eval="True" />
+            <field name="is_company" eval="True"/>
+            <field name="street">Calle Colón, 26</field>
+            <field name="street2">Planta 3, Oficina 1</field>
+            <field name="city">Vigo</field>
+            <field name="zip">36201</field>
+            <field name="country_id" ref="base.es" />
+            <field name="phone">+34 986 120 026</field>
+            <field name="mobile">+34 651 089 989</field>
+            <field name="email">anubia@anubia.es</field>
+            <field name="website">www.anubia.es</field>
+            <field name="lang">es_ES</field>
+        </record>
+
+        <!-- Customizing Anubía technical support user (partner) -->
+        <record model="res.partner" id="anubia_contact">
+            <field name="name">Soporte Técnico</field>
+            <field name="company_id" eval="None"/>
+            <field name="image" type="base64" file="anubia_support/static/src/img/anubia_contact.png" />
+            <field name="customer" eval="False"/>
+            <field name="supplier" eval="True" />
+            <field name="is_company" eval="False"/>
+            <field name="street">Calle Colón, 26</field>
+            <field name="street2">Planta 3, Oficina 1</field>
+            <field name="city">Vigo</field>
+            <field name="zip">36201</field>
+            <field name="country_id" ref="base.es" />
+            <field name="phone">+34 986 120 026</field>
+            <field name="mobile">+34 651 089 989</field>
+            <field name="email">anubia@anubia.es </field>
+            <field name="website">www.anubia.es</field>
+            <field name="lang">es_ES</field>
+            <field name="commercial_partner_id" ref="anubia_company" />
+            <field name="parent_id" ref="anubia_company" />
+            <field name="function">Soporte técnico</field>
+            <field name="use_parent_address" eval="True" />
+            <field name="active" eval="False" />
+        </record>
+
+    </data>
+</openerp>

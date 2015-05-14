@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="1">
+
+        <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            GRANTING ACCESS TO ALL THE FEATURES TO THE ADMINISTRATOR AND ANUBIA
+
+            - Allow to configure system.
+            - Granting access to technical features.
+            - Remove from company users
+
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record model="res.groups" id="base.group_user">
+            <field name="users" eval="[(3, ref('anubia_help_desk'))]" />
+        </record>
+
+        <record model="res.groups" id="base.group_system">
+            <field name="users" eval="[(4, ref('anubia_help_desk'))]" />
+        </record>
+
+        <record model="res.groups" id="base.group_no_one">
+            <field name="users" eval="[(4, ref('anubia_help_desk'))]" />
+        </record>
+
+    </data>
+</openerp>

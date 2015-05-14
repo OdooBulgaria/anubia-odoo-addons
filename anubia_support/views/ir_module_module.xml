@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+
+        <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            ADD FILTER TO SHOW ONLY THE ANUBÍA MODULES
+
+            - Add filter to show only the Anubía modules.
+            - Set created filter as default.
+
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <!-- Add a filter to show only modules from Anubía Soluciones en la Nube SL -->
+        <record model="ir.ui.view" id="view_module_filter">
+            <field name="name">ir.module.module.list.select</field>
+            <field name="model">ir.module.module</field>
+            <field name="inherit_id" ref="base.view_module_filter" />
+            <field name="arch" type="xml">
+                <data>
+
+                    <xpath expr="//filter[@name='app']" position="before">
+                        <filter name="anubia" string="Anubia, Soluciones en la Nube, SL" domain="[('author', '=', 'Anubia, Soluciones en la Nube, SL')]"/>
+                    </xpath>
+
+                    <xpath expr="//filter[@name='app']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+
+                    <xpath expr="//filter[@name='extra']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+
+                </data>
+            </field>
+        </record>
+
+        <!-- Replace default filter "App" by "Anubia" -->
+        <record model="ir.actions.act_window" id="base.open_module_tree">
+            <field name="context">{"search_default_app":0, "search_default_anubia":1}</field>
+        </record>
+
+    </data>
+</openerp>
