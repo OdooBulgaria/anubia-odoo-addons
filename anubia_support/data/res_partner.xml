@@ -12,7 +12,7 @@
 
         <!-- Add Anubía (Company) as partner -->
         <record model="res.partner" id="anubia_company">
-            <field name="name">Anubia, Soluciones en la Nube, SL</field>
+            <field name="name">Anubía, Soluciones en la Nube, SL</field>
             <field name="company_id" eval="None"/>
             <field name="image" type="base64" file="anubia_support/static/src/img/anubia_company.png" />
             <field name="customer" eval="False"/>
@@ -24,8 +24,7 @@
             <field name="zip">36201</field>
             <field name="country_id" ref="base.es" />
             <field name="phone">+34 986 120 026</field>
-            <field name="mobile">+34 651 089 989</field>
-            <field name="email">anubia@anubia.es</field>
+            <field name="email">info@anubia.es</field>
             <field name="website">www.anubia.es</field>
             <field name="lang">es_ES</field>
         </record>
@@ -44,8 +43,7 @@
             <field name="zip">36201</field>
             <field name="country_id" ref="base.es" />
             <field name="phone">+34 986 120 026</field>
-            <field name="mobile">+34 651 089 989</field>
-            <field name="email">anubia@anubia.es </field>
+            <field name="email">info@anubia.es</field>
             <field name="website">www.anubia.es</field>
             <field name="lang">es_ES</field>
             <field name="commercial_partner_id" ref="anubia_company" />

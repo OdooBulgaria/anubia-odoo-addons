@@ -27,4 +27,4 @@ Project has a common Odoo module structure; all external data are in XML files i
 
 ## License
 
-**Easy Password Generator** is licensed under the **[GNU Affero General Public License, version 3](http://www.gnu.org/licenses/agpl-3.0.html)** license and all documentation is released under [Creative Commons Attribution-ShareAlike 3.0](http://creativecommons.org/licenses/by-sa/3.0/).
+This module is licensed under the **[GNU Affero General Public License, version 3](http://www.gnu.org/licenses/agpl-3.0.html)** license and all documentation is released under [Creative Commons Attribution-ShareAlike 3.0](http://creativecommons.org/licenses/by-sa/3.0/).
