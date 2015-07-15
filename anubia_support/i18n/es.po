@@ -1,0 +1,23 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* anubia_support
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0-20150121\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-30 09:08+0000\n"
+"PO-Revision-Date: 2015-04-30 11:10+0100\n"
+"Last-Translator: Jorge Soto Garcia <sotogarcia@gmail.com>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 1.7.5\n"
+
+#. module: anubia_support
+#: view:ir.module.module:anubia_support.view_module_filter
+msgid "Anubia, Soluciones en la Nube, SL"
+msgstr "Anubía, Soluciones en la Nube, SL"

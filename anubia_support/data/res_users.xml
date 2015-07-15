@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="1">
+
+        <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            ADDING ANUBÍA TECHNICAL SUPPORT USER
+
+            - New user to allow remote technical support access.
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <!-- Anubia, technical support user -->
+        <record model="res.users" id="anubia_help_desk">
+            <field name="login">anubia</field>
+            <field name="partner_id" ref="anubia_contact" />
+            <field name="lang">es_ES</field>
+            <field name="tz">Europe/Madrid</field>
+            <field name="action_id" ref="base.action_res_company_form" />
+            <field name="signature"><![CDATA[
+<address>
+    <b>Anubía Soluciones en la Nube SL</b><br />
+    <i>Calle Colón, 26, Planta 3, Oficina 1</i><br />
+    <i>Vigo, Pontevedra, España</i><br />
+<br />
+    <table border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse;">
+        <tbody>
+            <tr>
+                <td>Teléfono:&nbsp;</td>
+                <td><a href="0034986120026" style="color: inherit; text-decoration: none;">+34 986 120 026</a></td>
+            </tr>
+            <tr>
+                <td>Email:&nbsp;</td>
+                <td><a href="mailto:anubia@anubia.es" style="color: inherit; text-decoration: none;">anubia@anubia.es</a></td>
+            </tr>
+            <tr>
+                <td>Página web:&nbsp;</td>
+                <td><a href="http://www.anubia.es" style="color: inherit; text-decoration: none;">http://www.anubia.es</a></td>
+            </tr>
+        </tbody>
+    </table>
+</address>
+            ]]></field>
+            <field name="password">anubia</field>
+            <field name="active" eval="False" />
+        </record>
+
+    </data>
+</openerp>
