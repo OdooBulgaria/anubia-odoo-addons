@@ -1,0 +1,11 @@
+/* Hides form view items in edit mode */
+.openerp .oe_form_editable .oe_base_zone_save_only,
+.openerp .oe_form_editable .oe_form_field:empty {
+    display: none !important;
+}
+
+/* Vertical spaced block */
+.oe_base_zone_vertical_spaced {
+    margin-top: 0.5em!important;
+    margin-bottom: 0.5em!important
+}

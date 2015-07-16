@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="1">
+
+        <record id="access_base_zone_global" model="ir.model.access">
+            <field name="name">base.zone global access rights</field>
+            <field name="model_id" ref="base_zone.model_base_zone"/>
+            <field name="perm_read" eval="True" />
+            <field name="perm_create" eval="False" />
+            <field name="perm_write" eval="False" />
+            <field name="perm_unlink" eval="False" />
+            <field name="active" eval="True" />
+        </record>
+
+        <record id="access_base_zone_base_group_system" model="ir.model.access">
+            <field name="name">base.zone base.group_system</field>
+            <field name="model_id" ref="base_zone.model_base_zone"/>
+            <field name="group_id" ref="base.group_system"/>
+            <field name="perm_read" eval="True" />
+            <field name="perm_create" eval="True" />
+            <field name="perm_write" eval="True" />
+            <field name="perm_unlink" eval="True" />
+            <field name="active" eval="True" />
+        </record>
+
+    </data>
+</openerp>

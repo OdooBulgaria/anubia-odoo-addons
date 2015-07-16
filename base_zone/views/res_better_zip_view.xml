@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="better_zip_form" model="ir.ui.view">
+            <field name="name">res.better.zip.form</field>
+            <field name="model">res.better.zip</field>
+            <field name="type">form</field>
+            <field name="mode">extension</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="base_location.better_zip_form" />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="." position="inside">
+                        <separator string="Zones" />
+                        <group col="2" class="oe_edit_only">
+                            <field name="base_zone_id" class="oe_field_base_zone_id"
+                                placeholder="Choose zone" colspan="4" />
+                        </group>
+                        <separator class="oe_base_zone_save_only" />
+                        <separator string="Holder zones" class="oe_edit_only" />
+                        <field name="holder_zone_ids" class="oe_field_holder_zone_ids"
+                            placeholder="Add/remove holder zones" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+    </data>
+</openerp>

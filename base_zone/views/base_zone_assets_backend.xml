@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="view_base_zone_assets_backend" model="ir.ui.view">
+            <field name="name">base_zone assets backend</field>
+            <field name="model"></field>
+            <field name="type">qweb</field>
+            <field name="mode">extension</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="web.assets_backend" />
+            <field name="arch" type="xml">
+                <xpath expr="." position="inside">
+                    <link rel="stylesheet" href="/base_zone/static/src/css/base_zone.css" />
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

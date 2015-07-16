@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+
+        <record id="action_build_changelog_server" model="ir.actions.server">
+            <field name="type">ir.actions.server</field>
+            <field name="name">Build changelog</field>
+            <field name="model_id" ref="model_build_crm_changelog" />
+            <field name="condition" eval="True" />
+            <field name="sequence" eval="5" />
+            <field name="context" eval="{}" />
+            <field name="code">action = self.ensure_changelog(cr, uid, context=context)</field>
+        </record>
+
+        <record id="action_todo_build_changelog_in_existing_leads_opportunities" model="ir.actions.todo">
+            <field name="name">Build changelog</field>
+            <field name="type">automatic</field>
+            <field name="state">open</field>
+            <field name="sequence" eval="10" />
+            <field name="action_id" ref="action_build_changelog_server" />
+            <field name="note">Updates the changelog in existing leads/opportunities</field>
+        </record>
+
+    </data>
+</openerp>

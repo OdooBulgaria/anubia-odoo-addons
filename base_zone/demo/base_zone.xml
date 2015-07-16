@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="1">
+
+        <record id="base_zone_eriador" model="base.zone">
+            <field name="name">Eriador</field>
+            <field name="user_ids" eval="[(4, ref('base.user_root'))]" />
+        </record>
+
+        <!-- Inside Eriador -->
+
+        <record id="base_zone_shire" model="base.zone">
+            <field name="name">Shire</field>
+            <field name="parent_id" ref="base_zone_eriador" />
+        </record>
+
+        <record id="base_zone_rivendell" model="base.zone">
+            <field name="name">Rivendell</field>
+            <field name="parent_id" ref="base_zone_eriador" />
+        </record>
+
+        <record id="base_zone_bree" model="base.zone">
+            <field name="name">Bree</field>
+            <field name="parent_id" ref="base_zone_eriador" />
+        </record>
+
+        <!-- Inside Shire -->
+
+        <record id="base_zone_northfarthing" model="base.zone">
+            <field name="name">Northfarthing</field>
+            <field name="parent_id" ref="base_zone_shire" />
+        </record>
+
+        <record id="base_zone_westfarthing" model="base.zone">
+            <field name="name">Westfarthing</field>
+            <field name="parent_id" ref="base_zone_shire" />
+        </record>
+
+        <record id="base_zone_southfarthing" model="base.zone">
+            <field name="name">Southfarthing</field>
+            <field name="parent_id" ref="base_zone_shire" />
+        </record>
+
+        <record id="base_zone_eastfarthing" model="base.zone">
+            <field name="name">Eastfarthing</field>
+            <field name="parent_id" ref="base_zone_shire" />
+        </record>
+
+        <record id="base_zone_buckland" model="base.zone">
+            <field name="name">Buckland</field>
+            <field name="parent_id" ref="base_zone_shire" />
+        </record>
+
+        <record id="base_zone_westmarch" model="base.zone">
+            <field name="name">Westmarch</field>
+            <field name="parent_id" ref="base_zone_shire" />
+            <field name="user_ids" eval="[(4, ref('base.user_demo'))]" />
+        </record>
+
+    </data>
+</openerp>

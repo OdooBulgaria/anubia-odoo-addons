@@ -1,0 +1,463 @@
+# Translation of Odoo Server.
+# This file contains the translation of the base_zone module
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0-20150121\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-09 07:44+0000\n"
+"PO-Revision-Date: 2015-07-09 09:49+0100\n"
+"Last-Translator: Jorge Soto Garcia <sotogarcia@gmail.com>\n"
+"Language-Team: Jorge Soto Garcia <sotogarcia@gmail.com>\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.7.5\n"
+
+#. module: base_zone
+#: field:base.zone,active:0
+msgid "Active"
+msgstr "Activa"
+
+#. module: base_zone
+#: help:base.zone,child_ids:0
+msgid "Add or remove subzones from zone"
+msgstr "Agregar o eliminar subzonas de la zona"
+
+#. module: base_zone
+#: help:res.users,zone_ids:0
+msgid "Add or remove the user from zone"
+msgstr "Agregar o eliminar el usuario de la zona"
+
+#. module: base_zone
+#: help:base.zone,user_ids:0
+msgid "Add or remove users from zone"
+msgstr "Agregar o eliminar usuarios de la zona"
+
+#. module: base_zone
+#: help:base.zone,zip_ids:0
+msgid "Add or remove zip codes from zone"
+msgstr "Agregar o eliminar códigos postales de la zona"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "Add/remove child zones"
+msgstr "Agregar /eliminar  zonas hijas"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "Add/remove holder users"
+msgstr "Agregar/quitar usuarios principales"
+
+#. module: base_zone
+#: view:res.better.zip:base_zone.better_zip_form
+msgid "Add/remove holder zones"
+msgstr "Agregar/quitar zonas principales"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "Add/remove subordinate zip codes"
+msgstr "Agregar/quitar códigos postales subordinados"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form view:res.users:base_zone.view_users_form
+msgid "Add/remove subordinate zones"
+msgstr "Agregar/quitar zonas subordinadas"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "Add/remove users"
+msgstr "Agregar/eliminar usuarios"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "Add/remove zip codes"
+msgstr "Agregar/eliminar códigos postales"
+
+#. module: base_zone
+#: view:res.users:base_zone.view_users_form
+msgid "Add/remove zones"
+msgstr "Agregar/quitar zonas"
+
+#. module: base_zone
+#: field:res.better.zip,base_zone_id:0
+msgid "Base zone"
+msgstr "Zona base"
+
+#. module: base_zone
+#: model:ir.model,name:base_zone.model_base_zone_middle_relationship
+msgid "Base zone middle relationship"
+msgstr "Relación intermedia de zona base"
+
+#. module: base_zone
+#: field:base.zone,child_ids:0
+msgid "Child zones"
+msgstr "Zonas hijas"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "Choose the parent zone"
+msgstr "Seleccione la zona padre"
+
+#. module: base_zone
+#: view:res.better.zip:base_zone.better_zip_form
+msgid "Choose zone"
+msgstr "Seleccione zona"
+
+#. module: base_zone
+#: model:ir.model,name:base_zone.model_res_better_zip
+msgid "City/locations completion object"
+msgstr "Objeto completo de Ciudad/localización "
+
+#. module: base_zone
+#: field:base.zone,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: base_zone
+#: field:base.zone,create_date:0
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: base_zone
+#: help:base.zone,message_last_post:0
+msgid "Date of the last message posted on the record."
+msgstr "Fecha del último mensaje ligado al registro"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "Descendants"
+msgstr "Descendientes"
+
+#. module: base_zone
+#: help:res.users,holder_zone_ids:0
+msgid "Display all holder zones"
+msgstr "Muestra todas las zonas principales"
+
+#. module: base_zone
+#: help:res.users,subordinate_zone_ids:0
+msgid "Display all subordinate zones"
+msgstr "Muestra todas las zonas subordinadas"
+
+#. module: base_zone
+#: help:base.zone,holder_ids:0
+msgid "Displays all holder zones including this same"
+msgstr "Muestra todas las zonas principales incluida esta"
+
+#. module: base_zone
+#: help:base.zone,subordinate_ids:0
+msgid "Displays all subordinated zones including this same"
+msgstr "Muestra todas las zonas subordinadas incluida esta"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "Enable/disable"
+msgstr "Habilitar/deshabilitar"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "Enter some information about the zone"
+msgstr "Introduzca alguna información referente a la zona"
+
+#. module: base_zone
+#: help:base.zone,name:0
+msgid "Enter the name of the zone"
+msgstr "Introduzca el nombre de la zona"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form view:base.zone:base_zone.view_base_zone_tree
+msgid "Enter the new name"
+msgstr "Introduzca un nuevo nombre"
+
+#. module: base_zone
+#: field:base.zone,message_follower_ids:0
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_search
+msgid "Geographical Zones"
+msgstr "Zonas geográficas"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+#: model:ir.actions.act_window,name:base_zone.action_geographical_zones_act_window
+#: model:ir.ui.menu,name:base_zone.menu_geographical_zones
+msgid "Geographical zones"
+msgstr "Zonas geográficas"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form field:base.zone,holder_user_ids:0
+msgid "Holder users"
+msgstr "Usuarios principales"
+
+#. module: base_zone
+#: field:base.zone,holder_ids:0 view:res.better.zip:base_zone.better_zip_form
+#: field:res.better.zip,holder_zone_ids:0 field:res.users,holder_zone_ids:0
+msgid "Holder zones"
+msgstr "Zonas principales"
+
+#. module: base_zone
+#: help:base.zone,message_summary:0
+msgid ""
+"Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be "
+"inserted in kanban views."
+msgstr ""
+"Mantiene el resumen de chat (número de mensajes, ...). Este resumen está directamente en formato HTML para ser "
+"insertado en Vistas Kanban."
+
+#. module: base_zone
+#: field:base.zone,id:0 field:base.zone.middle.relationship,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: base_zone
+#: help:base.zone,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr "Marcado si hay nuevos mensajes que requieren su atención."
+
+#. module: base_zone
+#: code:addons\base_zone\models\base_zone.py:261 sql_constraint:base.zone:0
+#, python-format
+msgid "If this parent zone was established an infinite loop would be created."
+msgstr "Se establece esta zona como padre se creará un bucle infinito."
+
+#. module: base_zone
+#: field:base.zone,message_is_follower:0
+msgid "Is a Follower"
+msgstr "Es un seguidor"
+
+#. module: base_zone
+#: field:base.zone,message_last_post:0
+msgid "Last Message Date"
+msgstr "Fecha del último mensaje"
+
+#. module: base_zone
+#: field:base.zone,write_uid:0
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: base_zone
+#: field:base.zone,write_date:0
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: base_zone
+#: field:base.zone,message_ids:0
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: base_zone
+#: help:base.zone,message_ids:0
+msgid "Messages and communication history"
+msgstr "Mensajes e historial de comunicación"
+
+#. module: base_zone
+#: field:base.zone,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form field:base.zone,notes:0
+msgid "Notes"
+msgstr "Notas"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form view:res.users:base_zone.view_users_form
+msgid "Own child zones"
+msgstr "Zonas hijas propias"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "Own users"
+msgstr "Usuarios propios"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form field:base.zone,zip_ids:0
+msgid "Own zip codes"
+msgstr "Códigos postales propios"
+
+#. module: base_zone
+#: field:base.zone,parent_id:0
+msgid "Parent zone"
+msgstr "Zona padre"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "Parent zones trail"
+msgstr "Rastro de zonas padre"
+
+#. module: base_zone
+#: help:base.zone,zip_range_ex:0
+msgid "Regular expression which defines the needed zip code range"
+msgstr "Expresión regular que define el rango de códigos postales necesario"
+
+#. module: base_zone
+#: help:res.better.zip,base_zone_id:0
+msgid "Set the zone to which zip code belongs"
+msgstr "Establezca la zona a la cual pertenece el código postal"
+
+#. module: base_zone
+#: help:base.zone,parent_id:0
+msgid "Sets the zone in which this will be included"
+msgstr "Establece la zona in la cual será incluida"
+
+#. module: base_zone
+#: help:base.zone,notes:0
+msgid "Some information about the zone"
+msgstr "Alguna información sobre la zona"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "Subordinate and holder users can not be added unless they are detached first."
+msgstr "Los usuarios subordinados y principales no pueden ser agregados a menos que sean desvinculados previamente."
+
+#. module: base_zone
+#: field:base.zone,subordinate_user_ids:0
+msgid "Subordinate users"
+msgstr "Usuarios subordinados"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form field:base.zone,subordinate_zip_ids:0
+msgid "Subordinate zip codes"
+msgstr "Códigos postales subordinados"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form field:base.zone,subordinate_ids:0
+#: view:res.users:base_zone.view_users_form field:res.users,subordinate_zone_ids:0
+msgid "Subordinate zones"
+msgstr "Zonas subordinadas"
+
+#. module: base_zone
+#: field:base.zone,message_summary:0
+msgid "Summary"
+msgstr "Resumen"
+
+#. module: base_zone
+#: help:base.zone,active:0
+msgid "Switch to enable or disable the zone"
+msgstr "Alterne para habilitar o deshabilitar la zona"
+
+#. module: base_zone
+#: model:ir.actions.act_window,help:base_zone.action_geographical_zones_act_window
+msgid "There are not any geographical zone defined"
+msgstr "No hay ninguna zona geográfica definida"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "To assign any zip code to this zone it should be detached from any other before."
+msgstr "Para asignar un código postal a esta zona debería ser desvinculado de cualquier otra previamente."
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "To establish any zone as a child it should be detached from any other parent before."
+msgstr ""
+"Para establecer cualquier zona como hija debería ser desvinculada de cualquier otra zona padre previamente."
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_tree
+msgid "Trail"
+msgstr "Rastro"
+
+#. module: base_zone
+#: field:base.zone,message_unread:0
+msgid "Unread Messages"
+msgstr "Mensajes no leídos"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form field:base.zone,user_ids:0
+#: model:ir.model,name:base_zone.model_res_users
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: base_zone
+#: help:base.zone,holder_user_ids:0
+msgid "Users of all ascendants zones including this same"
+msgstr "Usuarios de todas las zonas principales incluida esta"
+
+#. module: base_zone
+#: help:base.zone,subordinate_user_ids:0
+msgid "Users of all descendant zones including this same"
+msgstr "Usuarios de todas las zonas subordinadas incluida esta"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "Warning!"
+msgstr "¡Advertencia!"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "Zip codes"
+msgstr "Códigos postales"
+
+#. module: base_zone
+#: help:base.zone,subordinate_zip_ids:0 help:res.better.zip,holder_zone_ids:0
+msgid "Zip codes of all descendants zones including this same"
+msgstr "Códigos postales de todas las zonas subordinadas incluida esta"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form field:base.zone,zip_range_ex:0
+msgid "Zip range expression"
+msgstr "Expresión para el rango de códigos postales"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "Zip range regular expression"
+msgstr "Expresión regular para el rango de códigos postales"
+
+#. module: base_zone
+#: model:ir.model,name:base_zone.model_base_zone
+msgid "Zip-based geographical zone"
+msgstr "Zonas geográficas basadas en códigos postales"
+
+#. module: base_zone
+#: field:res.users,zone_ids:0
+msgid "Zone ids"
+msgstr "IDs de zona"
+
+#. module: base_zone
+#: view:res.better.zip:base_zone.better_zip_form view:res.users:base_zone.view_users_form
+msgid "Zones"
+msgstr "Zonas"
+
+#~ msgid "Add/remove implied users"
+#~ msgstr "Agregar/eliminar usuarios implícitos"
+
+#~ msgid "Add/remove implied zip codes"
+#~ msgstr "Agregar/eliminar códigos postales implícitos"
+
+#~ msgid "Add/remove implied zones"
+#~ msgstr "Agregar/eliminar zonas implícitas"
+
+#~ msgid "Ascending hierarchy"
+#~ msgstr "Jerarquía ascendente"
+
+#~ msgid "Descending hierarchy"
+#~ msgstr "Jerarquía descendente"
+
+#~ msgid "Display all implied zones"
+#~ msgstr "Mostrar todas las zonas implícitas"
+
+#~ msgid "Display all users from zone and from its ascendants"
+#~ msgstr "Mostrar todos los usuarios de la zona y sus ascendentes"
+
+#~ msgid "Display all zip codes from zone and from its descendants"
+#~ msgstr "Mostrar todos los códigos postales de la zona y sus descendientes"
+
+#~ msgid "Displays all ascendants zones including itself"
+#~ msgstr "Mostrar todas las zonas ascendentes incluida esta"
+
+#~ msgid "Displays all descendants zones including itself"
+#~ msgstr "Mostrar todas las zonas descendentes incluida esta"
+
+#~ msgid "Implied users"
+#~ msgstr "Usuarios implícitos"
+
+#~ msgid "Implied zip codes"
+#~ msgstr "Códigos postales implícitos"
+
+#~ msgid "Implied zones"
+#~ msgstr "Zonas implícitas"

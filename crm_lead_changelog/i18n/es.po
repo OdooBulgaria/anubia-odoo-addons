@@ -1,0 +1,81 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* crm_lead_changelog
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-07 11:40+0000\n"
+"PO-Revision-Date: 2015-07-07 13:52+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: crm_lead_changelog
+#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
+msgid "Date"
+msgstr "Fecha"
+
+#. module: crm_lead_changelog
+#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
+msgid "Enter the new value for date"
+msgstr "Introducir el nuevo valor para la fecha"
+
+#. module: crm_lead_changelog
+#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
+msgid "Enter the new value for new stage"
+msgstr "Introducir el valor para el nuevo estado"
+
+#. module: crm_lead_changelog
+#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
+msgid "Enter the new value for new user"
+msgstr "Introducir el valor para el nuevo usuario"
+
+#. module: crm_lead_changelog
+#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
+msgid "Enter the new value for old stage"
+msgstr "Introducir el valor para el estado previo"
+
+#. module: crm_lead_changelog
+#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
+msgid "Enter the new value for old user"
+msgstr "Introducir el valor para el usuario previo"
+
+#. module: crm_lead_changelog
+#: view:crm.lead:crm_lead_changelog.crm_case_form_view_oppor
+#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
+#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_tree
+msgid "Historics"
+msgstr "Historial"
+
+#. module: crm_lead_changelog
+#: model:ir.model,name:crm_lead_changelog.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "Iniciativa/Oportunidad"
+
+#. module: crm_lead_changelog
+#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
+#: field:crm.lead.historic,stage_id_new:0
+msgid "New stage"
+msgstr "Nuevo estado"
+
+#. module: crm_lead_changelog
+#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
+msgid "New user"
+msgstr "Nuevo usuario"
+
+#. module: crm_lead_changelog
+#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
+#: field:crm.lead.historic,stage_id_old:0
+msgid "Old stage"
+msgstr "Estado previo"
+
+#. module: crm_lead_changelog
+#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
+msgid "Old user"
+msgstr "Usuario previo"
+

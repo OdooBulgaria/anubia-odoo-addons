@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <!-- VIEWS: "Build changelog"
+
+            - Model·········: build.crm.changelog
+            - _rec_name·····: assign_to
+            - Domain········: []
+            - Context·······: {}
+            - Parent menu ··: base.menu_custom
+            - View priority·: 16    Sequence····: 10
+            - Action help···: Select an user to assign to preexisting leads/opportunities
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <!-- Form view for "build.crm.changelog" -->
+        <record id="view_build_crm_changelog_form" model="ir.ui.view">
+            <field name="name">view.build.crm.changelog.form</field>
+            <field name="model">build.crm.changelog</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <form string="Build changelog" create="1" delete="1" edit="1">
+                    <group col="2">
+                        <field name="assign_to" class="oe_field_assign_to" />
+                        <div class="alert alert-info crm_lead_changelog_vertical_spaced"
+                            role="alert" colspan="2">
+                            <strong>Information:</strong>
+                            You must indicate to which user will be attributed
+                            the changes already made in leads/opportunities.
+                        </div>
+                        <field name="user_id" class="oe_field_user_id "
+                            placeholder="Choose an user"
+                            attrs="{'invisible': [('assign_to', '&lt;&gt;', 's')]}"
+                            options="{'no_open': True}" />
+                        <div class="alert alert-warning crm_lead_changelog_vertical_spaced"
+                            role="alert" colspan="2"
+                            attrs="{'invisible': [('assign_to', '&lt;&gt;', 's')]}">
+                            <strong>Warning:</strong>
+                            The selected user will be set as responsible of the
+                            all changed made in the existing leads/opportunities.
+                            Be careful when using this option!
+                        </div>
+                    </group>
+
+                    <footer>
+                        <button string="Send" type="object"
+                                name="execute" placeholder="execute" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

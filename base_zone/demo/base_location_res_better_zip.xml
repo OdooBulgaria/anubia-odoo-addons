@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="1">
+
+        <record id="res_better_zip_eriador" model="res.better.zip">
+            <field name="name">ERDR</field>
+            <field name="city">Eriador</field>
+            <field name="base_zone_id" ref="base_zone_eriador" />
+        </record>
+
+        <!-- Inside Eriador -->
+
+        <record id="res_better_zip_shire" model="res.better.zip">
+            <field name="name">SHR</field>
+            <field name="city">Shire</field>
+            <field name="base_zone_id" ref="base_zone_shire" />
+        </record>
+
+        <record id="res_better_zip_rivendell" model="res.better.zip">
+            <field name="name">RVNDLL</field>
+            <field name="city">Rivendell</field>
+            <field name="base_zone_id" ref="base_zone_rivendell" />
+        </record>
+
+        <record id="res_better_zip_bree" model="res.better.zip">
+            <field name="name">BR</field>
+            <field name="city">Bree</field>
+            <field name="base_zone_id" ref="base_zone_bree" />
+        </record>
+
+        <!-- Inside Shire -->
+
+        <record id="res_better_zip_northfarthing" model="res.better.zip">
+            <field name="name">NTHF</field>
+            <field name="city">Northfarthing</field>
+            <field name="base_zone_id" ref="base_zone_northfarthing" />
+        </record>
+
+        <record id="res_better_zip_westfarthing" model="res.better.zip">
+            <field name="name">WSTF</field>
+            <field name="city">Westfarthing</field>
+            <field name="base_zone_id" ref="base_zone_westfarthing" />
+        </record>
+
+        <record id="res_better_zip_southfarthing" model="res.better.zip">
+            <field name="name">STHF</field>
+            <field name="city">Southfarthing</field>
+            <field name="base_zone_id" ref="base_zone_southfarthing" />
+        </record>
+
+        <record id="res_better_zip_eastfarthing" model="res.better.zip">
+            <field name="name">ESTF</field>
+            <field name="city">Eastfarthing</field>
+            <field name="base_zone_id" ref="base_zone_eastfarthing" />
+        </record>
+
+        <record id="res_better_zip_buckland" model="res.better.zip">
+            <field name="name">BCK</field>
+            <field name="city">Buckland</field>
+            <field name="base_zone_id" ref="base_zone_buckland" />
+        </record>
+
+        <record id="res_better_zip_westmarch" model="res.better.zip">
+            <field name="name">WSTM</field>
+            <field name="city">Westmarch</field>
+            <field name="base_zone_id" ref="base_zone_westmarch" />
+        </record>
+
+    </data>
+</openerp>

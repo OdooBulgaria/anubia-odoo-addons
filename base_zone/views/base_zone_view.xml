@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <!-- VIEWS: "Geographical zones"
+
+            - Model·········: base.zone
+            - _rec_name·····: name
+            - Domain········: []
+            - Context·······: {}
+            - Parent menu ··: base.menu_users
+            - View priority·: 16    Sequence····: 10
+            - Action help···: There are not any geographical zone defined
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <!-- Tree view for "base.zone" -->
+        <record id="view_base_zone_tree" model="ir.ui.view">
+            <field name="name">view.base.zone.tree</field>
+            <field name="model">base.zone</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" class="oe_field_name"
+                        placeholder="Enter the new name" />
+                    <field name="trail" class="oe_field_trail"
+                        placeholder="Trail" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view for "base.zone" -->
+        <record id="view_base_zone_form" model="ir.ui.view">
+            <field name="name">view.base.zone.form</field>
+            <field name="model">base.zone</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <form string="Geographical zones" create="1" delete="1" edit="1">
+                    <field name="subordinate_ids" invisible="1" />
+                    <field name="subordinate_user_ids" invisible="1" />
+
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" />
+                            <h1><field name="name" placeholder="Enter the new name" /></h1>
+                        </div>
+
+                        <group col="4">
+                            <field name="parent_id" class="oe_field_parent_zone_id"
+                                 placeholder="Choose the parent zone"
+                                 domain="[('id', 'not in', subordinate_ids[0][2])]" />
+
+                            <field name="trail" class="oe_field_trail oe_base_zone_save_only"
+                                placeholder="Parent zones trail" colspan="2" nolabel="1"
+                                attrs="{'invisible': [('parent_id', '=', False)]}" />
+
+                            <field name="active" class="oe_field_active"
+                                placeholder="Enable/disable" />
+                        </group>
+
+                        <notebook class="base_zone_notebook_page_padding_top">
+                            <page string="Notes" id="notes">
+                                <field name="notes" class="oe_field_note"
+                                    placeholder="Enter some information about the zone" />
+                            </page>
+                            <page string="Descendants" id="zones">
+                                <div class="oe_edit_only">
+                                    <separator string="Own child zones" />
+                                    <field name="child_ids" class="oe_field_child_ids"
+                                        placeholder="Add/remove child zones" widget="many2many"
+                                        domain="['&amp;',('id', 'not in', subordinate_ids[0][2]),('parent_id', '=', False)]" />
+                                    <div class="alert alert-warning alert-dismissible oe_base_zone_vertical_spaced" role="alert">
+                                        <strong>Warning!</strong>
+                                        To establish any zone as a child it should be detached from any other parent before.
+                                    </div>
+                                </div>
+                                <separator class="oe_base_zone_save_only" />
+                                <separator string="Subordinate zones" class="oe_edit_only" />
+                                <field name="subordinate_ids" class="oe_field_subordinate_ids"
+                                    placeholder="Add/remove subordinate zones" />
+                            </page>
+                            <page string="Zip codes" id="zips">
+                                <div class="oe_edit_only">
+                                    <group string="Zip range expression" col="12">
+                                        <group colspan="10" col="2">
+                                            <field name="zip_range_ex" class="oe_field_zip_range_ex"
+                                                placeholder="Zip range regular expression" />
+                                        </group>
+                                        <group col="2" colspan="2">
+                                            <button name="add_zip_codes" type="object" icon="gtk-add" />
+                                            <button name="remove_zip_codes" type="object" icon="gtk-remove" />
+                                        </group>
+                                    </group>
+                                    <separator string="Own zip codes" />
+                                    <field name="zip_ids" class="oe_field_own_zip_ids"
+                                        placeholder="Add/remove zip codes" widget="many2many"
+                                        domain="[('base_zone_id', '=', False)]" />
+                                    <div class="alert alert-warning alert-dismissible oe_base_zone_vertical_spaced" role="alert">
+                                        <strong>Warning!</strong>
+                                        To assign any zip code to this zone it should be detached from any other before.
+                                    </div>
+                                </div>
+
+                                <separator class="oe_base_zone_save_only" />
+                                <separator string="Subordinate zip codes" class="oe_edit_only" />
+                                <field name="subordinate_zip_ids" class="oe_field_subordinate_zip_ids"
+                                    placeholder="Add/remove subordinate zip codes" />
+                            </page>
+                            <page string="Users" id="users">
+                                <div class="oe_edit_only">
+                                    <separator string="Own users" />
+                                    <field name="user_ids" class="oe_field_user_ids"
+                                        placeholder="Add/remove users" widget="many2many" />
+                                        <!-- domain="['&amp;',('id', 'not in', subordinate_user_ids[0][2]),('id', 'not in', holder_user_ids[0][2]))]" />-->
+                                    <div class="alert alert-warning alert-dismissible oe_base_zone_vertical_spaced" role="alert">
+                                        <strong>Warning!</strong>
+                                        Subordinate and holder users can not be added unless they are detached first.
+                                    </div>
+                                </div>
+
+                                <separator class="oe_base_zone_save_only" />
+                                <separator string="Holder users" class="oe_edit_only" />
+                                <field name="holder_user_ids" class="oe_field_holder_user_ids"
+                                    placeholder="Add/remove holder users" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search view for "base.zone" -->
+        <record id="view_base_zone_search" model="ir.ui.view">
+            <field name="name">view.base.zone.search</field>
+            <field name="model">base.zone</field>
+            <field name="type">search</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <search string="Geographical Zones">
+                    <field name="name" />
+                    <field name="child_ids" />
+                    <field name="holder_ids" />
+                    <field name="subordinate_ids" />
+                    <field name="zip_ids" />
+                    <field name="subordinate_zip_ids" />
+                    <field name="user_ids" />
+                    <field name="holder_user_ids" />
+                </search>
+            </field>
+        </record>
+
+        <!-- Main window action for model.name -->
+        <record id="action_geographical_zones_act_window" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
+            <field name="name">Geographical zones</field>
+            <field name="res_model">base.zone</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_base_zone_search" />
+            <field name="help">There are not any geographical zone defined</field>
+        </record>
+
+        <!-- Main menu for model.name -->
+        <record id="menu_geographical_zones" model="ir.ui.menu" >
+            <field name="name">Geographical zones</field>
+            <field name="sequence" eval="10" />
+            <field name="action" ref="action_geographical_zones_act_window" />
+            <field name="parent_id" ref="base.menu_localisation" />
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="crm_case_form_view_leads" model="ir.ui.view">
+            <field name="name">CRM - Leads Form</field>
+            <field name="model">crm.lead</field>
+            <field name="type">form</field>
+            <field name="mode">extension</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="crm.crm_case_form_view_leads" />
+            <field name="arch" type="xml">
+
+                <!-- Adds new page to show related crm.lead.historic model items -->
+                <xpath expr="//notebook" position="inside">
+                    <page string="Changelog">
+                        <field name="changelog_ids" context="{
+                            'tree_view_ref': 'crm_lead_changelog.view_crm_lead_historic_tree',
+                            'form_view_ref': 'crm_lead_changelog.view_crm_lead_historic_form',
+                        }" widget="one2many_list" nolabel="1" />
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="crm_case_form_view_oppor" model="ir.ui.view">
+            <field name="name">Opportunities</field>
+            <field name="model">crm.lead</field>
+            <field name="type">form</field>
+            <field name="mode">extension</field>
+            <field name="priority" eval="20" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor" />
+            <field name="arch" type="xml">
+
+                <!-- Adds new page to show related crm.lead.historic model items -->
+                <xpath expr="//notebook" position="inside">
+                    <page string="Changelog">
+                        <field name="changelog_ids" context="{
+                            'tree_view_ref': 'crm_lead_changelog.view_crm_lead_historic_tree',
+                            'form_view_ref': 'crm_lead_changelog.view_crm_lead_historic_form',
+                        }" widget="one2many_list" nolabel="1" />
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Crm Lead Historic Tree View -->
+        <record id="view_crm_lead_historic_tree" model="ir.ui.view">
+            <field name="name">crm.lead.changelog.tree</field>
+            <field name="model">crm.lead.changelog</field>
+            <field name="arch" type="xml">
+                <tree string="Changelog" create="0" delete="0" editable="top">
+                    <field name="date"/>
+                    <field name="user_id"/>
+                    <field name="stage_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Crm Lead Historic Form View -->
+        <!-- <record id="view_crm_lead_historic_form" model="ir.ui.view">
+            <field name="name">crm.lead.historic.form</field>
+            <field name="model">crm.lead.historic</field>
+            <field name="arch" type="xml">
+                <form string="Historics">
+                    <group>
+                        <field name="current_user" attrs="{'invisible': False}"/>
+                        <field name="date" class="oe_field_date" string="Date" options="{'no_open': True, 'create': False, 'create_edit': False}" help="Enter the new value for date"/>
+                        <field name="stage_id_old" class="oe_field_stage_old" string="Old stage" options="{'no_open': True, 'create': False, 'create_edit': False}" help="Enter the new value for old stage"/>
+                        <field name="stage_id_new" class="oe_field_stage_new" string="New stage" options="{'no_open': True, 'create': False, 'create_edit': False}" help="Enter the new value for new stage"/>
+                        <field name="user_id_old" class="oe_field_user_id_old" string="Old user" options="{'no_open': True, 'create': False, 'create_edit': False}" help="Enter the new value for old user"/>
+                        <field name="user_id_new" class="oe_field_user_id_new" string="New user" options="{'no_open': True, 'create': False, 'create_edit': False}" help="Enter the new value for new user"/>
+                    </group>
+                </form>
+            </field>
+        </record> -->
+
+    </data>
+</openerp>
