@@ -57,3 +57,11 @@ docs/_build/
 # Backup files
 *~
 *.swp
+
+
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+# Other
+.gitmessage
