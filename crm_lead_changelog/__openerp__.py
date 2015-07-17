@@ -44,7 +44,7 @@
         'base',
         'crm',
         'web',
-        'web_m2x_options',
+        # 'web_m2x_options',  # --> not essential
     ],
     'external_dependencies': {
         'python': [
@@ -53,9 +53,11 @@
     'data': [
         'data/ir_actions_todo.xml',
 
+        'security/ir_model_access.xml',
+
         'views/crm_lead_changelog.xml',
         'views/crm_lead_changelog_view.xml',
-        'wizards/build_crm_changelog_view.xml',
+        'views/crm_crm_lead_view.xml',
     ],
     'demo': [
     ],

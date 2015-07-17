@@ -20,6 +20,12 @@
                             'form_view_ref': 'crm_lead_changelog.view_crm_lead_historic_form',
                         }" widget="one2many_list" nolabel="1" />
                     </page>
+                    <page string="Stage of case changelog">
+                        <field name="stage_changelog_ids" />
+                    </page>
+                    <page string="Salesperson changelog">
+                        <field name="user_changelog_ids" />
+                    </page>
                 </xpath>
 
             </field>
@@ -42,6 +48,12 @@
                             'tree_view_ref': 'crm_lead_changelog.view_crm_lead_historic_tree',
                             'form_view_ref': 'crm_lead_changelog.view_crm_lead_historic_form',
                         }" widget="one2many_list" nolabel="1" />
+                    </page>
+                    <page string="Stage of case changelog">
+                        <field name="stage_changelog_ids" />
+                    </page>
+                    <page string="Salesperson changelog">
+                        <field name="user_changelog_ids" />
                     </page>
                 </xpath>
 

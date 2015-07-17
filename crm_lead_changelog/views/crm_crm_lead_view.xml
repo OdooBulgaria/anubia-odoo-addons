@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="view_crm_lead_search" model="ir.ui.view">
+            <field name="name">CRM - Leads Search</field>
+            <field name="model">crm.lead</field>
+            <field name="type">search</field>
+            <field name="mode">extension</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="crm.view_crm_case_leads_filter" />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//search" position="inside">
+                        <field name="stage_changelog_ids" />
+                        <field name="user_changelog_ids" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="view_crm_lead_search" model="ir.ui.view">
+            <field name="name">CRM - Opportunities Search</field>
+            <field name="model">crm.lead</field>
+            <field name="type">search</field>
+            <field name="mode">extension</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter" />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//search" position="inside">
+                        <field name="changelog_ids" widget="date" />
+                        <field name="stage_changelog_ids" />
+                        <field name="user_changelog_ids" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+    </data>
+</openerp>

@@ -3,14 +3,23 @@
 <openerp>
     <data noupdate="0">
 
+        <!-- INSTALL TODO ACTION
+
+        After install the module, a changelog must be added to all the already
+        existing leads.
+
+        Below here are an ``ir.actions.todo`` and a ``ir.actions.server``, both
+        are related and will be responsible for call the needed python code to
+        build these changelog records.
+
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <record id="action_build_changelog_server" model="ir.actions.server">
             <field name="type">ir.actions.server</field>
             <field name="name">Build changelog</field>
-            <field name="model_id" ref="model_build_crm_changelog" />
+            <field name="model_id" ref="model_crm_lead_changelog" />
             <field name="condition" eval="True" />
             <field name="sequence" eval="5" />
-            <field name="context" eval="{}" />
             <field name="code">action = self.ensure_changelog(cr, uid, context=context)</field>
         </record>
 
@@ -20,7 +29,7 @@
             <field name="state">open</field>
             <field name="sequence" eval="10" />
             <field name="action_id" ref="action_build_changelog_server" />
-            <field name="note">Updates the changelog in existing leads/opportunities</field>
+            <field name="note">Builds a changelog for all existing leads/opportunities without any</field>
         </record>
 
     </data>

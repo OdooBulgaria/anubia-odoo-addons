@@ -22,15 +22,14 @@ class CrmLeadChangelog(models.Model):
     - date: Date in which the change was done
     - stage_id: Stage of case before the change
     - user_id: Salesperson before the change
-    - responsible_user_id: Who made the change
     """
 
     _name = 'crm.lead.changelog'
     _description = 'Lead change log'
 
-    _rec_name = 'id'
+    _rec_name = 'date'
 
-    _order = 'date DESC'
+    _order = 'date ASC'
 
     # --------------------------- ENTITY FIELDS -------------------------------
 
@@ -53,7 +52,7 @@ class CrmLeadChangelog(models.Model):
         required=True,
         readonly=False,
         index=False,
-        default=lambda self: fields.Datetime.context_today(self),
+        default=lambda self: fields.Datetime.now(),
         help='Date in which the change was made'
     )
 
@@ -85,20 +84,6 @@ class CrmLeadChangelog(models.Model):
         auto_join=False
     )
 
-    responsible_user_id = fields.Many2one(
-        string='responsible for changing',
-        required=True,
-        readonly=False,
-        index=False,
-        default=lambda self: self.env.uid,
-        help='Who made the change',
-        comodel_name='res.users',
-        domain=[],
-        context={},
-        ondelete='cascade',
-        auto_join=False
-    )
-
     # --------------------------- SQL CONSTRAINTS -----------------------------
 
     _sql_constraints = [
@@ -108,3 +93,51 @@ class CrmLeadChangelog(models.Model):
             _(u'Empty change in lead could not be registered')
         )
     ]
+
+    # --------------------------- PUBLIC METHODS ------------------------------
+
+    @api.model
+    def ensure_changelog(self):
+        """ Build a changelog of each one of the existing leads/opportunities
+            which have not changelog.
+
+            Values in fields `write_date`,  `create_date` and ``write_uid``
+            will be the same as in the related Lead/Opportunity.
+        """
+
+        if self.env['crm.lead'].search_count([]):
+            self.sudo().env.cr.execute(self._sql_ensure_changelog)
+
+    # ----------------------------- SQL STRINGS -------------------------------
+
+    _sql_ensure_changelog = """
+       INSERT INTO crm_lead_changelog (
+            lead_id,
+            stage_id,
+            user_id,
+            "date",
+            create_uid,
+            create_date,
+            write_uid,
+            write_date
+
+        ) SELECT
+            "id",
+            stage_id,
+            user_id,
+            create_date,-- first changelog always match with the lead creation
+            NULL,       -- allow to recognize preexisting leads in changelog
+            NULL,       -- allow to recognize preexisting leads in changelog
+            create_uid, -- first changelog always match with the lead creation
+            create_date -- first changelog always match with the lead creation
+        FROM
+            crm_lead
+        WHERE
+            crm_lead. ID NOT IN (
+                SELECT
+                    lead_id
+                FROM
+                    crm_lead_changelog
+            )
+    """
+

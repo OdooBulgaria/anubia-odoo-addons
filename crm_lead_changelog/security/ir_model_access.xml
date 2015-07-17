@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="access_crm_lead_change_res_groups" model="ir.model.access">
+            <field name="name">crm_lead_change res_groups</field>
+            <field name="model_id" ref="model_crm_lead_changelog"/>
+            <field name="perm_read" eval="True" />
+            <field name="perm_create" eval="True" />
+            <field name="perm_write" eval="False" />
+            <field name="perm_unlink" eval="False" />
+            <field name="active" eval="True" />
+        </record>
+
+        <record id="access_crm_lead_changelog_base_group_sale_manager" model="ir.model.access">
+            <field name="name">crm_lead_changelog base_group_sale_manager</field>
+            <field name="model_id" ref="model_crm_lead_changelog"/>
+            <field name="group_id" ref="base.group_no_one"/>
+            <field name="perm_read" eval="True" />
+            <field name="perm_create" eval="True" />
+            <field name="perm_write" eval="True" />
+            <field name="perm_unlink" eval="True" />
+            <field name="active" eval="True" />
+        </record>
+
+    </data>
+</openerp>
