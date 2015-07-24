@@ -6,7 +6,6 @@
 
 from openerp import models, fields, api
 from openerp.tools.translate import _
-from openerp.http import request
 
 from logging import getLogger
 
@@ -99,6 +98,7 @@ class BaseZone(models.Model):
         context={},
         auto_join=False,
         limit=None,
+        oldname='children_zone_ids',
         track_visibility='onchange',
     )
 
@@ -133,6 +133,20 @@ class BaseZone(models.Model):
         auto_join=False,
         limit=None,
         ondelete='set null'
+    )
+
+    default_user_id = fields.Many2one(
+        string='Default user',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='res.users',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False
     )
 
     notes = fields.Text(
@@ -261,7 +275,12 @@ class BaseZone(models.Model):
             'CHECK ((parent_id IS NULL) OR (parent_id <> id))',
             _(u'If this parent zone was established an infinite loop would '
               u'be created.')
-        )  # This will be overwritten later
+        ),  # This will be overwritten later
+        (
+            'verify_default_user_id',
+            'CHECK ((user_id IS NULL) OR (user_id > 0))',
+            _(u'Default user is not an allowed zone user.')
+        )
     ]
 
     # --------------------------- ONCHANGE EVENTS -----------------------------
@@ -334,7 +353,7 @@ class BaseZone(models.Model):
             zip_domain = [('name', 'in', zip_names)]
             zip_set = zip_set.search(zip_domain)
 
-        return zip_set
+        return zip_set.mapped('base_zone_id')
 
     # ------------------------- OVERWRITTEN METHODS ---------------------------
 
@@ -346,6 +365,7 @@ class BaseZone(models.Model):
         result = _super._auto_end(cr, context)
 
         cr.execute(self._sql_alter_recursion_constraint)
+        cr.execute(self._sql_verify_default_user)
 
         return result
 
@@ -403,6 +423,45 @@ class BaseZone(models.Model):
 
         msg = msg_format.format(*args, **kwargs)
         log(msg)
+
+    # ----------------------- BACKWARD COMPATIBILITY --------------------------
+
+    def get_zone_trail(self, context=None):
+        """ backward compatibility, undocumented """
+        self.ensure_one()
+        return self._compute_trail()
+
+    @api.one
+    @api.returns('base.zone')
+    def get_top_zone(self, context=None):
+        """ backward compatibility, undocumented """
+        return self.holder_ids.filtered(lambda x: not x.parent_id)
+
+    @api.one
+    @api.returns('res.better.zip')
+    def get_subtree_zip_ids(self, context=None):
+        """ backward compatibility, undocumented """
+        return self.subordinate_ids
+
+    def get_base_zones_for_zip(self, zip_name=None):
+        """ backward compatibility, undocumented """
+        return self.browse_by_zip(zip_name, subordinate=False)
+
+    @staticmethod
+    def get_users_by_zip(self, zip_name=None):
+        """ backward compatibility, undocumented """
+        if not zip_name:
+            return False
+        zip_ids = self.env['res.better.zip'].search([('name', '=', zip_name)])
+        user_ids = zip_ids.mapped('base_zone_ids.user_ids')
+        return user_ids
+
+    def contains_user(self, user_id=None):
+        """ backward compatibility, undocumented """
+        self.ensure_one()
+
+        users_ids = [u.id for u in self.user_ids]
+        return user_id and user_id in users_ids or False
 
     # ----------------------------- SQL QUERIES -------------------------------
 
@@ -520,4 +579,28 @@ class BaseZone(models.Model):
             parent_id IS NULL or
             parent_id <> ALL(GET_CHILD_ZONES(id))
         );
+    """
+
+    _sql_verify_default_user = """
+        CREATE
+        OR REPLACE FUNCTION GET_ZONE_USERS (INT) RETURNS INT [] AS $$ SELECT
+            ARRAY (
+                SELECT
+                    ID
+                FROM
+                    res_users
+                INNER JOIN base_zone_res_users_rel AS rel
+                    ON res_users."id" = rel.res_users_id
+                WHERE
+                    rel.base_zone_id = 1
+            ) $$ LANGUAGE SQL;
+
+        ALTER TABLE base_zone DROP CONSTRAINT
+        IF EXISTS base_zone_verify_default_user_id;
+
+        ALTER TABLE base_zone
+            ADD CONSTRAINT base_zone_verify_default_user_id CHECK (
+                default_user_id IS NULL
+                OR default_user_id  = ALL (GET_ZONE_USERS(ID))
+            );
     """

@@ -151,7 +151,7 @@ class CrmLead(models.Model):
         """ Recomputes those fields which depend from ``changelog_ids``
         """
 
-        self._compute_old_stage_ids()
+        self._compute_stage_changelog_ids()
         self._compute_user_changelog_ids()
 
     # ------------------------ METHODS OVERWRITTEN ----------------------------

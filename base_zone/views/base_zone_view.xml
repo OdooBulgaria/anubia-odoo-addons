@@ -113,6 +113,12 @@
                                     placeholder="Add/remove subordinate zip codes" />
                             </page>
                             <page string="Users" id="users">
+                                <group col="2">
+                                    <field name="default_user_id" class="oe_field_default_user_id"
+                                        placeholder="Choose user by default"
+                                        domain="[('id', 'in', user_ids[0][2])]"/>
+
+                                </group>
                                 <div class="oe_edit_only">
                                     <separator string="Own users" />
                                     <field name="user_ids" class="oe_field_user_ids"

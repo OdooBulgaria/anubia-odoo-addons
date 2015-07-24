@@ -305,7 +305,7 @@ openerp.web_graph.PivotTable = openerp.web.Class.extend({
             var cell_value = _.map(self.measures, function (m) {
                 return data_pt.attributes.aggregates[m.field];
             });
-			
+
             self.cells.push({
                 x: Math.min(row.id, col.id),
                 y: Math.max(row.id, col.id),
@@ -414,15 +414,15 @@ openerp.web_graph.PivotTable = openerp.web.Class.extend({
     get_groups: function (groupbys, fields, domain) {
         var self = this;
 		var total = 0;
-		
-		this.model.query('id')
+
+		this.model.query(['id'])
             .filter(domain)
             .context(this.context)
 			.all()
             .then(function (items) {
 				total = items.length
 			});
-			
+
         return this.model.query(_.without(fields, '__count'))
             .filter(domain)
             .context(this.context)
