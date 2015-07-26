@@ -4,7 +4,7 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from openerp import models, fields
+from openerp import models, fields, api
 
 from logging import getLogger
 
@@ -56,6 +56,7 @@ class ResBetterZip(models.Model):
 
     # -------------------------- PUBLIC METHODS   -----------------------------
 
+    @api.model
     def regex_search(self, regex, zone_out=False):
         """ Search zip codes whose names match a given regular expression
 
@@ -78,6 +79,7 @@ class ResBetterZip(models.Model):
 
             # STEP 4: Execute query and fetch a dict/list with of returned IDs
             # [{'id': n}, {'id': m}, ...]
+            self._log(0, u'Parsing regex {} for zone, query: {}', regex, _sql)
             cr = self.env.cr
             cr.execute(_sql)
             id_set = cr.dictfetchall()
@@ -111,6 +113,19 @@ class ResBetterZip(models.Model):
             regex = r''
 
         return regex
+
+    def _log(self, level, msg_format, *args, **kwargs):
+        """ Outputs an formated string in log
+
+            :param level (int): 0=> debug, 1=> info, 2=> warning, 3=> error
+            :param message (basestring): name of the message
+        """
+
+        methods = ['debug', 'info', 'warning', 'error']
+        log = getattr(_logger, methods[level])
+
+        msg = msg_format.format(*args, **kwargs)
+        log(msg)
 
     # ----------------------------- SQL QUERIES -------------------------------
 

@@ -280,7 +280,7 @@ class BaseZone(models.Model):
             'verify_default_user_id',
             'CHECK ((user_id IS NULL) OR (user_id > 0))',
             _(u'Default user is not an allowed zone user.')
-        )
+        )  # This will be overwritten later
     ]
 
     # --------------------------- ONCHANGE EVENTS -----------------------------
@@ -327,19 +327,17 @@ class BaseZone(models.Model):
     # --------------------------- PUBLIC METHODS ------------------------------
 
     @api.multi
-    def add_zip_codes(self, zip_range_ex=None):
+    def add_zip_codes(self):
         """ Behavior for the ``add`` button shown in the model form view """
 
         for record in self:
-            record.zip_range_ex = zip_range_ex or record.zip_range_ex or ''
             record._proccess_zip_range_ex(remove=False)
 
     @api.multi
-    def remove_zip_codes(self, zip_range_ex=None):
+    def remove_zip_codes(self):
         """ Behavior for the ``remove`` button shown in the model form view """
 
         for record in self:
-            record.zip_range_ex = zip_range_ex or record.zip_range_ex or ''
             record._proccess_zip_range_ex(remove=True)
 
     def browse_by_zip(self, zip_names, subordinate=False):
