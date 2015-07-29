@@ -27,7 +27,7 @@ class CrmLead(models.Model):
         comodel_name='crm.lead.changelog',
         inverse_name='lead_id',
         track_visibility='onchange',
-        help='Changes was made in lead',
+        help='Changes made in lead',
         search=lambda self, op, vl: self._search_stage_changelog_ids(op, vl)
     )
 
@@ -39,7 +39,7 @@ class CrmLead(models.Model):
         readonly=True,
         index=False,
         default=None,
-        help='Changes was made in stage of case',
+        help='Changes made in stage of case',
         comodel_name='crm.lead.changelog',
         inverse_name='lead_id',
         domain=[('stage_id', '<>', False)],
@@ -56,7 +56,7 @@ class CrmLead(models.Model):
         readonly=True,
         index=False,
         default=None,
-        help='Changes was made in salesperson',
+        help='Changes made in salesperson',
         comodel_name='crm.lead.changelog',
         inverse_name='lead_id',
         domain=[('user_id', '<>', False)],

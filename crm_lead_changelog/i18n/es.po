@@ -6,51 +6,104 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-07 11:40+0000\n"
-"PO-Revision-Date: 2015-07-07 13:52+0100\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2015-07-29 22:12+0000\n"
+"PO-Revision-Date: 2015-07-29 22:12+0000\n"
+"Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
 #. module: crm_lead_changelog
-#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
+#: model:ir.actions.server,name:crm_lead_changelog.action_build_changelog_server
+msgid "Build changelog"
+msgstr "Crear historial de cambios"
+
+#. module: crm_lead_changelog
+#: model:ir.actions.todo,note:crm_lead_changelog.action_todo_build_changelog_in_existing_leads_opportunities
+msgid "Builds a changelog for all existing leads/opportunities without any"
+msgstr "Crea un historial de cambios para aquellas iniciativas/oportunidades que no lo tengan"
+
+#. module: crm_lead_changelog
+#: view:crm.lead:crm_lead_changelog.crm_case_form_view_leads
+#: view:crm.lead:crm_lead_changelog.crm_case_form_view_oppor
+#: field:crm.lead,changelog_ids:0
+#: view:crm.lead.changelog:crm_lead_changelog.view_crm_lead_historic_tree
+msgid "Changelog"
+msgstr "Cambios"
+
+#. module: crm_lead_changelog
+#: help:crm.lead,changelog_ids:0
+msgid "Changes made in lead"
+msgstr "Cambios en el cupón"
+
+#. module: crm_lead_changelog
+#: help:crm.lead,stage_changelog_ids:0
+msgid "Changes made in stage of case"
+msgstr "Cambios de estado"
+
+#. module: crm_lead_changelog
+#: help:crm.lead,user_changelog_ids:0
+msgid "Changes made in salesperson"
+msgstr "Cambios de comercial"
+
+#. module: crm_lead_changelog
+#: field:crm.lead.changelog,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: crm_lead_changelog
+#: field:crm.lead.changelog,create_date:0
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: crm_lead_changelog
+#: field:crm.lead.changelog,date:0
 msgid "Date"
 msgstr "Fecha"
 
 #. module: crm_lead_changelog
-#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
-msgid "Enter the new value for date"
-msgstr "Introducir el nuevo valor para la fecha"
+#: help:crm.lead.changelog,date:0
+msgid "Date in which the change was made"
+msgstr "Fecha del cambio"
 
 #. module: crm_lead_changelog
-#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
-msgid "Enter the new value for new stage"
-msgstr "Introducir el valor para el nuevo estado"
+#: code:addons/crm_lead_changelog/models/crm_lead_changelog.py:93
+#: sql_constraint:crm.lead.changelog:0
+#, python-format
+msgid "Empty change in lead could not be registered"
+msgstr "No se pudo registrar un cambio vacío"
 
 #. module: crm_lead_changelog
-#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
-msgid "Enter the new value for new user"
-msgstr "Introducir el valor para el nuevo usuario"
+#: field:crm.lead.changelog,id:0
+msgid "ID"
+msgstr "ID"
 
 #. module: crm_lead_changelog
-#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
-msgid "Enter the new value for old stage"
-msgstr "Introducir el valor para el estado previo"
+#: field:crm.lead.changelog,write_uid:0
+msgid "Last Updated by"
+msgstr "Última actualización por"
 
 #. module: crm_lead_changelog
-#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
-msgid "Enter the new value for old user"
-msgstr "Introducir el valor para el usuario previo"
+#: field:crm.lead.changelog,write_date:0
+msgid "Last Updated on"
+msgstr "Última actualización en"
 
 #. module: crm_lead_changelog
-#: view:crm.lead:crm_lead_changelog.crm_case_form_view_oppor
-#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
-#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_tree
-msgid "Historics"
-msgstr "Historial"
+#: field:crm.lead.changelog,lead_id:0
+msgid "Lead"
+msgstr "Iniciativa"
+
+#. module: crm_lead_changelog
+#: model:ir.model,name:crm_lead_changelog.model_crm_lead_changelog
+msgid "Lead change log"
+msgstr "Historial de cambios en inciativa"
+
+#. module: crm_lead_changelog
+#: help:crm.lead.changelog,lead_id:0
+msgid "Lead to which this log record belongs"
+msgstr "Iniciativa asociada a este registro"
 
 #. module: crm_lead_changelog
 #: model:ir.model,name:crm_lead_changelog.model_crm_lead
@@ -58,24 +111,34 @@ msgid "Lead/Opportunity"
 msgstr "Iniciativa/Oportunidad"
 
 #. module: crm_lead_changelog
-#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
-#: field:crm.lead.historic,stage_id_new:0
-msgid "New stage"
-msgstr "Nuevo estado"
+#: field:crm.lead.changelog,user_id:0
+msgid "Salesperson"
+msgstr "Comercial"
 
 #. module: crm_lead_changelog
-#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
-msgid "New user"
-msgstr "Nuevo usuario"
+#: help:crm.lead.changelog,user_id:0
+msgid "Salesperson before the change"
+msgstr "Comercial antes del cambio"
 
 #. module: crm_lead_changelog
-#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
-#: field:crm.lead.historic,stage_id_old:0
-msgid "Old stage"
-msgstr "Estado previo"
+#: view:crm.lead:crm_lead_changelog.crm_case_form_view_leads
+#: view:crm.lead:crm_lead_changelog.crm_case_form_view_oppor
+msgid "Salesperson changelog"
+msgstr "Cambios de comercial"
 
 #. module: crm_lead_changelog
-#: view:crm.lead.historic:crm_lead_changelog.view_crm_lead_historic_form
-msgid "Old user"
-msgstr "Usuario previo"
+#: field:crm.lead.changelog,stage_id:0
+msgid "Stage of case"
+msgstr "Estado"
+
+#. module: crm_lead_changelog
+#: help:crm.lead.changelog,stage_id:0
+msgid "Stage of case before the change"
+msgstr "Estado antes del cambio"
+
+#. module: crm_lead_changelog
+#: view:crm.lead:crm_lead_changelog.crm_case_form_view_leads
+#: view:crm.lead:crm_lead_changelog.crm_case_form_view_oppor
+msgid "Stage of case changelog"
+msgstr "Cambios de estado"
 
