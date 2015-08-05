@@ -5,7 +5,8 @@
 
         <record id="base_zone_eriador" model="base.zone">
             <field name="name">Eriador</field>
-            <field name="user_ids" eval="[(4, ref('base.user_root'))]" />
+            <field name="user_ids" eval="[(4, ref('res_users_eriador'))]" />
+            <field name="default_user_id" ref="res_users_eriador" />
         </record>
 
         <!-- Inside Eriador -->
@@ -13,11 +14,15 @@
         <record id="base_zone_shire" model="base.zone">
             <field name="name">Shire</field>
             <field name="parent_id" ref="base_zone_eriador" />
+            <field name="user_ids" eval="[(4, ref('res_users_shire'))]" />
+            <field name="default_user_id" ref="res_users_shire" />
         </record>
 
         <record id="base_zone_rivendell" model="base.zone">
             <field name="name">Rivendell</field>
             <field name="parent_id" ref="base_zone_eriador" />
+            <field name="user_ids" eval="[(4, ref('res_users_rivendell'))]" />
+            <field name="default_user_id" ref="res_users_rivendell" />
         </record>
 
         <record id="base_zone_bree" model="base.zone">
@@ -30,21 +35,29 @@
         <record id="base_zone_northfarthing" model="base.zone">
             <field name="name">Northfarthing</field>
             <field name="parent_id" ref="base_zone_shire" />
+            <field name="user_ids" eval="[(4, ref('res_users_northfarthing'))]" />
+            <field name="default_user_id" ref="res_users_northfarthing" />
         </record>
 
         <record id="base_zone_westfarthing" model="base.zone">
             <field name="name">Westfarthing</field>
             <field name="parent_id" ref="base_zone_shire" />
+            <field name="user_ids" eval="[(4, ref('res_users_westfarthing'))]" />
+            <field name="default_user_id" ref="res_users_westfarthing" />
         </record>
 
         <record id="base_zone_southfarthing" model="base.zone">
             <field name="name">Southfarthing</field>
             <field name="parent_id" ref="base_zone_shire" />
+            <field name="user_ids" eval="[(4, ref('res_users_southfarthing'))]" />
+            <field name="default_user_id" ref="res_users_southfarthing" />
         </record>
 
         <record id="base_zone_eastfarthing" model="base.zone">
             <field name="name">Eastfarthing</field>
             <field name="parent_id" ref="base_zone_shire" />
+            <field name="user_ids" eval="[(4, ref('res_users_eastfarthing'))]" />
+            <field name="default_user_id" ref="res_users_eastfarthing" />
         </record>
 
         <record id="base_zone_buckland" model="base.zone">
@@ -55,7 +68,6 @@
         <record id="base_zone_westmarch" model="base.zone">
             <field name="name">Westmarch</field>
             <field name="parent_id" ref="base_zone_shire" />
-            <field name="user_ids" eval="[(4, ref('base.user_demo'))]" />
         </record>
 
     </data>

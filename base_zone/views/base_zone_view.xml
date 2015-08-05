@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <openerp>
-    <data noupdate="0">
+    <data noupdate="1">
 
         <!-- VIEWS: "Geographical zones"
 
@@ -122,7 +122,8 @@
                                 <div class="oe_edit_only">
                                     <separator string="Own users" />
                                     <field name="user_ids" class="oe_field_user_ids"
-                                        placeholder="Add/remove users" widget="many2many" />
+                                        placeholder="Add/remove users" widget="many2many"
+                                        context="{'tree_view_ref': 'base_zone.view_res_users_x2many_tree'}" />
                                         <!-- domain="['&amp;',('id', 'not in', subordinate_user_ids[0][2]),('id', 'not in', holder_user_ids[0][2]))]" />-->
                                     <div class="alert alert-warning alert-dismissible oe_base_zone_vertical_spaced" role="alert">
                                         <strong>Warning!</strong>
@@ -133,7 +134,8 @@
                                 <separator class="oe_base_zone_save_only" />
                                 <separator string="Holder users" class="oe_edit_only" />
                                 <field name="holder_user_ids" class="oe_field_holder_user_ids"
-                                    placeholder="Add/remove holder users" />
+                                    placeholder="Add/remove holder users"
+                                    context="{'tree_view_ref': 'base_zone.view_res_users_x2many_tree'}" />
                             </page>
                         </notebook>
                     </sheet>
