@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record model="res.users" id="res_users_eriador">
+            <field name="partner_id" ref="res_partner_eriador" />
+            <field name="login">jrr_tolkien</field>
+            <field name="company_id" ref="base.main_company" />
+            <field name="groups_id" eval="[(4, ref('base.group_sale_manager')), (4, ref('base.group_user'))]" />
+            <field name="active" eval="True" />
+            <field name="password">1234</field>
+            <field name="tz">Europe/Madrid</field>
+        </record>
+
+        <record model="res.users" id="res_users_rivendell">
+            <field name="partner_id" ref="res_partner_rivendell" />
+            <field name="login">elrond</field>
+            <field name="company_id" ref="base.main_company" />
+            <field name="groups_id" eval="[(4, ref('base.group_sale_salesman')), (4, ref('base.group_user'))]" />
+            <field name="active" eval="True" />
+            <field name="tz">Europe/Madrid</field>
+        </record>
+
+        <record model="res.users" id="res_users_shire">
+            <field name="partner_id" ref="res_partner_shire" />
+            <field name="login">will_pieblanco </field>
+            <field name="company_id" ref="base.main_company" />
+            <field name="groups_id" eval="[(4, ref('base.group_sale_salesman')), (4, ref('base.group_user'))]" />
+            <field name="active" eval="True" />
+            <field name="tz">Europe/Madrid</field>
+        </record>
+
+        <record model="res.users" id="res_users_northfarthing">
+            <field name="partner_id" ref="res_partner_northfarthing" />
+            <field name="login">bandobras_tuk</field>
+            <field name="company_id" ref="base.main_company" />
+            <field name="groups_id" eval="[(4, ref('base.group_sale_salesman')), (4, ref('base.group_user'))]" />
+            <field name="active" eval="True" />
+            <field name="tz">Europe/Madrid</field>
+        </record>
+
+        <record model="res.users" id="res_users_westfarthing">
+            <field name="partner_id" ref="res_partner_westfarthing" />
+            <field name="login">bilbo_bolson</field>
+            <field name="company_id" ref="base.main_company" />
+            <field name="groups_id" eval="[(4, ref('base.group_sale_salesman')), (4, ref('base.group_user'))]" />
+            <field name="active" eval="True" />
+            <field name="tz">Europe/Madrid</field>
+        </record>
+
+        <record model="res.users" id="res_users_southfarthing">
+            <field name="partner_id" ref="res_partner_southfarthing" />
+            <field name="login">tobold_corneta</field>
+            <field name="company_id" ref="base.main_company" />
+            <field name="groups_id" eval="[(4, ref('base.group_sale_salesman')), (4, ref('base.group_user'))]" />
+            <field name="active" eval="True" />
+            <field name="tz">Europe/Madrid</field>
+        </record>
+
+        <record model="res.users" id="res_users_eastfarthing">
+            <field name="partner_id" ref="res_partner_eastfarthing" />
+            <field name="login">gildor_inglorion</field>
+            <field name="company_id" ref="base.main_company" />
+            <field name="groups_id" eval="[(4, ref('base.group_sale_salesman')), (4, ref('base.group_user'))]" />
+            <field name="active" eval="True" />
+            <field name="password">1234</field>
+            <field name="tz">Europe/Madrid</field>
+        </record>
+
+    </data>
+</openerp>

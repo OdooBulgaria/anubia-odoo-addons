@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record model="res.partner" id="res_partner_eriador">
+            <field name="name">John Ronald Reuel Tolkien</field>
+        </record>
+
+        <record model="res.partner" id="res_partner_rivendell">
+            <field name="name">Elrond</field>
+        </record>
+
+        <record model="res.partner" id="res_partner_shire">
+            <field name="name">Will Pieblanco</field>
+        </record>
+
+        <record model="res.partner" id="res_partner_northfarthing">
+            <field name="name">Bandobras Tuk </field>
+        </record>
+
+        <record model="res.partner" id="res_partner_westfarthing">
+            <field name="name">Bilbo Bolson</field>
+        </record>
+
+        <record model="res.partner" id="res_partner_southfarthing">
+            <field name="name">Tobold Corneta</field>
+        </record>
+
+        <record model="res.partner" id="res_partner_eastfarthing">
+            <field name="name">Gildor Inglorion</field>
+        </record>
+
+    </data>
+</openerp>

@@ -53,8 +53,10 @@
         'views/res_better_zip_view.xml'
     ],
     'demo': [
-        'demo/base_zone.xml',
-        'demo/base_location_res_better_zip.xml'
+        'demo/base_res_partner_demo.xml',
+        'demo/base_res_users_demo.xml',
+        'demo/base_zone_demo.xml',
+        'demo/base_location_res_better_zip_demo.xml'
     ],
     'js': [
     ],

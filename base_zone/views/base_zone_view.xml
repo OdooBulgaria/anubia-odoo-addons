@@ -93,8 +93,8 @@
                                                 placeholder="Zip range regular expression" />
                                         </group>
                                         <group col="2" colspan="2">
-                                            <button name="add_zip_codes" type="object" icon="gtk-add" />
-                                            <button name="remove_zip_codes" type="object" icon="gtk-remove" />
+                                            <button name="button_add_zip_codes" type="object" icon="gtk-add" />
+                                            <button name="button_remove_zip_codes" type="object" icon="gtk-remove" />
                                         </group>
                                     </group>
                                     <separator string="Own zip codes" />
