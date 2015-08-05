@@ -1,0 +1,136 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* crm_case_stage_reason
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-08-05 14:17+0000\n"
+"PO-Revision-Date: 2015-08-05 16:22+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: crm_case_stage_reason
+#: model:ir.actions.act_window,help:crm_case_stage_reason.action_crm_stage_reason_tree
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                    Click to add a new reason for lead/opportunity stages.\n"
+"                </p><p>\n"
+"                    With just a quick glance on the Odoo lead/opportunity reasons\n"
+"                    screen, you can easily find all the information you need for\n"
+"                    each stage reason.\n"
+"                </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                    Click para añadir una nueva razón sobre una etapa de una iniciativa/oportunidad.\n"
+"                </p>\n"
+"            "
+
+#. module: crm_case_stage_reason
+#: field:crm.stage.reason,active:0
+msgid "Active"
+msgstr "Activo"
+
+#. module: crm_case_stage_reason
+#: field:crm.case.stage,crm_reason_ids:0
+msgid "Available reasons"
+msgstr "Razones disponibles"
+
+#. module: crm_case_stage_reason
+#: field:crm.stage.reason,crm_stages_ids:0
+msgid "Available stages"
+msgstr "Etapas disponibles"
+
+#. module: crm_case_stage_reason
+#: model:ir.actions.act_window,name:crm_case_stage_reason.action_crm_stage_reason_tree
+msgid "CRM Lead/Opportunity Reason Tree"
+msgstr "Razones"
+
+#. module: crm_case_stage_reason
+#: view:crm.stage.reason:crm_case_stage_reason.view_crm_stage_reason_form
+msgid "CRM reason for lead/opportunity stages"
+msgstr "Razón para la etapa"
+
+#. module: crm_case_stage_reason
+#: view:crm.stage.reason:crm_case_stage_reason.view_crm_stage_reason_tree
+msgid "CRM stage reasons"
+msgstr "Razones"
+
+#. module: crm_case_stage_reason
+#: field:crm.stage.reason,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: crm_case_stage_reason
+#: field:crm.stage.reason,create_date:0
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: crm_case_stage_reason
+#: view:crm.stage.reason:crm_case_stage_reason.view_crm_stage_reason_form
+#: field:crm.stage.reason,description:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: crm_case_stage_reason
+#: field:crm.stage.reason,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: crm_case_stage_reason
+#: field:crm.stage.reason,write_uid:0
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: crm_case_stage_reason
+#: field:crm.stage.reason,write_date:0
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: crm_case_stage_reason
+#: view:crm.stage.reason:crm_case_stage_reason.view_crm_stage_reason_form
+msgid "Lead/Opportunity reason"
+msgstr "Razón de la etapa"
+
+#. module: crm_case_stage_reason
+#: selection:crm.stage.reason,force_valid_value:0
+msgid "Not valid"
+msgstr "No válido"
+
+#. module: crm_case_stage_reason
+#: field:crm.stage.reason,name:0
+msgid "Reason"
+msgstr "Razón"
+
+#. module: crm_case_stage_reason
+#: code:addons/crm_case_stage_reason/models/crm_stage_reason.py:15
+#, python-format
+msgid "Reason for case stage"
+msgstr "Razones para etapas"
+
+#. module: crm_case_stage_reason
+#: model:ir.ui.menu,name:crm_case_stage_reason.menu_crm_stage_reason
+msgid "Reasons"
+msgstr "Razones"
+
+#. module: crm_case_stage_reason
+#: view:crm.stage.reason:crm_case_stage_reason.view_crm_stage_reason_form
+msgid "Short name for the reason."
+msgstr "Nombre corto para esta razón"
+
+#. module: crm_case_stage_reason
+#: model:ir.model,name:crm_case_stage_reason.model_crm_case_stage
+msgid "Stage of case"
+msgstr "Etapa del caso"
+
+#. module: crm_case_stage_reason
+#: selection:crm.stage.reason,force_valid_value:0
+msgid "Valid"
+msgstr "Válido"
+

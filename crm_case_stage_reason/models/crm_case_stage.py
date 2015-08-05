@@ -36,3 +36,13 @@ class CrmCaseStage(models.Model):
         size=50,
         translate=True
     )
+
+    crm_reason_ids = fields.Many2many(
+        comodel_name='crm.stage.reason',
+        relation='crm_stage_to_reason_rel',
+        string='Available reasons',
+        select=True,
+        ondelete='restrict',
+        required=False,
+        default=False,
+    )

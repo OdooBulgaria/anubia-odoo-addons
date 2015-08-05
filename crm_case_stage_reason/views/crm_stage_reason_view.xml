@@ -3,7 +3,73 @@
 <openerp>
     <data noupdate="0">
 
+        <!-- VIEWS -->
 
+        <!-- Form view -->
+        <record id="view_crm_stage_reason_form" model="ir.ui.view">
+            <field name="name">CRM Lead/Opportunity Reason Form</field>
+            <field name="model">crm.stage.reason</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Lead/Opportunity reason">
+                    <sheet>
+                        <h1>
+                            CRM reason for lead/opportunity stages
+                        </h1>
+                        <group col="4">
+                            <field name="name" readonly="0"
+                                   help="Short name for the reason."/>
+                            <newline/>
+                            <field name="active"/>
+                        </group>
+                        <separator/>
+                        <notebook>
+                            <page id="notes" string="Description">
+                                <br/>
+                                <field name="description" nolabel="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree view -->
+        <record id="view_crm_stage_reason_tree" model="ir.ui.view">
+            <field name="name">CRM Lead/Opportunity Reason Tree</field>
+            <field name="model">crm.stage.reason</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="CRM stage reasons">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- ACTIONS -->
+
+        <record id="action_crm_stage_reason_tree" model="ir.actions.act_window">
+            <field name="name">CRM Lead/Opportunity Reason Tree</field>
+            <field name="res_model">crm.stage.reason</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_crm_stage_reason_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add a new reason for lead/opportunity stages.
+                </p><p>
+                    With just a quick glance on the Odoo lead/opportunity reasons
+                    screen, you can easily find all the information you need for
+                    each stage reason.
+                </p>
+            </field>
+        </record>
+
+        <!-- MENUS -->
+
+        <menuitem id="menu_crm_stage_reason" name="Reasons"
+            parent="base.menu_crm_config_lead" sequence="0"
+            action="action_crm_stage_reason_tree" />
 
     </data>
 </openerp>
