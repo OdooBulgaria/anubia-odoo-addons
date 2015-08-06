@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <openerp>
-    <data noupdate="0">
+    <data noupdate="1">
 
         <record id="view_users_form_tree" model="ir.ui.view">
             <field name="name">res.users.tree</field>
@@ -46,6 +46,21 @@
                         </page>
                     </xpath>
                 </data>
+            </field>
+        </record>
+
+        <record id="view_res_users_x2many_tree" model="ir.ui.view">
+            <field name="name">Zone users</field>
+            <field name="model">res.users</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="25" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <field name="name" class="oe_field_name"
+                    placeholder="Enter the new value for name" />
+                <field name="subordinate_zone_ids" class="oe_field_subordinate_zone_ids"
+                    placeholder="Add/remove subordinate zones" />
             </field>
         </record>
 

@@ -5,6 +5,7 @@
 ###############################################################################
 
 from openerp import models, fields, api
+from openerp.exceptions import ValidationError
 from openerp.tools.translate import _
 
 from logging import getLogger
@@ -168,10 +169,8 @@ class BaseZone(models.Model):
         index=False,
         default=None,
         help='Regular expression which defines the needed zip code range',
-        size=65536,  # 64KB needed to add long lists of zip codes
         translate=False,
-        store=False,
-        search=lambda self, oper, val: self._search_zip_range_ex(oper, val)
+        compute=lambda self: self._compute_zip_range_ex()
     )
 
     holder_ids = fields.Many2many(
@@ -267,20 +266,23 @@ class BaseZone(models.Model):
         oldname='zone_trail'
     )
 
+    # ------------------------ POSTGRES CONSTRAINTS ---------------------------
+
+    @api.one
+    @api.constrains('default_user_id', 'user_ids')
+    def _check_default_user_id(self):
+        if self.default_user_id and self.default_user_id not in self.user_ids:
+            raise ValidationError('Default user must be in zone first')
+
     # --------------------------- SQL CONSTRAINTS -----------------------------
 
     _sql_constraints = [
         (
             'prevent_recursion',
-            'CHECK ((parent_id IS NULL) OR (parent_id <> id))',
+            'CHECK ((parent_id IS NULL) OR (parent_id != id))',
             _(u'If this parent zone was established an infinite loop would '
               u'be created.')
         ),  # This will be overwritten later
-        (
-            'verify_default_user_id',
-            'CHECK ((user_id IS NULL) OR (user_id > 0))',
-            _(u'Default user is not an allowed zone user.')
-        )  # This will be overwritten later
     ]
 
     # --------------------------- ONCHANGE EVENTS -----------------------------
@@ -318,23 +320,34 @@ class BaseZone(models.Model):
         # limit trail length (for good measure)
         return (trail or u'')[:255]
 
-    @api.model
-    def _search_zip_range_ex(self, operator, value):
-        """ Disallow search by zip_range_ex
-        """
-        return [('id', '<', 0)]
+    @api.multi
+    def _compute_zip_range_ex(self):
+        """ zip_range_ex must be empty each time zone is editing """
+        for record in self:
+            record.zip_range_ex = None
 
     # --------------------------- PUBLIC METHODS ------------------------------
 
+    @api.model
+    def auto_remove(self):
+        """ Method to clear SQL added when module was registered """
+
+        sql_drop_string = 'DROP FUNCTION IF EXISTS {0} {1};'
+        cr = self.env.cr
+
+        for proc_name in ['GET_CHILD_ZONES(INT)']:
+            self._log(0, u'Removing SQL procedure {}', proc_name)
+            cr.execute(sql_drop_string.format(proc_name, 'CASCADE'))
+
     @api.multi
-    def add_zip_codes(self):
+    def button_add_zip_codes(self):
         """ Behavior for the ``add`` button shown in the model form view """
 
         for record in self:
             record._proccess_zip_range_ex(remove=False)
 
     @api.multi
-    def remove_zip_codes(self):
+    def button_remove_zip_codes(self):
         """ Behavior for the ``remove`` button shown in the model form view """
 
         for record in self:
@@ -355,21 +368,39 @@ class BaseZone(models.Model):
 
     # ------------------------- OVERWRITTEN METHODS ---------------------------
 
-    def _auto_end(self, cr, context=None):
-        """ Overwritten method which replaces some model complex constraints
-        """
+    def _auto_init(self, cr, context=None):
+        """ Auto-initialize model """
 
-        _super = super(BaseZone, self)
-        result = _super._auto_end(cr, context)
+        result = super(BaseZone, self)._auto_init(cr, context=context)
 
-        cr.execute(self._sql_alter_recursion_constraint)
-        cr.execute(self._sql_verify_default_user)
+        cr.execute(self._sql_add_procedure_get_child_zones)
 
         return result
 
+    @api.model
+    def create(self, values):
+        """ Replace entered regex by found ``res.better.zip`` record ids """
+
+        # STEP 1: Replace the zip_range_ex for zip_ids
+        # The regular expresion will be used to search the ``res.better.zip``
+        # Theese will be added as ``zip_ids`` values
+        if 'zip_range_ex' in values and 'zip_range_ex':
+
+            zip_range_ex = values['zip_range_ex']
+            zip_set = self._regex_search(zip_range_ex, zone_out=True)
+            zip_ids = zip_set.mapped('id')
+
+            if zip_ids:
+                values.update({'zip_ids': [(6, 0, zip_ids)]})
+
+            values.update({'zip_range_ex': None})
+
+        # STEP 2: Call the parent method
+        return super(BaseZone, self).create(values)
+
     # -------------------------- AUXILIARY METHODS ----------------------------
 
-    @api.multi
+    @api.one
     def _proccess_zip_range_ex(self, remove=False):
         """ Proccess entered zip_range_ex adding or removing zips
 
@@ -378,24 +409,65 @@ class BaseZone(models.Model):
         :param remove: False => add, True => remove
         """
 
-        self.ensure_one()
-
+        # STEP 1: ensure the integrity of the values.
+        # On adding (not remove), zips aready linked will be ignored
         zip_range_ex = self.zip_range_ex or ''
         zone_out = not remove
-        result_obj = self.env['res.better.zip']
-        result_set = result_obj.regex_search(zip_range_ex, zone_out)
 
-        if result_set:
-            if remove:
-                zip_set = (self.zip_ids - result_set)
+        # STEP 2: Search all zips which matching with regular expresion
+        self._log(0, 'Zero: {}', zip_range_ex)
+        zip_set = self._regex_search(zip_range_ex, zone_out)
+
+        self._log(0, 'uno: {}', zip_set)
+
+        # STEP 3: Compute new set adding or removing zips
+        # This step will be executed only when zip_set is not empty
+        # One computed the zip_set it will be replaced in zone
+        if zip_set:
+            zip_set = self._compute_zip_set(self.zip_ids, zip_set, remove)
+
+            if zip_set:
+                zip_ids = zip_set.mapped('id') or [0]
+                self.zip_ids = [(6, 0, zip_ids)]
             else:
-                zip_set = (self.zip_ids | result_set)
+                self.zip_ids = None
 
-            zip_ids = zip_set.mapped('id') or [0]
-            self.zip_ids = [(6, 0, zip_ids)]
-
+        # STEP 4: Remove used regular expresion from field
         self.zip_range_ex = None
 
+    @api.model
+    def _regex_search(self, zip_range_ex, zone_out=False):
+        """ Call method named ``regex_search`` provided by ``res.better.zip``
+
+        :param regex: regular expression
+        :param zone_out: ensure the returned zip codes are out of any zone
+        :return: recordset of res.better.zip (can be empty)
+        """
+
+        zip_obj = self.env['res.better.zip']
+        return zip_obj.regex_search(zip_range_ex, zone_out)
+
+    def _compute_zip_set(self, set1, set2, remove=False):
+        """ Computes a new set adding or removing the existing records in set2
+        from set1
+
+        :param set1: first ``res.better.zip`` set in operation
+        :param set2: second ``res.better.zip`` set in operation
+        :param remove: True for remove set2 from set1 or false add together
+        :return: new set which will be the result of the operation
+        """
+
+        if set2:
+            if remove:
+                zip_set = (set1 - set2)
+            else:
+                zip_set = (set1 | set2)
+        else:
+            zip_set = set1
+
+        return zip_set
+
+    @api.model
     def _normalize_zips(self, arg, atoms=_atoms):
         """ Normalizes the ids argument for ``browse_by_zip`` to a tuple.
 
@@ -559,7 +631,7 @@ class BaseZone(models.Model):
     # SQL query used by base.zone.middle.relationship parent model
     _sql_view_select_base_zone_subordinate_res_users_rel = False
 
-    _sql_alter_recursion_constraint = """
+    _sql_add_procedure_get_child_zones = """
         CREATE
         OR REPLACE FUNCTION GET_CHILD_ZONES (INT) RETURNS int[] AS $$
         select array(SELECT
@@ -579,26 +651,3 @@ class BaseZone(models.Model):
         );
     """
 
-    _sql_verify_default_user = """
-        CREATE
-        OR REPLACE FUNCTION GET_ZONE_USERS (INT) RETURNS INT [] AS $$ SELECT
-            ARRAY (
-                SELECT
-                    ID
-                FROM
-                    res_users
-                INNER JOIN base_zone_res_users_rel AS rel
-                    ON res_users."id" = rel.res_users_id
-                WHERE
-                    rel.base_zone_id = 1
-            ) $$ LANGUAGE SQL;
-
-        ALTER TABLE base_zone DROP CONSTRAINT
-        IF EXISTS base_zone_verify_default_user_id;
-
-        ALTER TABLE base_zone
-            ADD CONSTRAINT base_zone_verify_default_user_id CHECK (
-                default_user_id IS NULL
-                OR default_user_id  = ALL (GET_ZONE_USERS(ID))
-            );
-    """
