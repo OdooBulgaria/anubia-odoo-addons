@@ -26,6 +26,8 @@ class CrmCaseStage(models.Model):
     _rec_name = 'name'
     _order = 'name ASC'
 
+    # --------------------------- ENTITY  FIELDS ------------------------------
+
     name = fields.Char(
         string='Name',
         required=True,
@@ -45,4 +47,20 @@ class CrmCaseStage(models.Model):
         ondelete='restrict',
         required=False,
         default=False,
+    )
+
+    default_crm_reason_id = fields.Many2one(
+        'crm.stage.reason',
+        string='Default reason',
+        select=True,
+        ondelete='restrict',
+        required=False,
+        default=False,
+        domain="[('id', 'in', crm_reason_ids[0][2])]",
+    )
+
+    active = fields.Boolean(
+        string="Active",
+        default=True,
+        store=True,
     )

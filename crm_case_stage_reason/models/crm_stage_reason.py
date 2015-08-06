@@ -17,7 +17,7 @@ class CrmStageReason(models.Model):
     _rec_name = 'name'
     _order = 'name ASC'
 
-    # -------------------- Entity  Fields ----------------------
+    # --------------------------- ENTITY  FIELDS ------------------------------
 
     name = fields.Char(
         string='Reason',

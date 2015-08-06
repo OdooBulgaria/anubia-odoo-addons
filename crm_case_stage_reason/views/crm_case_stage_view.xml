@@ -3,6 +3,49 @@
 <openerp>
     <data noupdate="0">
 
+        <!-- VIEWS -->
+
+        <!-- Tree View -->
+        <record id="crm_case_stage_tree_crm_ticket_platform" model="ir.ui.view">
+            <field name="name">crm.case.stage.tree.crm.case.stage.reason</field>
+            <field name="model">crm.case.stage</field>
+            <field name="inherit_id" ref="crm.crm_case_stage_tree"/>
+            <field name="arch" type="xml">
+                <field name="type" position="after">
+                    <field name="default_crm_reason_id"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="crm_case_stage_form_crm_ticket_platform" model="ir.ui.view">
+            <field name="name">crm.case.stage.form.crm.case.stage.reason</field>
+            <field name="model">crm.case.stage</field>
+            <field name="priority" eval="1"/>
+            <field name="inherit_id" ref="crm.crm_case_stage_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//separator[@string='Requirements']" position="before">
+                    <group>
+                        <label for="crm_reason_ids"/>
+                        <newline/>
+                        <field name="crm_reason_ids" nolabel="1"/>
+                    </group>
+                    <separator/>
+                    <group>
+                        <field name="default_crm_reason_id"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- ACTIONS -->
+
+        <record id="crm_case_stage_act" model="ir.actions.act_window">
+            <field name="name">Stages</field>
+            <field name="res_model">crm.case.stage</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="crm_case_stage_tree_crm_ticket_platform"/>
+        </record>
 
     </data>
 </openerp>
