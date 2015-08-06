@@ -64,3 +64,53 @@ class CrmCaseStage(models.Model):
         default=True,
         store=True,
     )
+
+    # ----------------------------- CONSTRAINTS -------------------------------
+
+    _sql_constraints = [
+        (
+            'check_default_crm_reason_id',
+            'CHECK ((default_crm_reason_id IS NULL) OR (default_crm_reason_id > 0))',
+            u'Default reason must belong to the allow list of reasons'
+        )
+    ]
+
+    # ------------------------- OVERWRITTEN METHODS ---------------------------
+
+    def _auto_end(self, cr, context=None):
+        """ Overwritten method which replaces some model complex constraints
+        """
+
+        _super = super(CrmCaseStage, self)
+        result = _super._auto_end(cr, context)
+
+        cr.execute(self._sql_default_crm_reason_id)
+
+        return result
+
+    # ----------------------------- SQL QUERIES -------------------------------
+
+    _sql_default_crm_reason_id = """
+        CREATE
+        OR REPLACE FUNCTION get_reasons_from_stage(int) RETURNS int[] AS $$
+        SELECT
+            ARRAY (
+                SELECT
+                    id
+                FROM
+                    crm_stage_reason
+                INNER JOIN crm_stage_to_reason_rel AS rel
+                    ON crm_stage_reason.id = rel.crm_stage_reason_id
+                WHERE
+                    rel.crm_case_stage_id = $1
+            ) $$ LANGUAGE SQL;
+
+        ALTER TABLE crm_case_stage DROP CONSTRAINT
+        IF EXISTS crm_case_stage_check_default_crm_reason_id;
+
+        ALTER TABLE crm_case_stage
+            ADD CONSTRAINT crm_case_stage_check_default_crm_reason_id CHECK (
+                (default_crm_reason_id IS NULL)
+                OR (default_crm_reason_id = ANY(get_reasons_from_stage(id)))
+            );
+    """
