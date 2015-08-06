@@ -4,9 +4,13 @@
 #    __openerp__.py file at the root folder of this module.    #
 ################################################################
 
-from openerp import models, fields
+from openerp import models, fields, api
 from openerp.tools.translate import _
-        
+from logging import getLogger
+
+
+_logger = getLogger(__name__)
+
 
 class CrmStageReason(models.Model):
     """ Explanation on why an opportunity is in current case stage.

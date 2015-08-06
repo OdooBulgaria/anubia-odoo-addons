@@ -15,6 +15,6 @@
 
 ## CRM.LEAD
 
-- [ ] Relación One2many crm.lead (n)---------->(1) crm.stage.reason.
+- [ ] Relación Many2one crm.lead (n)---------->(1) crm.stage.reason.
 - [ ] Dominio en crm.lead que restrinja las razones disponibles según la etapa seleccionada.
 - [ ] ``_sql_constraint``  que impida agregar razón inválida
