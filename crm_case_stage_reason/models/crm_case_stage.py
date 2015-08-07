@@ -126,7 +126,7 @@ class CrmCaseStage(models.Model):
 
         return result
 
-    # ----------------------------- NEW METHODS -------------------------------
+    # -------------------------- AUXILIARY METHODS ----------------------------
 
     def _both_reasons_changed(self, values):
         return \
