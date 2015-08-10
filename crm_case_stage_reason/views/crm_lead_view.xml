@@ -14,7 +14,6 @@
                 <!-- Add stage/reason fields group -->
                 <xpath expr="//field[@name='user_id']/.." position="after">
                     <group>
-                        <field name="crm_reason_available_ids" invisible="1"/>
                         <field name="stage_id" readonly="1"/>
                         <field name="crm_reason_id"
                                attrs="{'invisible': [('crm_reason_available_ids', '=', [(6, False, [])])]}"

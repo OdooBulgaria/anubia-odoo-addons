@@ -36,24 +36,6 @@ class CrmLead(models.Model):
         domain="[('crm_stages_ids', '=', stage_id)]",
     )
 
-    crm_reason_available_ids = fields.Many2many(
-        string="Historic stages",
-        comodel_name='crm.stage.reason',
-        relation='crm_reason_available_ids_rel',
-        column1='lead_id',
-        column2='reason_id',
-        store=True,
-        compute='_compute_crm_reason_available_ids',
-    )
-
-    # ----------------------- AUXILIARY FIELD METHODS -------------------------
-
-    @api.depends('stage_id')
-    def _compute_crm_reason_available_ids(self):
-        for record in self:
-            record.crm_reason_available_ids = record.stage_id and \
-                record.stage_id.crm_reason_ids or False
-
     # ------------------------- OVERWRITTEN METHODS ---------------------------
 
     @api.multi

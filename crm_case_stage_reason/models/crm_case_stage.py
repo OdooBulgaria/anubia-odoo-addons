@@ -21,10 +21,10 @@ class CrmCaseStage(models.Model):
     """
 
     _inherit = 'crm.case.stage'
-    _description = u'Crm case stage'
+    _description = _('Stage of case')
 
     _rec_name = 'name'
-    _order = 'name ASC'
+    _order = 'sequence'
 
     # --------------------------- ENTITY  FIELDS ------------------------------
 
