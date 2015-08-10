@@ -73,6 +73,16 @@ msgid "Created on"
 msgstr "Creado en"
 
 #. module: crm_case_stage_reason
+#: field:crm.case.stage,default_crm_reason_id:0
+msgid "Default reason"
+msgstr "Razón por defecto"
+
+#. module: crm_case_stage_reason
+#: sql_constraint:crm.case.stage:0
+msgid "Default reason must belong to the allow list of reasons"
+msgstr "La razón por defecto debe formar parte de la lista de razones permitida"
+
+#. module: crm_case_stage_reason
 #: view:crm.stage.reason:crm_case_stage_reason.view_crm_stage_reason_form
 #: field:crm.stage.reason,description:0
 msgid "Description"
@@ -92,6 +102,11 @@ msgstr "Última actualización por"
 #: field:crm.stage.reason,write_date:0
 msgid "Last Updated on"
 msgstr "Última actualización en"
+
+#. module: crm_case_stage_reason
+#: model:ir.model,name:crm_case_stage_reason.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "Iniciativa/Oportunidad"
 
 #. module: crm_case_stage_reason
 #: view:crm.stage.reason:crm_case_stage_reason.view_crm_stage_reason_form
@@ -122,12 +137,17 @@ msgstr "Razones"
 #. module: crm_case_stage_reason
 #: view:crm.stage.reason:crm_case_stage_reason.view_crm_stage_reason_form
 msgid "Short name for the reason."
-msgstr "Nombre corto para esta razón"
+msgstr "Nombre corto para esta razón."
 
 #. module: crm_case_stage_reason
 #: model:ir.model,name:crm_case_stage_reason.model_crm_case_stage
 msgid "Stage of case"
 msgstr "Etapa del caso"
+
+#. module: crm_case_stage_reason
+#: model:ir.actions.act_window,name:crm_case_stage_reason.crm_case_stage_act
+msgid "Stages"
+msgstr "Estados"
 
 #. module: crm_case_stage_reason
 #: selection:crm.stage.reason,force_valid_value:0
