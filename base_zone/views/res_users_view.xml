@@ -3,7 +3,7 @@
 <openerp>
     <data noupdate="1">
 
-        <record id="view_users_form_tree" model="ir.ui.view">
+        <!-- <record id="view_users_form_tree" model="ir.ui.view">
             <field name="name">res.users.tree</field>
             <field name="model">res.users</field>
             <field name="type">tree</field>
@@ -62,7 +62,7 @@
                 <field name="subordinate_zone_ids" class="oe_field_subordinate_zone_ids"
                     placeholder="Add/remove subordinate zones" />
             </field>
-        </record>
+        </record> -->
 
     </data>
 </openerp>
