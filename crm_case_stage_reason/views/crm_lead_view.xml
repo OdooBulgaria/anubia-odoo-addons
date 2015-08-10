@@ -16,8 +16,6 @@
                     <group>
                         <field name="stage_id" readonly="1"/>
                         <field name="crm_reason_id"
-                               attrs="{'invisible': [('crm_reason_available_ids', '=', [(6, False, [])])]}"
-                               domain="[('id', 'in', crm_reason_available_ids[0][2])]"
                                options="{'no_open': True, 'no_create_edit': True}"/>
                     </group>
                 </xpath>
