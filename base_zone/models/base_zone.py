@@ -266,14 +266,6 @@ class BaseZone(models.Model):
         oldname='zone_trail'
     )
 
-    # ------------------------ POSTGRES CONSTRAINTS ---------------------------
-
-    @api.one
-    @api.constrains('default_user_id', 'user_ids')
-    def _check_default_user_id(self):
-        if self.default_user_id and self.default_user_id not in self.user_ids:
-            raise ValidationError('Default user must be in zone first')
-
     # --------------------------- SQL CONSTRAINTS -----------------------------
 
     _sql_constraints = [
@@ -328,17 +320,6 @@ class BaseZone(models.Model):
 
     # --------------------------- PUBLIC METHODS ------------------------------
 
-    @api.model
-    def auto_remove(self):
-        """ Method to clear SQL added when module was registered """
-
-        sql_drop_string = 'DROP FUNCTION IF EXISTS {0} {1};'
-        cr = self.env.cr
-
-        for proc_name in ['GET_CHILD_ZONES(INT)']:
-            self._log(0, u'Removing SQL procedure {}', proc_name)
-            cr.execute(sql_drop_string.format(proc_name, 'CASCADE'))
-
     @api.multi
     def button_add_zip_codes(self):
         """ Behavior for the ``add`` button shown in the model form view """
@@ -374,6 +355,7 @@ class BaseZone(models.Model):
         result = super(BaseZone, self)._auto_init(cr, context=context)
 
         cr.execute(self._sql_add_procedure_get_child_zones)
+        cr.execute(self._sql_ensure_default_user_id)
 
         return result
 
@@ -649,5 +631,68 @@ class BaseZone(models.Model):
             parent_id IS NULL or
             parent_id <> ALL(GET_CHILD_ZONES(id))
         );
+    """
+
+    # SQL code below ensures that:
+    # 1) when default_user_id is set, it will be added in user_ids too.
+    # 2) when a user_ids is removed, user will be removed from default too.
+    _sql_ensure_default_user_id = """
+        CREATE OR REPLACE FUNCTION ENSURE_ADDED_DEFAULT_USER_ID()
+        RETURNS TRIGGER AS $$
+        BEGIN
+            IF NEW.default_user_id IS NOT NULL THEN
+                IF NOT EXISTS (
+                    SELECT *
+                    FROM base_zone_res_users_rel AS rel
+                    WHERE rel.base_zone_id = NEW."id"
+                        AND rel.res_users_id = NEW.default_user_id
+                ) THEN
+                    INSERT INTO base_zone_res_users_rel
+                        (base_zone_id, res_users_id)
+                    VALUES
+                        (NEW."id", NEW.default_user_id);
+                END IF;
+            END IF;
+
+            RETURN NEW;
+        END;
+        $$ LANGUAGE 'plpgsql';
+
+        CREATE OR REPLACE FUNCTION ENSURE_DELETED_DEFAULT_USER_ID()
+        RETURNS TRIGGER AS $$
+        BEGIN
+
+            UPDATE base_zone SET default_user_id = NULL
+            WHERE "id" = OLD.base_zone_id
+            AND default_user_id = OLD.res_users_id;
+
+            RETURN NEW;
+        END;
+        $$ LANGUAGE 'plpgsql';
+
+
+        DROP TRIGGER IF EXISTS
+            CRM_LEAD_ENSURE_DEFAULT_USER_ID_BEFORE_INSERT
+            ON base_zone CASCADE;
+
+        CREATE TRIGGER CRM_LEAD_ENSURE_DEFAULT_USER_ID_AFTER_INSERT
+            AFTER INSERT ON base_zone FOR EACH ROW
+            EXECUTE PROCEDURE ENSURE_ADDED_DEFAULT_USER_ID ();
+
+        DROP TRIGGER IF EXISTS
+            CRM_LEAD_ENSURE_DEFAULT_USER_ID_AFTER_UPDATE
+            ON base_zone CASCADE;
+
+        CREATE TRIGGER CRM_LEAD_ENSURE_DEFAULT_USER_ID_AFTER_UPDATE
+            AFTER UPDATE ON base_zone FOR EACH ROW
+            EXECUTE PROCEDURE ENSURE_ADDED_DEFAULT_USER_ID ();
+
+        DROP TRIGGER IF EXISTS
+            CRM_LEAD_ENSURE_DEFAULT_USER_ID_AFTER_DELETE
+            ON base_zone_res_users_rel CASCADE;
+
+        CREATE TRIGGER CRM_LEAD_ENSURE_DEFAULT_USER_ID_AFTER_DELETE
+            AFTER DELETE ON base_zone_res_users_rel FOR EACH ROW
+            EXECUTE PROCEDURE ENSURE_DELETED_DEFAULT_USER_ID ();
     """
 

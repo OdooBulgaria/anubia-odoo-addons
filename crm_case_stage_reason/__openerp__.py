@@ -25,8 +25,8 @@
     'summary': 'Allow to choose the reason for lead stage of case',
     'version': '1.0',
 
-    'author': "Anubia, Soluciones en la Nube, SL",
-    'website': "http://www.anubia.es",
+    'author': 'Anubia, Soluciones en la Nube, SL',
+    'website': 'http://www.anubia.es',
     'maintainer': 'Anubia, soluciones en la nube, SL',
 
     'contributors': [
@@ -68,5 +68,6 @@
     'test': [
     ],
 
-    'installable': True
+    'installable': True,
+    'uninstall_hook': 'uninstall_hook'
 }

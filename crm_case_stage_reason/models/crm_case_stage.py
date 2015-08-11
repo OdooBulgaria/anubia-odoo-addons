@@ -5,6 +5,7 @@
 ###############################################################################
 
 from openerp import models, fields, api
+from openerp.exceptions import ValidationError
 from openerp.tools.translate import _
 from logging import getLogger
 
@@ -65,99 +66,12 @@ class CrmCaseStage(models.Model):
         store=True,
     )
 
-    # ----------------------------- CONSTRAINTS -------------------------------
+    # ------------------------ POSTGRES CONSTRAINTS ---------------------------
 
-    _sql_constraints = [
-        (
-            'check_default_crm_reason_id',
-            'CHECK ((default_crm_reason_id IS NULL) OR (default_crm_reason_id > 0))',
-            u'Default reason must belong to the allow list of reasons'
-        )
-    ]
-
-    # ------------------------- OVERWRITTEN METHODS ---------------------------
-
-    def _auto_end(self, cr, context=None):
-        """ Overwritten method which replaces some model complex constraints
-        """
-
-        _super = super(CrmCaseStage, self)
-        result = _super._auto_end(cr, context)
-
-        cr.execute(self._sql_default_crm_reason_id)
-
-        return result
-
-    @api.multi
-    def write(self, values):
-        """
-            Update all record(s) in recordset, with new value comes as {values}
-            return True on success, False otherwise
-
-            @param values: dict of new values to be set
-            @return: True on success, False otherwise
-        """
-        result = True
-
-        if self._both_reasons_changed(values):
-            crm_reason_ids = values.pop('crm_reason_ids')
-            result = super(CrmCaseStage, self).write(
-                {'crm_reason_ids': crm_reason_ids})
-
-        return result and super(CrmCaseStage, self).write(values)
-
-    @api.model
-    def create(self, values):
-        """
-            Create a new record for a model CrmCaseStage
-
-            @param values: provides a data for new record
-            @return: returns a id of new record
-        """
-        default_crm_reason_id = None
-
-        if self._both_reasons_changed(values):
-            default_crm_reason_id = values.pop('default_crm_reason_id')
-
-        result = super(CrmCaseStage, self).create(values)
-
-        if result and default_crm_reason_id:
-            result.write({'default_crm_reason_id': default_crm_reason_id})
-
-        return result
-
-    # -------------------------- AUXILIARY METHODS ----------------------------
-
-    def _both_reasons_changed(self, values):
-        return \
-            'default_crm_reason_id' in values and \
-            values['default_crm_reason_id'] and \
-            'crm_reason_ids' in values and \
-            values['crm_reason_ids']
-
-    # ----------------------------- SQL QUERIES -------------------------------
-
-    _sql_default_crm_reason_id = """
-        CREATE
-        OR REPLACE FUNCTION get_reasons_from_stage(int) RETURNS int[] AS $$
-        SELECT
-            ARRAY (
-                SELECT
-                    id
-                FROM
-                    crm_stage_reason
-                INNER JOIN crm_stage_to_reason_rel AS rel
-                    ON crm_stage_reason.id = rel.crm_stage_reason_id
-                WHERE
-                    rel.crm_case_stage_id = $1
-            ) $$ LANGUAGE SQL;
-
-        ALTER TABLE crm_case_stage DROP CONSTRAINT
-        IF EXISTS crm_case_stage_check_default_crm_reason_id;
-
-        ALTER TABLE crm_case_stage
-            ADD CONSTRAINT crm_case_stage_check_default_crm_reason_id CHECK (
-                (default_crm_reason_id IS NULL)
-                OR (default_crm_reason_id = ANY(get_reasons_from_stage(id)))
-            );
-    """
+    @api.one
+    @api.constrains('default_crm_reason_id', 'crm_reason_ids')
+    def _check_default_user_id(self):
+        def_reason_id = self.default_crm_reason_id
+        if def_reason_id and def_reason_id not in self.crm_reason_ids:
+            msg = _(u'Default reason not available for this stage of case')
+            raise ValidationError(msg)

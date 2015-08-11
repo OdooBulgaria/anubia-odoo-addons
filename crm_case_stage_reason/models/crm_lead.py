@@ -38,29 +38,60 @@ class CrmLead(models.Model):
 
     # ------------------------- OVERWRITTEN METHODS ---------------------------
 
-    @api.multi
-    def write(self, values):
-        """ Update reason according to new stage if this have changed.
+    def _auto_end(self, cr, context=None):
+        """ This method has been overwritten to register the model procedures
+        and triggers
         """
-        values = self._update_lead_reason(values)
-        result = super(CrmLead, self.sudo()).write(values)
-        return result
 
-    # -------------------------- AUXILIARY METHODS ----------------------------
+        super(CrmLead, self)._auto_end(cr, context=context)
 
-    def _update_lead_reason(self, values):
-        """ If stage have been changed ('stage_id' in values), it checks if
-            current reason is valid for new stage, otherwise it changes it.
+        cr.execute(self._sql_add_procedures_and_triggers)
 
-            :param self: recordset of crm.lead
-            :return: updated dictionary
-        """
-        stage_id = values.get('stage_id', False)
-        if stage_id:
-            for record in self:
-                current_reason = record.crm_reason_id
-                new_stage = self.env['crm.case.stage'].browse(stage_id)
-                if current_reason not in new_stage.crm_reason_ids:
-                    values['crm_reason_id'] = \
-                        new_stage.default_crm_reason_id.id
-        return values
+    # -------------------------- SQL QUERY STRINGS ----------------------------
+
+    _sql_add_procedures_and_triggers = """
+        CREATE OR REPLACE FUNCTION ENSURE_VALID_REASON()
+        RETURNS TRIGGER AS $$
+        DECLARE
+            available_reasons INTEGER ARRAY;
+            default_reason INTEGER;
+        BEGIN
+            IF NEW.stage_id IS NULL THEN
+                NEW.crm_reason_id = NULL;
+            ELSE
+                available_reasons = (SELECT
+                    ARRAY (
+                        SELECT
+                            rel.crm_stage_reason_id
+                        FROM
+                            crm_stage_to_reason_rel as rel
+                        WHERE rel.crm_case_stage_id = NEW.crm_reason_id
+                    )):: INTEGER ARRAY;
+
+                IF NEW.crm_reason_id != ALL(available_reasons) THEN
+                    NEW.crm_reason_id = (
+                        SELECT default_crm_reason_id
+                        FROM crm_case_stage
+                        WHERE "id" = 2 LIMIT 1
+                    )::INTEGER;
+                END IF;
+            END IF;
+
+            RETURN NULL;
+        END;
+        $$ LANGUAGE 'plpgsql';
+
+        DROP TRIGGER IF EXISTS
+            CRM_LEAD_ENSURE_VALID_REASON_BEFORE_INSERT ON crm_lead CASCADE;
+
+        CREATE TRIGGER CRM_LEAD_ENSURE_VALID_REASON_BEFORE_INSERT
+            BEFORE INSERT ON crm_lead FOR EACH ROW
+            EXECUTE PROCEDURE ENSURE_VALID_REASON ();
+
+        DROP TRIGGER IF EXISTS
+            CRM_LEAD_ENSURE_VALID_REASON_BEFORE_UPDATE ON crm_lead CASCADE;
+
+        CREATE TRIGGER CRM_LEAD_ENSURE_VALID_REASON_BEFORE_UPDATE
+            BEFORE UPDATE ON crm_lead FOR EACH ROW
+            EXECUTE PROCEDURE ENSURE_VALID_REASON ();
+    """

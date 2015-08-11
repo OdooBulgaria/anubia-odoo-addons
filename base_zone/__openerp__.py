@@ -70,5 +70,6 @@
     'test': [
     ],
 
-    'installable': True
+    'installable': True,
+    'uninstall_hook': 'uninstall_hook'
 }

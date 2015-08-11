@@ -9,4 +9,4 @@ from . import base_zone_middle_relationship
 from . import res_better_zip
 from . import base_zone
 from . import res_users
-from . import ir_module_module
+
