@@ -42,7 +42,7 @@ class BaseZone(models.Model):
     _inherit = ['base.zone.middle.relationship', 'mail.thread']
 
     _rec_name = 'name'
-    _order = 'name ASC'
+    _order = 'parent_id DESC, name ASC'
 
     _zip_range_regex = None
 
@@ -170,7 +170,6 @@ class BaseZone(models.Model):
         default=None,
         help='Regular expression which defines the needed zip code range',
         translate=False,
-        compute=lambda self: self._compute_zip_range_ex()
     )
 
     holder_ids = fields.Many2many(
@@ -672,7 +671,7 @@ class BaseZone(models.Model):
 
 
         DROP TRIGGER IF EXISTS
-            CRM_LEAD_ENSURE_DEFAULT_USER_ID_BEFORE_INSERT
+            CRM_LEAD_ENSURE_DEFAULT_USER_ID_AFTER_INSERT
             ON base_zone CASCADE;
 
         CREATE TRIGGER CRM_LEAD_ENSURE_DEFAULT_USER_ID_AFTER_INSERT
