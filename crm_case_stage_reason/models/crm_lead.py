@@ -65,19 +65,19 @@ class CrmLead(models.Model):
                             rel.crm_stage_reason_id
                         FROM
                             crm_stage_to_reason_rel as rel
-                        WHERE rel.crm_case_stage_id = NEW.crm_reason_id
+                        WHERE rel.crm_case_stage_id = NEW.stage_id
                     )):: INTEGER ARRAY;
 
                 IF NEW.crm_reason_id != ALL(available_reasons) THEN
                     NEW.crm_reason_id = (
                         SELECT default_crm_reason_id
                         FROM crm_case_stage
-                        WHERE "id" = 2 LIMIT 1
+                        WHERE "id" = NEW.stage_id LIMIT 1
                     )::INTEGER;
                 END IF;
             END IF;
 
-            RETURN NULL;
+            RETURN NEW;
         END;
         $$ LANGUAGE 'plpgsql';
 
