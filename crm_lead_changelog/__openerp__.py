@@ -43,6 +43,7 @@
     'depends': [
         'base',
         'crm',
+        'crm_case_stage_reason',
         'web',
         # 'web_m2x_options',  # --> not essential
     ],

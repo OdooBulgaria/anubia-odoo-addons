@@ -84,12 +84,27 @@ class CrmLeadChangelog(models.Model):
         auto_join=False
     )
 
+    reason_id = fields.Many2one(
+        string='Reason',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help='Reason before the change',
+        comodel_name='crm.stage.reason',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False
+    )
+
     # --------------------------- SQL CONSTRAINTS -----------------------------
 
     _sql_constraints = [
         (
             'non_empty',
-            'CHECK(stage_id IS NOT NULL OR user_id IS NOT NULL)',
+            '''CHECK(stage_id IS NOT NULL OR user_id IS NOT NULL OR reason_id
+                IS NOT NULL)''',
             _(u'Empty change in lead could not be registered')
         )
     ]
@@ -115,6 +130,7 @@ class CrmLeadChangelog(models.Model):
             lead_id,
             stage_id,
             user_id,
+            reason_id,
             "date",
             create_uid,
             create_date,
@@ -125,6 +141,7 @@ class CrmLeadChangelog(models.Model):
             "id",
             stage_id,
             user_id,
+            crm_reason_id,
             create_date,-- first changelog always match with the lead creation
             NULL,       -- allow to recognize preexisting leads in changelog
             NULL,       -- allow to recognize preexisting leads in changelog

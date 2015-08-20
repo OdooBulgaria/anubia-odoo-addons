@@ -69,6 +69,7 @@
                     <field name="date"/>
                     <field name="user_id"/>
                     <field name="stage_id"/>
+                    <field name="reason_id"/>
                 </tree>
             </field>
         </record>

@@ -158,30 +158,33 @@ class CrmLead(models.Model):
 
     @api.model
     def create(self, values):
-        """ Adds a new changelog record to register the assigned ``stage_id``
-        and ``user_id``.
+        """ Adds a new changelog record to register the assigned ``stage_id``,
+        ``user_id`` and ``reason_id``.
         """
 
         # STEP 1: Calling parent method to perform the changes in the leads
         result = super(CrmLead, self).create(values)
 
-        # STEP 1: Update the changelog before the leads are changed
-        stage_id, user_id = self._changes_to_register(values)
-        if stage_id or user_id:  # needless, stage_id always appears on create
-            result._update_changelog(stage_id, user_id)
+        # STEP 2: Update the changelog before the leads are changed
+        stage_id, user_id, reason_id = self._changes_to_register(values)
+        # needless, stage_id always appears on create
+        if stage_id or user_id or reason_id:
+            result._update_changelog(stage_id, user_id, reason_id)
 
         return result
 
     @api.multi
     def write(self, values):
         """ Adds a new changelog record to register the assigned ``stage_id``
-        and ``user_id``.
+        ``user_id`` and ``reason_id``.
         """
 
+        values = self._update_lead_reason(values)
+
         # STEP 1: Update the changelog before the leads are changed
-        stage_id, user_id = self._changes_to_register(values)
-        if stage_id or user_id:
-            self._update_changelog(stage_id, user_id)
+        stage_id, user_id, reason_id = self._changes_to_register(values)
+        if stage_id or user_id or reason_id:
+            self._update_changelog(stage_id, user_id, reason_id)
 
         # STEP 2: Calling parent method to perform the changes in the leads
         return super(CrmLead, self).write(values)
@@ -190,27 +193,53 @@ class CrmLead(models.Model):
 
     @api.model
     def _changes_to_register(self, values):
-        """ Return a tuple with ``stage_id`` and ``user_id`` values (Integers)
+        """ Return a tuple with ``stage_id``, ``user_id`` and ``reason_id``
+            values (Integers)
 
         :param values: dictionary from create or write methods.
-        :return: tuple (stage_id, user_id); each one of the item could be False
+        :return: tuple (stage_id, user_id, reason_id); each one of the item
+            could be False
         """
 
-        return values.get('stage_id', False), values.get('user_id', False)
+        return values.get('stage_id', False), \
+            values.get('user_id', False), \
+            values.get('crm_reason_id', False)
 
     @api.multi
-    def _update_changelog(self, stage_id, user_id):
+    def _update_changelog(self, stage_id, user_id, reason_id):
         """ Create a changelog record for each one of the leads in recordset
 
         :param stage_id (integer): id of the stage or False
         :param user_id (integer): id of the user (salesperson) or False
+        :param reason_id (integer): id of the reason or False
         """
 
         log_obj = self.env['crm.lead.changelog']
 
-        values = {'stage_id': stage_id, 'user_id': user_id}
+        values = {
+            'stage_id': stage_id,
+            'user_id': user_id,
+            'reason_id': reason_id
+        }
         values.update({'create_uid': self.env.uid, 'write_uid': self.env.uid})
 
         for record in self:
             values.update({'lead_id': record.id})
             log_obj.create(values)
+
+    def _update_lead_reason(self, values):
+        """ If stage have been changed ('stage_id' in values), it checks if
+            current reason is valid for new stage, otherwise it changes it.
+
+            :param self: recordset of crm.lead
+            :return: updated dictionary
+        """
+        stage_id = values.get('stage_id', False)
+        if stage_id:
+            for record in self:
+                current_reason = record.crm_reason_id
+                new_stage = self.env['crm.case.stage'].browse(stage_id)
+                if current_reason not in new_stage.crm_reason_ids:
+                    values['crm_reason_id'] = \
+                        new_stage.default_crm_reason_id.id
+        return values
