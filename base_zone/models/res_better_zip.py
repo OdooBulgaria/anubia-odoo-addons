@@ -44,7 +44,7 @@ class ResBetterZip(models.Model):
         readonly=True,
         index=False,
         default=None,
-        help='Zip codes of all descendants zones including this same',
+        help='Zip codes of all holder zones including this same',
         comodel_name='base.zone',
         relation='base_zone_subordinate_res_better_zip_rel',
         column1='res_better_zip_id',

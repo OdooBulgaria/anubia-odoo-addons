@@ -69,7 +69,7 @@
                                 <field name="notes" class="oe_field_note"
                                     placeholder="Enter some information about the zone" />
                             </page>
-                            <page string="Descendants" id="zones">
+                            <page string="Subordinate" id="zones">
                                 <div class="oe_edit_only">
                                     <separator string="Own child zones" />
                                     <field name="child_ids" class="oe_field_child_ids"
@@ -81,7 +81,7 @@
                                     </div>
                                 </div>
                                 <separator class="oe_base_zone_save_only" />
-                                <separator string="Subordinate zones" class="oe_edit_only" />
+                                <separator string="All subordinate zones" class="oe_edit_only" />
                                 <field name="subordinate_ids" class="oe_field_subordinate_ids"
                                     placeholder="Add/remove subordinate zones" />
                             </page>

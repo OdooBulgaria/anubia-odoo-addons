@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0-20150121\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-20 19:27+0000\n"
-"PO-Revision-Date: 2015-08-20 21:28+0100\n"
+"POT-Creation-Date: 2015-08-19 16:43+0000\n"
+"PO-Revision-Date: 2015-08-20 20:12+0100\n"
 "Last-Translator: Jorge Soto Garcia <sotogarcia@gmail.com>\n"
 "Language-Team: Jorge Soto Garcia <sotogarcia@gmail.com>\n"
 "Language: es_ES\n"
@@ -45,59 +45,47 @@ msgstr "Agregar o quitar códigos postales de la zona"
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
 msgid "Add/remove child zones"
-msgstr "Agregar o quitar zonas hijas"
+msgstr "Agregar/quitar zonas hijas"
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
 msgid "Add/remove holder users"
-msgstr "Agregar o quitar usuarios titulares"
+msgstr "Agregar/quitar usuarios titulares"
 
 #. module: base_zone
 #: view:res.better.zip:base_zone.better_zip_form
 msgid "Add/remove holder zones"
-msgstr "Agregar o quitar zonas titulares"
+msgstr "Agregar/quitar zonas titulares"
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
 msgid "Add/remove subordinate zip codes"
-msgstr "Agregar o quitar códigos postales subordinados"
+msgstr "Agregar/quitar códigos postales subordinados"
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
-#: view:res.users:base_zone.view_res_users_x2many_tree
-#: view:res.users:base_zone.view_users_form
 msgid "Add/remove subordinate zones"
-msgstr "Agregar o quitar zonas subordinadas"
+msgstr "Agregar/quitar zonas subordinadas"
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
 msgid "Add/remove users"
-msgstr "Agregar o quitar usuarios"
+msgstr "Agregar/quitar usuarios"
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
 msgid "Add/remove zip codes"
-msgstr "Agregar o quitar códigos postales"
-
-#. module: base_zone
-#: view:res.users:base_zone.view_users_form
-msgid "Add/remove zones"
-msgstr "Agregar o quitar zonas"
-
-#. module: base_zone
-#: view:base.zone:base_zone.view_base_zone_form
-msgid "All subordinate zones"
-msgstr "Todas las zonas subordinadas"
+msgstr "Agregar/quitar códigos postales"
 
 #. module: base_zone
 #: field:res.better.zip,base_zone_id:0
 msgid "Base zone"
-msgstr "Zona base"
+msgstr "Base zone"
 
 #. module: base_zone
 #: model:ir.model,name:base_zone.model_base_zone_middle_relationship
 msgid "Base zone middle relationship"
-msgstr "Tabla intermedia de relación en zona base"
+msgstr "Base zone relación intermedia"
 
 #. module: base_zone
 #: field:base.zone,child_ids:0
@@ -115,24 +103,14 @@ msgid "Choose user by default"
 msgstr "Seleccione el usuario predeterminado"
 
 #. module: base_zone
-#: help:base.zone,default_user_id:0
-msgid "Choose which user will be the default for this zone"
-msgstr "Seleccione que usuario será el predeterminado para esta zona"
-
-#. module: base_zone
 #: view:res.better.zip:base_zone.better_zip_form
 msgid "Choose zone"
 msgstr "Seleccione la zona"
 
 #. module: base_zone
-#: view:res.users:base_zone.view_users_form_tree
-msgid "Choose zones for this user"
-msgstr "Seleccione las zonas para este usuario"
-
-#. module: base_zone
 #: model:ir.model,name:base_zone.model_res_better_zip
 msgid "City/locations completion object"
-msgstr "Objeto de completado de ciudad/ubicación"
+msgstr "Objeto completo de Ciudad/localización "
 
 #. module: base_zone
 #: field:base.zone,create_uid:0
@@ -152,82 +130,82 @@ msgstr "Fecha del último mensaje publicado en el registro."
 #. module: base_zone
 #: field:base.zone,default_user_id:0
 msgid "Default user"
-msgstr "Usuario predeterminado"
+msgstr "Usuario por predeterminado"
+
+#. module: base_zone
+#: view:base.zone:base_zone.view_base_zone_form
+msgid "Subordinate"
+msgstr ""
 
 #. module: base_zone
 #: help:res.users,holder_zone_ids:0
 msgid "Display all holder zones"
-msgstr "Mostrar todas las zonas titulares"
+msgstr ""
 
 #. module: base_zone
 #: help:res.users,subordinate_zone_ids:0
 msgid "Display all subordinate zones"
-msgstr "Mostrar todas las zonas subordinadas"
+msgstr ""
 
 #. module: base_zone
 #: help:base.zone,holder_ids:0
 msgid "Displays all holder zones including this same"
-msgstr "Muestra todas las zonas titulares incluida esta"
+msgstr ""
 
 #. module: base_zone
 #: help:base.zone,subordinate_ids:0
 msgid "Displays all subordinated zones including this same"
-msgstr "Muestra todas las zonas subordinadas incluida esta"
+msgstr ""
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
 msgid "Enable/disable"
-msgstr "Habilitar o deshabilitar"
+msgstr ""
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
 msgid "Enter some information about the zone"
-msgstr "Introduzca alguna información acerca de la zona"
+msgstr ""
 
 #. module: base_zone
 #: help:base.zone,name:0
 msgid "Enter the name of the zone"
-msgstr "Introduzca el nombre de la zona"
+msgstr ""
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
 #: view:base.zone:base_zone.view_base_zone_tree
 msgid "Enter the new name"
-msgstr "Introduzca el nuevo nombre"
-
-#. module: base_zone
-#: view:res.users:base_zone.view_res_users_x2many_tree
-msgid "Enter the new value for name"
-msgstr "Introduzca el nuevo valor para el nombre"
+msgstr ""
 
 #. module: base_zone
 #: field:base.zone,message_follower_ids:0
 msgid "Followers"
-msgstr "Seguidores"
+msgstr ""
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_search
 msgid "Geographical Zones"
-msgstr "Zonas Geográficas"
+msgstr ""
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
 #: model:ir.actions.act_window,name:base_zone.action_geographical_zones_act_window
 #: model:ir.ui.menu,name:base_zone.menu_geographical_zones
 msgid "Geographical zones"
-msgstr "Zonas geográficas"
+msgstr ""
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
 #: field:base.zone,holder_user_ids:0
 msgid "Holder users"
-msgstr "Usuarios titulares"
+msgstr ""
 
 #. module: base_zone
 #: field:base.zone,holder_ids:0 view:res.better.zip:base_zone.better_zip_form
 #: field:res.better.zip,holder_zone_ids:0 field:res.users,holder_zone_ids:0
 msgid "Holder zones"
-msgstr "Zonas titulares"
+msgstr ""
 
 #. module: base_zone
 #: help:base.zone,message_summary:0
@@ -235,155 +213,145 @@ msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
 msgstr ""
-"Contiene el resumen del chatter (nº de mensajes, ...). Este resumen viene "
-"directamente en formato HTML para poder ser insertado en las vistas kanban."
 
 #. module: base_zone
 #: field:base.zone,id:0 field:base.zone.middle.relationship,id:0
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: base_zone
 #: help:base.zone,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr "Si está marcado, hay nuevos mensajes que requieren su atención"
+msgstr ""
 
 #. module: base_zone
 #: code:addons/base_zone/models/base_zone.py:274 sql_constraint:base.zone:0
 #, python-format
 msgid "If this parent zone was established an infinite loop would be created."
-msgstr "Si se establece esta zona como padre se creará un bucle infinito"
+msgstr ""
 
 #. module: base_zone
 #: field:base.zone,message_is_follower:0
 msgid "Is a Follower"
-msgstr "Es un seguidor"
+msgstr ""
 
 #. module: base_zone
 #: field:base.zone,message_last_post:0
 msgid "Last Message Date"
-msgstr "Fecha del último mensaje"
+msgstr ""
 
 #. module: base_zone
 #: field:base.zone,write_uid:0
 msgid "Last Updated by"
-msgstr "Última actualización de"
+msgstr ""
 
 #. module: base_zone
 #: field:base.zone,write_date:0
 msgid "Last Updated on"
-msgstr "Última actualización en"
+msgstr ""
 
 #. module: base_zone
 #: field:base.zone,message_ids:0
 msgid "Messages"
-msgstr "Mensajes"
+msgstr ""
 
 #. module: base_zone
 #: help:base.zone,message_ids:0
 msgid "Messages and communication history"
-msgstr "Mensajes e historial de comunicación"
+msgstr ""
 
 #. module: base_zone
 #: field:base.zone,name:0
 msgid "Name"
-msgstr "Nombre"
+msgstr ""
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form field:base.zone,notes:0
 msgid "Notes"
-msgstr "Notas"
+msgstr ""
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
-#: view:res.users:base_zone.view_users_form
 msgid "Own child zones"
-msgstr "Zonas hijas propias"
+msgstr ""
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
 msgid "Own users"
-msgstr "Usuarios propios"
+msgstr ""
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form field:base.zone,zip_ids:0
 msgid "Own zip codes"
-msgstr "Códigos postales propios"
+msgstr ""
 
 #. module: base_zone
 #: field:base.zone,parent_id:0
 msgid "Parent zone"
-msgstr "Zona padre"
+msgstr ""
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
 msgid "Parent zones trail"
-msgstr "Jerarquía de zonas"
+msgstr ""
 
 #. module: base_zone
 #: help:base.zone,zip_range_ex:0
 msgid "Regular expression which defines the needed zip code range"
-msgstr "Expresión regular que define el rango de códigos postales necesarios"
+msgstr ""
 
 #. module: base_zone
 #: help:res.better.zip,base_zone_id:0
 msgid "Set the zone to which zip code belongs"
-msgstr "Establezca la zona a la cual pertenece el código postal"
+msgstr ""
 
 #. module: base_zone
 #: help:base.zone,parent_id:0
 msgid "Sets the zone in which this will be included"
-msgstr "Establece la zona en la cual será incluido el código postal"
+msgstr ""
 
 #. module: base_zone
 #: help:base.zone,notes:0
 msgid "Some information about the zone"
-msgstr "Alguna información acerca de la zona"
-
-#. module: base_zone
-#: view:base.zone:base_zone.view_base_zone_form
-msgid "Subordinate"
-msgstr "Subordinadas"
+msgstr ""
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
 msgid ""
 "Subordinate and holder users can not be added unless they are detached first."
 msgstr ""
-"Los usuarios titulares y subordinados no pueden ser agregados a menos que "
-"hayan sido desvinculados primero."
 
 #. module: base_zone
 #: field:base.zone,subordinate_user_ids:0
 msgid "Subordinate users"
-msgstr "Usuarios subordinados"
+msgstr ""
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
 #: field:base.zone,subordinate_zip_ids:0
 msgid "Subordinate zip codes"
-msgstr "Códigos postales subordinados"
+msgstr ""
 
 #. module: base_zone
-#: field:base.zone,subordinate_ids:0 view:res.users:base_zone.view_users_form
-#: field:res.users,subordinate_zone_ids:0
+#: view:base.zone:base_zone.view_base_zone_form
+#: field:base.zone,subordinate_ids:0 field:res.users,subordinate_zone_ids:0
 msgid "Subordinate zones"
-msgstr "Zonas subordinadas"
+msgstr ""
 
 #. module: base_zone
 #: field:base.zone,message_summary:0
 msgid "Summary"
-msgstr "Resumen"
+msgstr ""
 
 #. module: base_zone
 #: help:base.zone,active:0
 msgid "Switch to enable or disable the zone"
-msgstr "Cambiar para activar o desactivar la zona"
+msgstr ""
 
 #. module: base_zone
 #: model:ir.actions.act_window,help:base_zone.action_geographical_zones_act_window
 msgid "There are not any geographical zone defined"
-msgstr "No hay ninguna zona geográfica definida"
+msgstr ""
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
@@ -391,8 +359,6 @@ msgid ""
 "To assign any zip code to this zone it should be detached from any other "
 "before."
 msgstr ""
-"Para asignar cualquier código postal a la zona, este debería ser "
-"desvinculado de cualquier otra primero."
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
@@ -400,34 +366,32 @@ msgid ""
 "To establish any zone as a child it should be detached from any other parent "
 "before."
 msgstr ""
-"Para establecer cualquier zona como hija, esta debería ser desvinculada de "
-"cualquier otra primero."
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_tree
 msgid "Trail"
-msgstr "Jerarquía"
+msgstr ""
 
 #. module: base_zone
 #: field:base.zone,message_unread:0
 msgid "Unread Messages"
-msgstr "Mensajes sin leer"
+msgstr ""
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form field:base.zone,user_ids:0
 #: model:ir.model,name:base_zone.model_res_users
 msgid "Users"
-msgstr "Usuarios"
+msgstr ""
 
 #. module: base_zone
 #: help:base.zone,holder_user_ids:0
-msgid "Users of all holder zones including this same"
-msgstr "Usuarios de todas las zonas titulares incluida esta"
+msgid "Users of all ascendants zones including this same"
+msgstr ""
 
 #. module: base_zone
 #: help:base.zone,subordinate_user_ids:0
 msgid "Users of all subordinate zones including this same"
-msgstr "Usuarios de todas las zonas subordinadas incluida esta"
+msgstr "Usuarios de todas "
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
@@ -440,19 +404,14 @@ msgid "Zip codes"
 msgstr "Códigos postales"
 
 #. module: base_zone
-#: help:res.better.zip,holder_zone_ids:0
-msgid "Zip codes of all holder zones including this same"
-msgstr "Códigos postales de todas las zonas titulares incluida esta"
-
-#. module: base_zone
-#: help:base.zone,subordinate_zip_ids:0
+#: help:base.zone,subordinate_zip_ids:0 help:res.better.zip,holder_zone_ids:0
 msgid "Zip codes of all subordinate zones including this same"
-msgstr "Códigos postales de todas las zonas subordinadas incluida esta"
+msgstr "Códigos postales de todas las zonas descendientes incluida esta"
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form field:base.zone,zip_range_ex:0
 msgid "Zip range expression"
-msgstr "Expresión para el rango de códigos postales"
+msgstr "Expresión de códigos postales"
 
 #. module: base_zone
 #: view:base.zone:base_zone.view_base_zone_form
@@ -467,13 +426,9 @@ msgstr "Zona geográfica basada en códigos postales"
 #. module: base_zone
 #: field:res.users,zone_ids:0
 msgid "Zone ids"
-msgstr "IDs de zona"
+msgstr "Ids de zona"
 
 #. module: base_zone
 #: view:res.better.zip:base_zone.better_zip_form
-#: view:res.users:base_zone.view_users_form
 msgid "Zones"
 msgstr "Zonas"
-
-#~ msgid "Users of all ascendants zones including this same"
-#~ msgstr "Usuarios de todas las zonas subordinadas incluida esta"

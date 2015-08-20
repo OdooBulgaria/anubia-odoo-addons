@@ -17,6 +17,10 @@ class BaseZoneMiddleRelationship(models.AbstractModel):
         To automatically replace middle relation with view, just add a model
         attribute named as `prefix_relationname`, where prefix is the value of
         self._prefix.
+
+        NOTE: if the two ends of the relationship have many2many fields, the
+        `prefix_relationname` attribute must be declared in both models but
+        it can be set to NULL in second one.
     """
 
     _name = 'base.zone.middle.relationship'
@@ -71,8 +75,8 @@ class BaseZoneMiddleRelationship(models.AbstractModel):
         cr.execute(create_sql)
 
         # STEP 5: Add Rules to prevent INSERT, UPDATE AND DELETE are added
-        sql_no_crud = self._sql_no_crud.format(m2m_tbl)
-        cr.execute(sql_no_crud)
+        sql_no_cud = self._sql_no_cud.format(m2m_tbl)
+        cr.execute(sql_no_cud)
 
         # STEP 6: Returns true if the relation had been created
         # @see: _m2m_raise_or_create_relation method in openerp.models
@@ -118,6 +122,7 @@ class BaseZoneMiddleRelationship(models.AbstractModel):
 
     # ---------------------------- SQL QUERTIES -------------------------------
 
+    # Get type of an existing relation (TABLE or VIEW)
     _sql_relkind = """
         SELECT
             relkind
@@ -128,15 +133,18 @@ class BaseZoneMiddleRelationship(models.AbstractModel):
         AND relname = '{}';
     """
 
+    # Drops a relation if it exists
     _sql_drop_relation = """
         DROP {} IF EXISTS {} CASCADE
     """
 
+    # Creates or replaces a relation
     _sql_create_view = """
         CREATE OR REPLACE VIEW {} AS ({})
     """
 
-    _sql_no_crud = """
+    # Prevents CREATE, UPDATE and DELETE
+    _sql_no_cud = """
         CREATE OR REPLACE
             RULE {0}_no_update
             AS ON UPDATE TO {0}
