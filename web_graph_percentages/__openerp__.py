@@ -27,8 +27,8 @@
 
     'description': 'Allows to calculate percentages in pivot tables',
 
-    'author': 'Jorge Soto Garcia',
-    'maintainer': 'Anubia, soluciones en la nube, SL',
+    'author': 'Anubía, soluciones en la nube, SL',
+    'maintainer': 'Anubía, soluciones en la nube, SL',
     'contributors': ['Jorge Soto Garcia <sotogarcia@gmail.com>'],
 
     'website': "http://www.anubia.es",

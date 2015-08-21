@@ -25,9 +25,9 @@
     'summary': 'Allow to choose the reason for lead stage of case',
     'version': '1.0',
 
-    'author': 'Anubia, Soluciones en la Nube, SL',
+    'author': 'Anubía, soluciones en la nube, SL',
     'website': 'http://www.anubia.es',
-    'maintainer': 'Anubia, soluciones en la nube, SL',
+    'maintainer': 'Anubía, soluciones en la nube, SL',
 
     'contributors': [
         'Jorge Soto García <sotogarcia@gmail.com>',

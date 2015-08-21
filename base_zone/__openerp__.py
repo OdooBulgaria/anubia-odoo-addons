@@ -26,8 +26,8 @@
     'version': '1.0',
     'description': 'Allows to define zip-based geographical zones for users',
 
-    'author': 'Anubia, Soluciones en la Nube, SL',
-    'maintainer': 'Anubía, Soluciones en la Nube, SL',
+    'author': 'Anubía, soluciones en la nube, SL',
+    'maintainer': 'Anubía, soluciones en la nube, SL',
     'contributors': ['Jorge Soto García <sotogarcia@gmail.com>'],
 
     'website': 'http://www.anubia.es',
