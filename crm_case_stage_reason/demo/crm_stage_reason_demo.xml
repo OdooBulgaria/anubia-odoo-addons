@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <!-- Reasons for stage of case: Won (default)
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="crm_stage_reason_demo_1" model="crm.stage.reason">
+            <field name="name">Agreement</field>
+            <field name="description">Reason demo 1</field>
+            <field name="active" eval="True" />
+            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead6'))]" />
+        </record>
+
+        <!-- Reasons for stage of case: Negotiation (Not default)
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="crm_stage_reason_demo_2" model="crm.stage.reason">
+            <field name="name">Valued customer</field>
+            <field name="description">Reason demo 2</field>
+            <field name="active" eval="True" />
+            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead5'))]" />
+        </record>
+
+        <!-- Reasons for stage of case: Dead (Not default)
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="crm_stage_reason_demo_3" model="crm.stage.reason">
+            <field name="name">Invalid customer profile</field>
+            <field name="description">Reason demo 3</field>
+            <field name="active" eval="True" />
+            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead2'))]" />
+        </record>
+
+        <!-- Reasons for stage of case: Lost (default)
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="crm_stage_reason_demo_4" model="crm.stage.reason">
+            <field name="name">Rejected</field>
+            <field name="description">Reason demo 4</field>
+            <field name="active" eval="True" />
+            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead7'))]" />
+        </record>
+
+        <!-- Reasons for several stages of cases
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="crm_stage_reason_demo_5" model="crm.stage.reason">
+            <field name="name">Unable to contact</field>
+            <field name="description">Reason demo 5</field>
+            <field name="active" eval="True" />
+            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead2')),(4, ref('crm.stage_lead7'))]" />
+        </record>
+
+    </data>
+</openerp>

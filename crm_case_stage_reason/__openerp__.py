@@ -24,6 +24,7 @@
     'name': 'Reason for stage of case',
     'summary': 'Allow to choose the reason for lead stage of case',
     'version': '1.0',
+    'description': 'Allow to choose the reason for lead stage of case',
 
     'author': 'Anubía, soluciones en la nube, SL',
     'website': 'http://www.anubia.es',
@@ -56,6 +57,9 @@
         'views/crm_stage_reason_view.xml'
     ],
     'demo': [
+        'demo/crm_stage_reason_demo.xml',
+        'demo/crm_crm_case_stage_demo.xml',
+        'demo/crm_lead.xml'
     ],
     'js': [
     ],

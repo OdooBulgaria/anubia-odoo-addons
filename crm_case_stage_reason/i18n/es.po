@@ -1,19 +1,21 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* crm_case_stage_reason
+# 	* crm_case_stage_reason
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-05 14:17+0000\n"
-"PO-Revision-Date: 2015-08-05 16:22+0100\n"
+"POT-Creation-Date: 2015-08-26 17:36+0000\n"
+"PO-Revision-Date: 2015-08-26 19:46+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"X-Generator: Poedit 1.7.5\n"
 
 #. module: crm_case_stage_reason
 #: model:ir.actions.act_window,help:crm_case_stage_reason.action_crm_stage_reason_tree
@@ -21,21 +23,29 @@ msgid ""
 "<p class=\"oe_view_nocontent_create\">\n"
 "                    Click to add a new reason for lead/opportunity stages.\n"
 "                </p><p>\n"
-"                    With just a quick glance on the Odoo lead/opportunity reasons\n"
-"                    screen, you can easily find all the information you need for\n"
+"                    With just a quick glance on the Odoo lead/opportunity "
+"reasons\n"
+"                    screen, you can easily find all the information you need "
+"for\n"
 "                    each stage reason.\n"
 "                </p>\n"
 "            "
 msgstr ""
 "<p class=\"oe_view_nocontent_create\">\n"
-"                    Click para añadir una nueva razón sobre una etapa de una iniciativa/oportunidad.\n"
+"                    Click para añadir una nueva razón sobre una etapa de una "
+"iniciativa/oportunidad.\n"
 "                </p>\n"
 "            "
 
 #. module: crm_case_stage_reason
-#: field:crm.stage.reason,active:0
+#: field:crm.case.stage,active:0 field:crm.stage.reason,active:0
 msgid "Active"
 msgstr "Activo"
+
+#. module: crm_case_stage_reason
+#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_1
+msgid "Agreement"
+msgstr "Acuerdo"
 
 #. module: crm_case_stage_reason
 #: field:crm.case.stage,crm_reason_ids:0
@@ -78,9 +88,10 @@ msgid "Default reason"
 msgstr "Razón por defecto"
 
 #. module: crm_case_stage_reason
-#: sql_constraint:crm.case.stage:0
-msgid "Default reason must belong to the allow list of reasons"
-msgstr "La razón por defecto debe formar parte de la lista de razones permitida"
+#: code:addons/crm_case_stage_reason/models/crm_case_stage.py:76
+#, python-format
+msgid "Default reason not available for this stage of case"
+msgstr "Razón por defecto no está disponible para esta etapa del caso"
 
 #. module: crm_case_stage_reason
 #: view:crm.stage.reason:crm_case_stage_reason.view_crm_stage_reason_form
@@ -92,6 +103,11 @@ msgstr "Descripción"
 #: field:crm.stage.reason,id:0
 msgid "ID"
 msgstr "ID"
+
+#. module: crm_case_stage_reason
+#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_3
+msgid "Invalid customer profile"
+msgstr "Perfil de cliente no válido"
 
 #. module: crm_case_stage_reason
 #: field:crm.stage.reason,write_uid:0
@@ -114,17 +130,38 @@ msgid "Lead/Opportunity reason"
 msgstr "Razón de la etapa"
 
 #. module: crm_case_stage_reason
-#: selection:crm.stage.reason,force_valid_value:0
-msgid "Not valid"
-msgstr "No válido"
-
-#. module: crm_case_stage_reason
-#: field:crm.stage.reason,name:0
+#: field:crm.lead,crm_reason_id:0 field:crm.stage.reason,name:0
 msgid "Reason"
 msgstr "Razón"
 
 #. module: crm_case_stage_reason
-#: code:addons/crm_case_stage_reason/models/crm_stage_reason.py:15
+#: model:crm.stage.reason,description:crm_case_stage_reason.crm_stage_reason_demo_1
+msgid "Reason demo 1"
+msgstr "Razón demo 1"
+
+#. module: crm_case_stage_reason
+#: model:crm.stage.reason,description:crm_case_stage_reason.crm_stage_reason_demo_2
+msgid "Reason demo 2"
+msgstr "Razón demo 2"
+
+#. module: crm_case_stage_reason
+#: model:crm.stage.reason,description:crm_case_stage_reason.crm_stage_reason_demo_3
+msgid "Reason demo 3"
+msgstr "Razón demo 3"
+
+#. module: crm_case_stage_reason
+#: model:crm.stage.reason,description:crm_case_stage_reason.crm_stage_reason_demo_4
+msgid "Reason demo 4"
+msgstr "Razón demo 4"
+
+#. module: crm_case_stage_reason
+#: model:crm.stage.reason,description:crm_case_stage_reason.crm_stage_reason_demo_5
+msgid "Reason demo 5"
+msgstr "Razón demo 5"
+
+#. module: crm_case_stage_reason
+#: code:addons/crm_case_stage_reason/models/crm_stage_reason.py:19
+#: model:ir.model,name:crm_case_stage_reason.model_crm_stage_reason
 #, python-format
 msgid "Reason for case stage"
 msgstr "Razones para etapas"
@@ -135,12 +172,19 @@ msgid "Reasons"
 msgstr "Razones"
 
 #. module: crm_case_stage_reason
+#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_4
+msgid "Rejected"
+msgstr "Rechazado"
+
+#. module: crm_case_stage_reason
 #: view:crm.stage.reason:crm_case_stage_reason.view_crm_stage_reason_form
 msgid "Short name for the reason."
 msgstr "Nombre corto para esta razón."
 
 #. module: crm_case_stage_reason
+#: code:addons/crm_case_stage_reason/models/crm_case_stage.py:25
 #: model:ir.model,name:crm_case_stage_reason.model_crm_case_stage
+#, python-format
 msgid "Stage of case"
 msgstr "Etapa del caso"
 
@@ -150,7 +194,27 @@ msgid "Stages"
 msgstr "Estados"
 
 #. module: crm_case_stage_reason
-#: selection:crm.stage.reason,force_valid_value:0
-msgid "Valid"
-msgstr "Válido"
+#: code:addons/crm_case_stage_reason/models/crm_lead.py:110
+#, python-format
+msgid "The given reason is not valid for some of the stages of cases"
+msgstr "La razón dada no es válido para algunas de las etapas"
 
+#. module: crm_case_stage_reason
+#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_5
+msgid "Unable to contact"
+msgstr "No puede ser contactado"
+
+#. module: crm_case_stage_reason
+#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_2
+msgid "Valued customer"
+msgstr "Cliente valioso"
+
+#~ msgid "Default reason must belong to the allow list of reasons"
+#~ msgstr ""
+#~ "La razón por defecto debe formar parte de la lista de razones permitida"
+
+#~ msgid "Not valid"
+#~ msgstr "No válido"
+
+#~ msgid "Valid"
+#~ msgstr "Válido"

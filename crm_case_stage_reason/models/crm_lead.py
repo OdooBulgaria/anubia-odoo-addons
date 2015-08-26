@@ -119,7 +119,6 @@ class CrmLead(models.Model):
         if new_stage_id is False:
             if new_reason_id:
                 valid_ids = self._stages_from_reason(new_reason_id)
-                self._log(3, 'self: {}, valid_ids: {}', self, valid_ids)
                 assert self and not self.filtered(
                     lambda x: x.stage_id and x.stage_id.id not in valid_ids), \
                     error_message

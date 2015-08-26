@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="crm.stage_lead6" model="crm.case.stage">
+            <field name="default_crm_reason_id" ref="crm_stage_reason_demo_1" />
+        </record>
+
+        <record id="crm.stage_lead7" model="crm.case.stage">
+            <field name="default_crm_reason_id" ref="crm_stage_reason_demo_4" />
+        </record>
+
+    </data>
+</openerp>

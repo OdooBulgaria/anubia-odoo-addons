@@ -4,10 +4,4 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from . import models
-from . import tests
-
-# --------------------------- INSTALLATION HOOKS ------------------------------
-
-from logging import getLogger
-_logger = getLogger(__name__)
+from . import test_crm_lead
