@@ -16,7 +16,7 @@ class CrmStageReason(models.Model):
     """ Explanation on why an opportunity is in current case stage.
     """
     _name = 'crm.stage.reason'
-    _description = _('Reason for case stage')
+    _description = _('Reason for stage of case')
 
     _rec_name = 'name'
     _order = 'name ASC'

@@ -59,6 +59,11 @@
         'views/crm_lead_changelog.xml',
         'views/crm_lead_changelog_view.xml',
         'views/crm_crm_lead_view.xml',
+
+        'report/crm_lead_changelog_user_update.xml',
+        'report/crm_lead_changelog_stage_update.xml',
+        'report/crm_lead_changelog_reason_update.xml',
+        'report/crm_lead_changelog_update.xml'
     ],
     'demo': [
     ],

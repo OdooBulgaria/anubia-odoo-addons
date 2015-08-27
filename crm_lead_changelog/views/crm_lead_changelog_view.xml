@@ -49,12 +49,6 @@
                             'form_view_ref': 'crm_lead_changelog.view_crm_lead_historic_form',
                         }" widget="one2many_list" nolabel="1" />
                     </page>
-                    <page string="Stage of case changelog">
-                        <field name="stage_changelog_ids" />
-                    </page>
-                    <page string="Salesperson changelog">
-                        <field name="user_changelog_ids" />
-                    </page>
                 </xpath>
 
             </field>
@@ -65,7 +59,7 @@
             <field name="name">crm.lead.changelog.tree</field>
             <field name="model">crm.lead.changelog</field>
             <field name="arch" type="xml">
-                <tree string="Changelog" create="0" delete="0" editable="top">
+                <tree string="Changelog" create="0" delete="0">
                     <field name="date"/>
                     <field name="user_id"/>
                     <field name="stage_id"/>
@@ -75,22 +69,20 @@
         </record>
 
         <!-- Crm Lead Historic Form View -->
-        <!-- <record id="view_crm_lead_historic_form" model="ir.ui.view">
-            <field name="name">crm.lead.historic.form</field>
-            <field name="model">crm.lead.historic</field>
+        <record id="view_crm_lead_historic_form" model="ir.ui.view">
+            <field name="name">crm.lead.changelog.form</field>
+            <field name="model">crm.lead.changelog</field>
             <field name="arch" type="xml">
-                <form string="Historics">
-                    <group>
-                        <field name="current_user" attrs="{'invisible': False}"/>
-                        <field name="date" class="oe_field_date" string="Date" options="{'no_open': True, 'create': False, 'create_edit': False}" help="Enter the new value for date"/>
-                        <field name="stage_id_old" class="oe_field_stage_old" string="Old stage" options="{'no_open': True, 'create': False, 'create_edit': False}" help="Enter the new value for old stage"/>
-                        <field name="stage_id_new" class="oe_field_stage_new" string="New stage" options="{'no_open': True, 'create': False, 'create_edit': False}" help="Enter the new value for new stage"/>
-                        <field name="user_id_old" class="oe_field_user_id_old" string="Old user" options="{'no_open': True, 'create': False, 'create_edit': False}" help="Enter the new value for old user"/>
-                        <field name="user_id_new" class="oe_field_user_id_new" string="New user" options="{'no_open': True, 'create': False, 'create_edit': False}" help="Enter the new value for new user"/>
+                <form string="Changelog" create="0" delete="0" edit="0">
+                    <group col="2">
+                        <field name="date"/>
+                        <field name="user_id"/>
+                        <field name="stage_id"/>
+                        <field name="reason_id"/>
                     </group>
                 </form>
             </field>
-        </record> -->
+        </record>
 
     </data>
 </openerp>

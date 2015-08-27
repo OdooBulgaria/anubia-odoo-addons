@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <!-- VIEWS: "Changes made in stage of case over leads/opportunities"
+
+            - Model·········: crm.lead.changelog.stage.update
+            - _rec_name·····: id
+            - Domain········: []
+            - Context·······: {}
+            - Parent menu ··: base.next_id_64
+            - View priority·: 16    Sequence····: 10
+            - Action help···: There are not leads/opportunities to display
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <!-- Tree view for "crm.lead.changelog.stage.update" -->
+        <record id="view_crm_lead_changelog_stage_update_tree" model="ir.ui.view">
+            <field name="name">view.crm.lead.changelog.stage.update.tree</field>
+            <field name="model">crm.lead.changelog.stage.update</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <tree string="crm_lead_changelog_stage_update_tree" create="0" delete="0" edit="0">
+                    <field name="lead_id" class="oe_field_lead_id" />
+                    <field name="stage_id" class="oe_field_stage_id" />
+                    <field name="sequence" class="oe_field_sequence" />
+                    <field name="date" class="oe_field_date" />
+                    <field name="display_up_to" class="oe_field_display_up_to" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view for "crm.lead.changelog.stage.update" -->
+        <record id="view_crm_lead_changelog_stage_update_form" model="ir.ui.view">
+            <field name="name">view.crm.lead.changelog.stage.update.form</field>
+            <field name="model">crm.lead.changelog.stage.update</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <form string="crm_lead_changelog_stage_update_form" create="0" delete="0" edit="0">
+                    <sheet>
+                        <div class="oe_title crm_lead_changelog_vertical_spaced">
+                            <label for="display_name" class="oe_edit_only" />
+                            <h1>
+                                <field name="display_name" class="oe_field_display_name" />
+                            </h1>
+                        </div>
+                        <group col="4" class="crm_lead_changelog_vertical_spaced">
+                            <field name="date" class="oe_field_date" />
+                            <field name="display_up_to" class="oe_field_display_up_to" />
+                        </group>
+                        <group col="4">
+                            <field name="lead_id" class="oe_field_lead_id" />
+                            <field name="sequence" class="oe_field_sequence" />
+                            <field name="stage_id" class="oe_field_stage_id" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- graph view for "crm.lead.changelog.stage.update" -->
+        <record id="view_crm_lead_changelog_stage_update_graph" model="ir.ui.view">
+            <field name="name">view.crm.lead.changelog.stage.update.graph</field>
+            <field name="model">crm.lead.changelog.stage.update</field>
+            <field name="type">graph</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                 <graph string="Lead stage changelog analysis" type="pivot" stacked="True">
+                    <field name="stage_id" type="row" />
+                    <field name="date" interval="month" type="col" />
+                 </graph>
+            </field>
+        </record>
+
+        <!-- Search view for "crm.lead.changelog.stage.update" -->
+        <record id="view_crm_lead_changelog_stage_update_search" model="ir.ui.view">
+            <field name="name">view.crm.lead.changelog.stage.update.search</field>
+            <field name="model">crm.lead.changelog.stage.update</field>
+            <field name="type">search</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <search string="crm_lead_changelog_stage_update_search">
+                    <field name="lead_id" />
+                    <field name="stage_id" />
+                    <field name="date" />
+                    <field name="sequence" />
+                    <field name="up_to" />
+                    <filter name="this_year"
+                        string="This year"
+                        domain="[('date','&gt;=',time.strftime('%%Y-01-01')),('date','&lt;=',time.strftime('%%Y-12-31'))]"
+                        help="Changes have been made this year"/>
+                    <filter name="this_month"
+                        string="This month"
+                        domain="[('date','&gt;=',time.strftime('%%Y-%%m-01')),('date','&lt;=',time.strftime('%%Y-%%m-31'))]"
+                        help="Changes have been made this month"/>
+                    <filter name="today"
+                        string="Today"
+                        domain="[('date','&gt;=',time.strftime('%%Y-%%m-%%d')),('date','&lt;=',time.strftime('%%Y-%%m-%%d'))]"
+                        help="Changes have been made today"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="filter_crm_lead_changelog_stage_update_stage_id" model="ir.filters">
+            <field name="name">Changes by stage of case</field>
+            <field name="model_id">crm.lead.changelog.stage.update</field>
+            <field name="domain">[]</field>
+            <field name="user_id" eval="False"/>
+            <field name="context">{'group_by': ['stage_id'], 'col_group_by': ['date:month']}</field>
+        </record>
+
+        <record id="filter_crm_lead_changelog_stage_update_laed_id" model="ir.filters">
+            <field name="name">Changes by lead</field>
+            <field name="model_id">crm.lead.changelog.stage.update</field>
+            <field name="domain">[]</field>
+            <field name="user_id" eval="False"/>
+            <field name="context">{'group_by': ['lead_id'], 'col_group_by': ['date:month']}</field>
+        </record>
+
+        <!-- Main window action for crm.lead.changelog.stage.update -->
+        <record id="action_crm_lead_changelog_stage_update_act_window" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
+            <field name="name">Changes made in stage of case over leads/opportunities</field>
+            <field name="res_model">crm.lead.changelog.stage.update</field>
+            <field name="view_mode">tree,graph,form</field>
+            <field name="view_type">form</field>
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_this_year': 1}</field>
+            <field name="search_view_id" ref="view_crm_lead_changelog_stage_update_search" />
+            <field name="help">There are not leads/opportunities to display</field>
+        </record>
+
+        <!-- Main menu for crm.lead.changelog.stage.update -->
+        <record id="menu_crm_lead_changelog_stage_update" model="ir.ui.menu" >
+            <field name="name">Changes made in stage of case over leads/opportunities</field>
+            <field name="sequence" eval="10" />
+            <field name="action" ref="action_crm_lead_changelog_stage_update_act_window" />
+            <field name="parent_id" ref="base.next_id_64" />
+        </record>
+    </data>
+</openerp>
