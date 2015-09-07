@@ -63,14 +63,14 @@
         'report/crm_lead_changelog_user_update.xml',
         'report/crm_lead_changelog_stage_update.xml',
         'report/crm_lead_changelog_reason_update.xml',
-        'report/crm_lead_changelog_update.xml'
+        'report/crm_lead_changelog_update.xml',
+        'report/crm_lead_changelog_table.xml'
     ],
     'demo': [
     ],
     'js': [
     ],
     'css': [
-        'static/static/css/crm_lead_changelog.css',
         'static/static/css/crm_lead_changelog.css'
     ],
     'qweb': [

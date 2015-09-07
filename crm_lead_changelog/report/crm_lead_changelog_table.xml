@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <!-- VIEWS: "Changes made in leads/opportunities"
+
+            - Model·········: crm.lead.changelog.update
+            - _rec_name·····: id
+            - Domain········: []
+            - Context·······: {}
+            - Parent menu ··: base.next_id_64
+            - View priority·: 16    Sequence····: 10
+            - Action help···: There are not leads/opportunities to display
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <!-- Tree view for "crm.lead.changelog.update" -->
+        <record id="view_crm_lead_changelog_table_tree" model="ir.ui.view">
+            <field name="name">view.crm.lead.changelog.table.tree</field>
+            <field name="model">crm.lead.changelog.table</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <tree string="crm_lead_changelog_table_tree" create="0" delete="0" edit="0">
+                    <field name="lead_id" class="oe_field_lead_id" />
+                    <field name="date" class="oe_field_date" />
+                    <field name="source_id" class="oe_field_source_id" />
+                    <field name="user_id" class="oe_field_user_id" />
+                    <field name="stage_id" class="oe_field_stage_id" />
+                    <field name="reason_id" class="oe_field_reason_id" />
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</openerp>
