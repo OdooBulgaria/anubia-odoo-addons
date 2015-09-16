@@ -48,6 +48,20 @@ class CrmLeadChangelogTable(models.Model):
         help='Date on which the change was made'
     )
 
+    zone_id = fields.Many2one(
+        string='Zone',
+        required=True,
+        readonly=True,
+        index=False,
+        default=None,
+        comodel_name='base.zone',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False,
+        help=('Zone assigned to the lead in this change')
+    )
+
     source_id = fields.Many2one(
         string='Source',
         required=True,
@@ -133,6 +147,10 @@ class CrmLeadChangelogTable(models.Model):
                 row_number() OVER () AS id,
                 crm_lead_changelog.lead_id AS lead_id,
                 date,
+                (SELECT base_zone_id
+                    FROM crm_lead
+                    WHERE id = crm_lead_changelog.lead_id
+                    LIMIT 1) AS zone_id,
                 (SELECT source_id
                     FROM crm_lead
                     WHERE id = crm_lead_changelog.lead_id
