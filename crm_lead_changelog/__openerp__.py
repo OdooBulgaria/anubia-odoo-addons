@@ -44,8 +44,7 @@
         'base',
         'crm',
         'crm_case_stage_reason',
-        'web',
-        # 'web_m2x_options',  # --> not essential
+        'web'
     ],
     'external_dependencies': {
         'python': [
@@ -63,8 +62,7 @@
         'report/crm_lead_changelog_user_update.xml',
         'report/crm_lead_changelog_stage_update.xml',
         'report/crm_lead_changelog_reason_update.xml',
-        'report/crm_lead_changelog_update.xml',
-        'report/crm_lead_changelog_table.xml'
+        'report/crm_lead_changelog_update.xml'
     ],
     'demo': [
         # 'demo/crm_lead_demo.xml',

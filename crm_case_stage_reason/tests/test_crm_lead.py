@@ -8,18 +8,37 @@ from openerp.tests.common import TransactionCase
 
 from logging import getLogger
 
-
 _logger = getLogger(__name__)
 
 
 class TestCrmLead(TransactionCase):
     """ This class contains the unit tests for 'crm.lead'.
 
-        Tests:
-          - item_name: Checks if the item_name works properly
+        Below is the stage/reasons tree
+
+        ├───New --------------------- (1)
+        │   ├───Customer call·················(1)
+        │   ├───Contact form··················(2)
+        │   └───Business venture··············(3)
+        ├───Dead -------------------- (2)
+        │   ├───Invalid customer profile······(4)
+        │   └───Unable to contact·············(5)
+        ├───Proposition ------------- (4)
+        │   ├───Specific Requirements·········(6)
+        │   └───General terms not accepted····(8)
+        ├───Negotiation ------------- (5)
+        │   ├───Valued customer···············(7)
+        │   └───General terms not accepted····(8)
+        ├───Won --------------------- (6)
+        │   └───Agreement·····················(9)
+        └───Lost -------------------- (7)
+            ├───Unable to contact·············(5)
+            └───Rejected······················(10)
     """
 
     def setUp(self):
+        """ Setting up object which will perform the tests """
+
         rsxid = 'crm_case_stage_reason.crm_stage_reason_demo_%s'
         stxid = 'crm.stage_lead%s'
 
@@ -44,7 +63,8 @@ class TestCrmLead(TransactionCase):
             {'stage_id': self.st7.id, 'crm_reason_id': self.rs4.id},
         ]
 
-    def _log(self, level, msg_format, *args, **kwargs):
+    @classmethod
+    def _log(cls, level, msg_format, *args, **kwargs):
         """ Outputs an formated string in log
 
             :param level (int): 0=> debug, 1=> info, 2=> warning, 3=> error
@@ -73,6 +93,9 @@ class TestCrmLead(TransactionCase):
         | 1             | 1             | (1, 1)         |
         """
 
+        # Deliberate access to the private methods will be tested
+        values_to_update = getattr(self._lead_obj, '_values_to_update')
+
         # STEP 1: Define the expected results
         results = [
             (False, False),
@@ -90,7 +113,7 @@ class TestCrmLead(TransactionCase):
         for values in self._chances:
 
             # STEP 2: Compute results calling method and print results
-            obtained = self._lead_obj._values_to_update(values),
+            obtained = values_to_update(values),
             expected = results[counter],
             self._log(0, 'obtainded {} / expected {}', obtained, expected)
 
@@ -108,6 +131,9 @@ class TestCrmLead(TransactionCase):
         """ Checks if the _reasons_from_stage works properly
         """
 
+        # Deliberate access to the private methods will be tested
+        reasons_from_stage = getattr(self._lead_obj, '_reasons_from_stage')
+
         # STEP 1: Load all stages
         stage_domain = []
         stage_obj = self.env['crm.case.stage']
@@ -120,7 +146,7 @@ class TestCrmLead(TransactionCase):
             default_reason_id = stage.default_crm_reason_id.id or None
 
             # STEP 3: Call tested method for current stage
-            result = self._lead_obj._reasons_from_stage(stage.id)
+            result = reasons_from_stage(stage.id)
 
             # STEP 4: compare reasons earned from stage and tested method
             self._log(0, 'obtained: {} / expected: {}', result[0], reason_ids)
@@ -141,6 +167,10 @@ class TestCrmLead(TransactionCase):
     def test__stages_from_reason(self):
         """ Checks if the _stages_from_reason works properly
         """
+
+        # Deliberate access to the private methods will be tested
+        stages_from_reason = getattr(self._lead_obj, '_stages_from_reason')
+
         # STEP 1: Load all reasons
         reason_domain = []
         reason_obj = self.env['crm.stage.reason']
@@ -152,7 +182,7 @@ class TestCrmLead(TransactionCase):
             stage_ids = reason.crm_stages_ids.mapped('id')
 
             # STEP 3: Call tested method for current reason
-            result = self._lead_obj._stages_from_reason(reason.id)
+            result = stages_from_reason(reason.id)
 
             # STEP 4: compare stages earned from reason and tested method
             self._log(0, 'stages: {} / {}', result, stage_ids)
@@ -162,8 +192,47 @@ class TestCrmLead(TransactionCase):
                 msg='_stages_from_reasone(%s) fails!' % reason.id
             )
 
+    def _expected_values(self, lead_dict, values, expected):
+        """ Compares result from _ensure_values method with an expected
+        dictionary using a dictionary of different lead records
+
+        :param lead_dict: dictionary {name:crm.lead,...}
+        :param values: dictionary with the values will be passed to the method
+        :param expected: dictionary with the values will be expected as result
+        """
+
+        msg = u'%s._ensure_values fails with %s'
+
+        for key, lead_obj in lead_dict.iteritems():
+            self._log(0, '{}._ensure_values({}) (expecting...)', key, values)
+            ensure_values = getattr(lead_obj, '_ensure_values')
+            result = ensure_values(values)
+            self.assertDictEqual(expected, result, msg % (key, values))
+
+    def _expected_fail(self, lead_dict, values):
+        """ Check if method fails
+
+        :param lead_dict: dictionary {name:crm.lead,...}
+        :param values: dictionary with the values will be passed to the method
+        """
+
+        msg = u'%s._ensure_values fails with %s'
+
+        for key, lead_obj in lead_dict.iteritems():
+            self._log(0, '{}._ensure_values({}) (should fail)', key, values)
+            ensure_values = getattr(lead_obj, '_ensure_values')
+            try:
+                result = ensure_values(values)
+            except AssertionError as ex:
+                self._log(0, u'Expected AssertionError {}', ex)
+                result = None
+            self.assertIsNone(result, msg % (key, values))
+
     def test__ensure_values(self):
-        """ Checks if the _ensure_values works properly
+        """ Checks if the ``_ensure_values`` works properly
+
+        It tests the nine cases shown in the following table:
+
         | new_stage_id  | new_reason_id | action                           |
         | ------------- | ------------- | -------------------------------- |
         |               |               |                                  |
@@ -175,169 +244,104 @@ class TestCrmLead(TransactionCase):
         |    Not None   |               | Add default reason in values     |
         |    Not None   |    None       | 'crm_reason_id': None (*)        |
         |    Not None   |    Not None   | Check if new reason in new stage |
+
+        The third and nineth cases depends of the recordset, this method tests
+        both with the two possible results.
         """
-        msg = u'_ensure_values fails with %s'
+
+        # STEP 0: Declare and initialice variables
+        rxid = 'crm_case_stage_reason.crm_stage_reason_demo_%d'
+
+        # Empty recordset, record with ``New`` as stage and with a different
         lead_obj = self._lead_obj
         lead_new = self.env.ref('crm.crm_case_27')
         lead_dead = self.env.ref('crm.crm_case_11')
 
-        stage_new = self.env.ref('crm.stage_lead1')
-        reason_new = self.env.ref(
-            'crm_case_stage_reason.crm_stage_reason_demo_2')
-        reason_venture = self.env.ref(
-            'crm_case_stage_reason.crm_stage_reason_demo_3')
+        lead_all = {
+            'lead_obj': lead_obj,
+            'lead_new': lead_new,
+            'lead_dead': lead_dead
+        }
 
-        # STEP 1: |               |               |
+        # The ``New`` stage; valid, default and invalid reason
+        stage_new = self.env.ref('crm.stage_lead1')
+
+        reason_new = self.env.ref(rxid % 2)
+        reason_venture = self.env.ref(rxid % 3)
+        reason_agreement = self.env.ref(rxid % 9)
+
+        # TEST 1: new_stage_id: empty, new_reason_id: empty
         # ----------------------------------------------------------
         values = {}
         expected = {}
 
-        result = lead_obj._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
+        self._expected_values(lead_all, values, expected)
 
-        result = lead_new._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
-
-        result = lead_dead._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
-
-        # STEP 2: |               |    None       |
+        # TEST 2: new_stage_id: empty, new_reason_id: none
         # ----------------------------------------------------------
         values = {'crm_reason_id': None}
         expected = {'crm_reason_id': None}
 
-        result = lead_obj._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
+        self._expected_values(lead_all, values, expected)
 
-        result = lead_new._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
-
-        result = lead_dead._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
-
-        # STEP 3: |               |    Not None   |
+        # TEST 3: new_stage_id: empty, new_reason_id: value
+        # It must fail when ``stage_id`` is different than ``New``
         # ----------------------------------------------------------
         values = {'crm_reason_id': reason_new.id}
-        expected = None
-        try:
-            result = lead_obj._ensure_values(values)
-        except:
-            result = None
-        self.assertIsNone(result,  msg % values)
+        expected = {'crm_reason_id': reason_new.id}
 
-        # try:
-        #     result = lead_new._ensure_values(values)
-        # except:
-        #     result = None
-        # self.assertDictEqual(expected, result, msg % values)
+        self._expected_values({'lead_new': lead_new}, values, expected)
 
-        try:
-            result = lead_dead._ensure_values(values)
-        except:
-            result = None
-        self.assertIsNone(result,  msg % values)
+        fail_dict = {'lead_obj': lead_obj, 'lead_dead': lead_dead}
+        self._expected_fail(fail_dict, values)
 
-        # STEP 4: |    None       |               |
+        # TEST 4: new_stage_id: none, new_reason_id: empty
         # ----------------------------------------------------------
         values = {'stage_id': None}
         expected = {'stage_id': None, 'crm_reason_id': None}
 
-        result = lead_obj._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
+        self._expected_values(lead_all, values, expected)
 
-        result = lead_new._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
-
-        result = lead_dead._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
-
-        # STEP 5: |    None       |    None       |
+        # TEST 5: new_stage_id: none, new_reason_id: none
         # ----------------------------------------------------------
         values = {'stage_id': None, 'crm_reason_id': None}
         expected = {'stage_id': None, 'crm_reason_id': None}
 
-        result = lead_obj._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
+        self._expected_values(lead_all, values, expected)
 
-        result = lead_new._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
-
-        result = lead_dead._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
-
-        # STEP 6: |    None       |    Not None   |
+        # TEST 6: new_stage_id: empty, new_reason_id: value
+        # It should fail in all cases
         # ----------------------------------------------------------
         values = {'stage_id': None, 'crm_reason_id': reason_new.id}
-        expected = None
-        try:
-            result = lead_obj._ensure_values(values)
-        except:
-            result = None
-        self.assertIsNone(result,  msg % values)
+        self._expected_fail(lead_all, values)
 
-        try:
-            result = lead_new._ensure_values(values)
-        except:
-            result = None
-        self.assertIsNone(result,  msg % values)
-
-        try:
-            result = lead_dead._ensure_values(values)
-        except:
-            result = None
-        self.assertIsNone(result,  msg % values)
-
-        # STEP 7: |    Not None   |               |
+        # TEST 7: new_stage_id: value, new_reason_id: empty
         # ----------------------------------------------------------
         values = {'stage_id': stage_new.id}
         expected = dict(
             stage_id=stage_new.id, crm_reason_id=reason_venture.id)
 
-        result = lead_obj._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
+        self._expected_values(lead_all, values, expected)
 
-        result = lead_new._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
-
-        result = lead_dead._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
-
-        # STEP 8: |    Not None   |    None       |
+        # TEST 8: new_stage_id: value, new_reason_id: none
         # ----------------------------------------------------------
         values = {'stage_id': stage_new.id, 'crm_reason_id': None}
         expected = {'stage_id': stage_new.id, 'crm_reason_id': None}
 
-        result = lead_obj._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
+        self._expected_values(lead_all, values, expected)
 
-        result = lead_new._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
-
-        result = lead_dead._ensure_values(values)
-        self.assertDictEqual(expected, result, msg % values)
-
-        # STEP 9: |    Not None   |    Not None   |
+        # TEST 9: new_stage_id: value, new_reason_id: value
+        # It success if stage_id and reason are compatible or fails otherwise
         # ----------------------------------------------------------
         values = {'stage_id': stage_new.id, 'crm_reason_id': reason_new.id}
         expected = {'stage_id': stage_new.id, 'crm_reason_id': reason_new.id}
 
-        try:
-            result = lead_obj._ensure_values(values)
-        except:
-            result = None
-        self.assertDictEqual(expected, result, msg % values)
+        # 1
+        self._expected_values(lead_all, values, expected)
 
-        try:
-            result = lead_new._ensure_values(values)
-        except:
-            result = None
-        self.assertDictEqual(expected, result, msg % values)
-
-        try:
-            result = lead_dead._ensure_values(values)
-        except:
-            result = None
-        self.assertDictEqual(expected, result, msg % values)
+        # 2
+        values.update({'crm_reason_id': reason_agreement.id})
+        self._expected_fail(lead_all, values)
 
     # -------------------------- SQL QUERY STRINGS ----------------------------
 
