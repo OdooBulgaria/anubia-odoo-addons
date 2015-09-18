@@ -4,15 +4,12 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from openerp import models, fields, api
-from openerp.tools.translate import _
+from openerp.tests.common import TransactionCase
+
 from logging import getLogger
 
 
 _logger = getLogger(__name__)
-
-
-from openerp.tests.common import TransactionCase
 
 
 class TestCrmLead(TransactionCase):
@@ -179,117 +176,168 @@ class TestCrmLead(TransactionCase):
         |    Not None   |    None       | 'crm_reason_id': None (*)        |
         |    Not None   |    Not None   | Check if new reason in new stage |
         """
+        msg = u'_ensure_values fails with %s'
+        lead_obj = self._lead_obj
+        lead_new = self.env.ref('crm.crm_case_27')
+        lead_dead = self.env.ref('crm.crm_case_11')
 
-        # STEP 1: Load all leads
-        lead_domain = []
-        lead_obj = self.env['crm.lead']
-        lead_set = lead_obj.search(lead_domain)
+        stage_new = self.env.ref('crm.stage_lead1')
+        reason_new = self.env.ref(
+            'crm_case_stage_reason.crm_stage_reason_demo_2')
+        reason_venture = self.env.ref(
+            'crm_case_stage_reason.crm_stage_reason_demo_3')
 
-        # STEP 2: Loop all chances
-        for values in self._chances:
+        # STEP 1: |               |               |
+        # ----------------------------------------------------------
+        values = {}
+        expected = {}
 
-            result = {}
-            fail = False
-            lead_list = self._lead_obj
+        result = lead_obj._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
 
-            # STEP 3: Loop in accumulated lead recordset
-            for lead in (self._lead_obj + lead_set):
+        result = lead_new._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
 
-                lead_list = lead_list + lead
-                self._log(0, 'Lead {}', lead_list)
+        result = lead_dead._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
 
-                # STEP 4: Call method and save result or catch error
-                # By each lead recordset and chance
-                try:
-                    result = lead_list._ensure_values(values)
-                except:
-                    fail = True
+        # STEP 2: |               |    None       |
+        # ----------------------------------------------------------
+        values = {'crm_reason_id': None}
+        expected = {'crm_reason_id': None}
 
-                # STEP 5: Test special cases, when crm_reason_id is numeric
-                if 'crm_reason_id' in values and values['crm_reason_id']:
-                    self._test__ensure_values_special(values, fail)
+        result = lead_obj._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
 
-                # STEP 6: Test common cases if method have not raised an error
-                if not fail:
-                    self._test__ensure_values_common(values, result)
+        result = lead_new._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
 
-    # -------------------------- AUXILIARY METHODS ----------------------------
+        result = lead_dead._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
 
-    def _test__ensure_values_common(self, values, result):
-        """ Checks common cases in _ensure_values method
-        | new_stage_id  | new_reason_id | action                           |
-        | ------------- | ------------- | -------------------------------- |
-        |               |               |                                  |
-        |               |    None       | 'crm_reason_id': None (*)        |
-        |    None       |               | 'crm_reason_id': None            |
-        |    None       |    None       | 'crm_reason_id': None (*)        |
-        |    Not None   |               | Add default reason in values     |
-        |    Not None   |    None       | 'crm_reason_id': None (*)        |
-        """
-        # STEP 1: Initialize variables
-        expected = values.copy()
-        stage_id = values.get('stage_id')
+        # STEP 3: |               |    Not None   |
+        # ----------------------------------------------------------
+        values = {'crm_reason_id': reason_new.id}
+        expected = None
+        try:
+            result = lead_obj._ensure_values(values)
+        except:
+            result = None
+        self.assertIsNone(result,  msg % values)
 
-        # STEP 2: When stage_id is numeric and crm_reason_id was not given,
-        # expected result must have the default_crm_reason_id
-        if stage_id and 'crm_reason_id' not in values:
-            stage_obj = self.env['crm.case.stage']
-            stage_set = stage_obj.browse(values['stage_id'])
-            expected.update(
-                {'crm_reason_id': stage_set.default_crm_reason_id.id or None}
-            )
+        # try:
+        #     result = lead_new._ensure_values(values)
+        # except:
+        #     result = None
+        # self.assertDictEqual(expected, result, msg % values)
 
-        # STEP 3: Check if obtained is DictEqual to the expected result
-        self._log(0, 'obtained: {} / expected: {}', expected, result)
-        self.assertDictEqual(
-            result,
-            values,
-            'Error: obtained: %s / expected: %s' % (expected, result)
-        )
+        try:
+            result = lead_dead._ensure_values(values)
+        except:
+            result = None
+        self.assertIsNone(result,  msg % values)
 
-    def _test__ensure_values_special(self, values, fail):
-        """ Checks special cases in _ensure_values method
-        | new_stage_id  | new_reason_id | action                           |
-        | ------------- | ------------- | -------------------------------- |
-        |               |    Not None   | checks new reason in ``self``    |
-        |    None       |    Not None   | Launch an error always           |
-        |    Not None   |    Not None   | Check if new reason in new stage |
-        """
+        # STEP 4: |    None       |               |
+        # ----------------------------------------------------------
+        values = {'stage_id': None}
+        expected = {'stage_id': None, 'crm_reason_id': None}
 
-        # STEP 1: When not stage_id new reason should be tested in recordset
-        if 'stage_id' not in values:
-            all_stage_ids = self._lead_obj.mapped('stage_id')
-            all_ids = set(all_stage_ids.mapped('id'))
+        result = lead_obj._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
 
-            reason_obj = self.env['crm.stage.reason']
-            reason_set = reason_obj.browse(values['crm_reason_id'])
-            valid_ids = set(reason_set.crm_stages_ids.mapped('id'))
+        result = lead_new._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
 
-            self._log(0, 'values: {}; fail: {}', values, fail)
-            self.assertTrue(
-                len(all_ids - valid_ids) == 0 or fail,
-                msg='%s should have raised an error' % (values,)
-            )
+        result = lead_dead._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
 
-        # STEP 2: When given stage_id is None an error should be raised
-        elif values['stage_id'] == None:
-            self._log(0, 'values: {}; fail: {}', values, fail)
-            self.assertTrue(
-                fail,
-                msg='%s should have raised an error' % (values,)
-            )
+        # STEP 5: |    None       |    None       |
+        # ----------------------------------------------------------
+        values = {'stage_id': None, 'crm_reason_id': None}
+        expected = {'stage_id': None, 'crm_reason_id': None}
 
-        # STEP 3: When stage_id was given, reason should be tested for it
-        else:
-            stage_obj = self.env['crm.case.stage']
-            stage_set = stage_obj.browse(values['stage_id'])
-            _ids = stage_set.crm_reason_ids.mapped('id')
+        result = lead_obj._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
 
-            self._log(0, 'values: {}; fail: {}', values, fail)
-            self.assertTrue(
-                values['crm_reason_id'] in _ids or fail,
-                msg='%s should have raised an error' % (values,)
-            )
+        result = lead_new._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
+
+        result = lead_dead._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
+
+        # STEP 6: |    None       |    Not None   |
+        # ----------------------------------------------------------
+        values = {'stage_id': None, 'crm_reason_id': reason_new.id}
+        expected = None
+        try:
+            result = lead_obj._ensure_values(values)
+        except:
+            result = None
+        self.assertIsNone(result,  msg % values)
+
+        try:
+            result = lead_new._ensure_values(values)
+        except:
+            result = None
+        self.assertIsNone(result,  msg % values)
+
+        try:
+            result = lead_dead._ensure_values(values)
+        except:
+            result = None
+        self.assertIsNone(result,  msg % values)
+
+        # STEP 7: |    Not None   |               |
+        # ----------------------------------------------------------
+        values = {'stage_id': stage_new.id}
+        expected = dict(
+            stage_id=stage_new.id, crm_reason_id=reason_venture.id)
+
+        result = lead_obj._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
+
+        result = lead_new._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
+
+        result = lead_dead._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
+
+        # STEP 8: |    Not None   |    None       |
+        # ----------------------------------------------------------
+        values = {'stage_id': stage_new.id, 'crm_reason_id': None}
+        expected = {'stage_id': stage_new.id, 'crm_reason_id': None}
+
+        result = lead_obj._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
+
+        result = lead_new._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
+
+        result = lead_dead._ensure_values(values)
+        self.assertDictEqual(expected, result, msg % values)
+
+        # STEP 9: |    Not None   |    Not None   |
+        # ----------------------------------------------------------
+        values = {'stage_id': stage_new.id, 'crm_reason_id': reason_new.id}
+        expected = {'stage_id': stage_new.id, 'crm_reason_id': reason_new.id}
+
+        try:
+            result = lead_obj._ensure_values(values)
+        except:
+            result = None
+        self.assertDictEqual(expected, result, msg % values)
+
+        try:
+            result = lead_new._ensure_values(values)
+        except:
+            result = None
+        self.assertDictEqual(expected, result, msg % values)
+
+        try:
+            result = lead_dead._ensure_values(values)
+        except:
+            result = None
+        self.assertDictEqual(expected, result, msg % values)
 
     # -------------------------- SQL QUERY STRINGS ----------------------------
 

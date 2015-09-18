@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <openerp>
-    <data noupdate="0">
+    <data noupdate="1">
 
-        <record id="crm.crm_case_23" model="crm.lead">
-            <field name="crm_reason_id" ref="crm_stage_reason_demo_2" />
+        <record id="crm.crm_case_27" model="crm.lead">
+            <field name="crm_reason_id" ref="crm_stage_reason_demo_1" />
         </record>
 
-        <record id="crm.crm_case_24" model="crm.lead">
-            <field name="crm_reason_id" ref="crm_stage_reason_demo_2" />
+        <record id="crm.crm_case_13" model="crm.lead">
+            <field name="crm_reason_id" ref="crm_stage_reason_demo_3" />
         </record>
 
-        <record id="crm.crm_case_25" model="crm.lead">
-            <field name="crm_reason_id" ref="crm_stage_reason_demo_2" />
+        <record id="crm.crm_case_21" model="crm.lead">
+            <field name="crm_reason_id" ref="crm_stage_reason_demo_6" />
         </record>
 
-        <record id="crm.crm_case_26" model="crm.lead">
-            <field name="crm_reason_id" ref="crm_stage_reason_demo_2" />
+        <record id="crm.crm_case_11" model="crm.lead">
+            <field name="crm_reason_id" ref="crm_stage_reason_demo_5" />
         </record>
 
     </data>

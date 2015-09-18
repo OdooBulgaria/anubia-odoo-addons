@@ -1,56 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <openerp>
-    <data noupdate="0">
+    <data noupdate="1">
 
-        <!-- Reasons for stage of case: Won (default)
+        <!-- Reasons for stage of case: New
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <record id="crm_stage_reason_demo_1" model="crm.stage.reason">
-            <field name="name">Agreement</field>
+            <field name="name">Customer call</field>
             <field name="description">Reason demo 1</field>
             <field name="active" eval="True" />
-            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead6'))]" />
+            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead1'))]" />
         </record>
 
-        <!-- Reasons for stage of case: Negotiation (Not default)
-        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <record id="crm_stage_reason_demo_2" model="crm.stage.reason">
-            <field name="name">Valued customer</field>
+            <field name="name">Contact form</field>
             <field name="description">Reason demo 2</field>
             <field name="active" eval="True" />
-            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead5'))]" />
+            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead1'))]" />
         </record>
-
-        <!-- Reasons for stage of case: Dead (Not default)
-        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <record id="crm_stage_reason_demo_3" model="crm.stage.reason">
-            <field name="name">Invalid customer profile</field>
+            <field name="name">Business venture</field>
             <field name="description">Reason demo 3</field>
             <field name="active" eval="True" />
-            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead2'))]" />
+            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead1'))]" />
         </record>
 
-        <!-- Reasons for stage of case: Lost (default)
+        <!-- Reasons for stage of case: Dead
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <record id="crm_stage_reason_demo_4" model="crm.stage.reason">
-            <field name="name">Rejected</field>
+            <field name="name">Invalid customer profile</field>
             <field name="description">Reason demo 4</field>
             <field name="active" eval="True" />
-            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead7'))]" />
+            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead2'))]" />
         </record>
-
-        <!-- Reasons for several stages of cases
-        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <record id="crm_stage_reason_demo_5" model="crm.stage.reason">
             <field name="name">Unable to contact</field>
             <field name="description">Reason demo 5</field>
             <field name="active" eval="True" />
-            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead2')),(4, ref('crm.stage_lead7'))]" />
+            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead2')), (4, ref('crm.stage_lead7'))]" />
+        </record>
+
+        <!-- Reasons for stage of case: Proposition
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="crm_stage_reason_demo_6" model="crm.stage.reason">
+            <field name="name">Specific Requirements</field>
+            <field name="description">Reason demo 6</field>
+            <field name="active" eval="True" />
+            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead4'))]" />
+        </record>
+
+        <!-- Reasons for stage of case: Negotiation
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="crm_stage_reason_demo_7" model="crm.stage.reason">
+            <field name="name">Valued customer</field>
+            <field name="description">Reason demo 7</field>
+            <field name="active" eval="True" />
+            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead5'))]" />
+        </record>
+
+        <record id="crm_stage_reason_demo_8" model="crm.stage.reason">
+            <field name="name">General terms not accepted</field>
+            <field name="description">Reason demo 8</field>
+            <field name="active" eval="True" />
+            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead4')),(4, ref('crm.stage_lead5'))]" />
+        </record>
+
+        <!-- Reasons for stage of case: Won
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="crm_stage_reason_demo_9" model="crm.stage.reason">
+            <field name="name">Agreement</field>
+            <field name="description">Reason demo 9</field>
+            <field name="active" eval="True" />
+            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead6'))]" />
+        </record>
+
+        <!-- Reasons for stage of case: Lost
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="crm_stage_reason_demo_10" model="crm.stage.reason">
+            <field name="name">Rejected</field>
+            <field name="description">Reason demo 10</field>
+            <field name="active" eval="True" />
+            <field name="crm_stages_ids" eval="[(4, ref('crm.stage_lead7'))]" />
         </record>
 
     </data>

@@ -35,7 +35,7 @@ class CrmLeadChangelog(models.Model):
 
     lead_id = fields.Many2one(
         string='Lead',
-        required=False,
+        required=True,
         readonly=True,
         index=False,
         default=None,
@@ -98,16 +98,40 @@ class CrmLeadChangelog(models.Model):
         auto_join=False
     )
 
+    user_id_changed = fields.Boolean(
+        string='User was changed',
+        required=False,
+        readonly=False,
+        index=False,
+        default=False,
+        help='Checked if the user was changed'
+    )
+
+    stage_id_changed = fields.Boolean(
+        string='Stage of case was changed',
+        required=False,
+        readonly=False,
+        index=False,
+        default=False,
+        help='Checked if the stage of case was changed'
+    )
+
+    reason_id_changed = fields.Boolean(
+        string='Reason was changed',
+        required=False,
+        readonly=True,
+        index=False,
+        default=False,
+        help='Checked if the reason of stage of case was changed'
+    )
+
     # --------------------------- SQL CONSTRAINTS -----------------------------
 
-    _sql_constraints = [
-        (
-            'non_empty',
-            '''CHECK(stage_id IS NOT NULL OR user_id IS NOT NULL OR reason_id
-                IS NOT NULL)''',
-            _(u'Empty change in lead could not be registered')
-        )
-    ]
+    _sql_constraints = [(
+        'non_empty',
+        'CHECK(user_id_changed OR stage_id_changed OR reason_id_changed)',
+        _(u'Empty change in lead could not be registered')
+    )]
 
     # --------------------------- PUBLIC METHODS ------------------------------
 
@@ -123,30 +147,83 @@ class CrmLeadChangelog(models.Model):
         if self.env['crm.lead'].search_count([]):
             self.sudo().env.cr.execute(self._sql_ensure_changelog)
 
+    # -------------------------------- CRUD -----------------------------------
+
+    @api.multi
+    def write(self, values):
+        """ Update all record(s) in recordset, with new value comes as {values}
+            return True on success, False otherwise
+
+            @param values: dict of new values to be set
+
+            @return: True on success, False otherwise
+        """
+
+        values = self._update_changelog_values(values)
+        result = super(CrmLeadChangelog, self).write(values)
+
+        return result
+
+    @api.model
+    def create(self, values):
+        """ Create a new record for a model CrmLeadChangelog
+            @param values: provides a data for new record
+
+            @return: returns a id of new record
+        """
+
+        values = self._update_changelog_values(values)
+        result = super(CrmLeadChangelog, self).create(values)
+
+        return result
+
+    # -------------------------- AUXILIARY METHODS ----------------------------
+
+    @api.model
+    def _update_changelog_values(self, values):
+        """ Set values for the Boolean fields. These fields will have a True
+        when user has been changed a value or False otherwise.
+
+        This method prevents theses fields can be updated manually too.
+        """
+
+        values.update({
+            'user_id_changed': 'user_id' in values,
+            'stage_id_changed': 'stage_id' in values,
+            'reason_id_changed': 'reason_id' in values
+        })
+
+        return values
+
     # ----------------------------- SQL STRINGS -------------------------------
 
     _sql_ensure_changelog = """
        INSERT INTO crm_lead_changelog (
             lead_id,
-            stage_id,
             user_id,
+            stage_id,
             reason_id,
             "date",
             create_uid,
             create_date,
             write_uid,
-            write_date
-
+            write_date,
+            user_id_changed,
+            stage_id_changed,
+            reason_id_changed
         ) SELECT
             "id",
-            stage_id,
             user_id,
+            stage_id,
             crm_reason_id,
             create_date,-- first changelog always match with the lead creation
             NULL,       -- allow to recognize preexisting leads in changelog
             NULL,       -- allow to recognize preexisting leads in changelog
             create_uid, -- first changelog always match with the lead creation
-            create_date -- first changelog always match with the lead creation
+            create_date, -- first changelog always match with the lead creation
+            user_id::BOOLEAN,
+            stage_id::BOOLEAN,
+            crm_reason_id::BOOLEAN
         FROM
             crm_lead
         WHERE

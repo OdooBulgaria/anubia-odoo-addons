@@ -5,7 +5,6 @@
 ###############################################################################
 
 from openerp import models, fields, api
-from openerp.tools.translate import _
 from openerp.tools import drop_view_if_exists
 from logging import getLogger
 
@@ -126,7 +125,7 @@ class CrmLeadChangelogUpdate(models.Model):
     )
 
     prev_reason_id = fields.Many2one(
-        string='Previous salesperson',
+        string='Previous reason',
         required=False,
         readonly=True,
         index=False,
@@ -136,11 +135,11 @@ class CrmLeadChangelogUpdate(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        help=('Salesperson assigned to the lead in the previous change')
+        help='Reason assigned to the lead in the previous change'
     )
 
     reason_id = fields.Many2one(
-        string='Salesperson',
+        string='Reason',
         required=True,
         readonly=True,
         index=False,
@@ -150,11 +149,11 @@ class CrmLeadChangelogUpdate(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        help=('Salesperson assigned to the lead in this change')
+        help='Reason assigned to the lead in this change'
     )
 
     next_reason_id = fields.Many2one(
-        string='Next salesperson',
+        string='Next reason',
         required=False,
         readonly=True,
         index=False,
@@ -164,8 +163,7 @@ class CrmLeadChangelogUpdate(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        help=('Salesperson who has been assigned to the lead in the next '
-              'change')
+        help='Reason who has been assigned to the lead in the next change'
     )
 
     item_id = fields.Reference(
@@ -197,30 +195,30 @@ class CrmLeadChangelogUpdate(models.Model):
     )
 
     is_initial = fields.Boolean(
-        string='Is the initial salesperson?',
+        string='Is the initial field change?',
         required=False,
         readonly=True,
         index=False,
         default=False,
-        help='Checked if it was the first change of salesperson'
+        help='Checked if it was the first change of field'
     )
 
     is_current = fields.Boolean(
-        string='Is the current salesperson?',
+        string='Is the current value of field?',
         required=False,
         readonly=True,
         index=False,
         default=False,
-        help='Checked if it was the last change of salesperson'
+        help='Checked if it was the last change of field'
     )
 
     sequence = fields.Integer(
-        string='Sequence',
+        string='Sequence field order',
         required=True,
         readonly=True,
         index=False,
         default=0,
-        help='Sequence order of this change in the lead changes'
+        help='Sequence order of this change in the field changes'
     )
 
     date = fields.Datetime(
@@ -265,6 +263,8 @@ class CrmLeadChangelogUpdate(models.Model):
         compute=lambda self: self._compute_display_up_to()
     )
 
+    # ----------------------- COMPUTED FIELD METHODS --------------------------
+
     @api.multi
     @api.depends('lead_id', 'item_id')
     def _compute_display_name(self):
@@ -279,6 +279,8 @@ class CrmLeadChangelogUpdate(models.Model):
             year = fields.Datetime.from_string(record.up_to).year
             record.display_up_to = year < 9999 and record.up_to or 'infinity'
 
+    # --------------------------- ONCHANGE EVENTS -----------------------------
+
     @api.one
     @api.onchange('lead_id')
     def _onchange_lead_id(self):
@@ -288,6 +290,8 @@ class CrmLeadChangelogUpdate(models.Model):
     @api.onchange('item_id')
     def _onchange_user_id(self):
         self._compute_display_name()
+
+    # ------------------------- OVERWRITTEN METHODS ---------------------------
 
     def init(self, cr):
         """ Build database view which will be used as module origin
@@ -335,7 +339,8 @@ class CrmLeadChangelogUpdate(models.Model):
                             crm_lead_changelog.date,
                             crm_lead_changelog.create_date
                            FROM crm_lead_changelog
-                          WHERE (crm_lead_changelog.user_id IS NOT NULL)) t1
+                          WHERE (
+                            crm_lead_changelog.user_id_changed IS TRUE)) t1
                   WINDOW user_w AS (PARTITION BY t1.lead_id ORDER BY t1.date)
                   ORDER BY t1.lead_id, t1.date DESC
                 ), stage_updates AS (
@@ -376,7 +381,8 @@ class CrmLeadChangelogUpdate(models.Model):
                             crm_lead_changelog.date,
                             crm_lead_changelog.create_date
                            FROM crm_lead_changelog
-                          WHERE (crm_lead_changelog.stage_id IS NOT NULL)) t1
+                          WHERE (
+                            crm_lead_changelog.stage_id_changed IS TRUE)) t1
                   WINDOW stage_w AS (PARTITION BY t1.lead_id ORDER BY t1.date)
                   ORDER BY t1.lead_id, t1.date DESC
                 ), reason_updates AS (
@@ -417,7 +423,8 @@ class CrmLeadChangelogUpdate(models.Model):
                             crm_lead_changelog.date,
                             crm_lead_changelog.create_date
                            FROM crm_lead_changelog
-                          WHERE (crm_lead_changelog.reason_id IS NOT NULL)) t1
+                          WHERE (
+                            crm_lead_changelog.reason_id_changed IS TRUE)) t1
                   WINDOW reason_w AS (PARTITION BY t1.lead_id ORDER BY t1.date)
                   ORDER BY t1.lead_id, t1.date DESC
                 )

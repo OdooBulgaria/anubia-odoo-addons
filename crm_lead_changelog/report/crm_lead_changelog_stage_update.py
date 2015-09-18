@@ -5,7 +5,6 @@
 ###############################################################################
 
 from openerp import models, fields, api
-from openerp.tools.translate import _
 from openerp.tools import drop_view_if_exists
 from logging import getLogger
 
@@ -24,6 +23,8 @@ class CrmLeadChangelogStageUpdate(models.Model):
     _order = 'lead_id DESC, date DESC'
 
     _auto = False
+
+    # ---------------------------- ENTITY FIELDS ------------------------------
 
     lead_id = fields.Many2one(
         string='Lead/Opportunity',
@@ -50,7 +51,7 @@ class CrmLeadChangelogStageUpdate(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        help=('Stage of case assigned to the lead in the previous change')
+        help='Stage of case assigned to the lead in the previous change'
     )
 
     stage_id = fields.Many2one(
@@ -64,7 +65,7 @@ class CrmLeadChangelogStageUpdate(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        help=('Stage of case assigned to the lead in this change')
+        help='Stage of case assigned to the lead in this change'
     )
 
     next_stage_id = fields.Many2one(
@@ -78,8 +79,7 @@ class CrmLeadChangelogStageUpdate(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        help=('Stage of case who has been assigned to the lead in the next '
-              'change')
+        help='Stage of case assigned to the lead in the net change'
     )
 
     is_initial = fields.Boolean(
@@ -151,6 +151,8 @@ class CrmLeadChangelogStageUpdate(models.Model):
         compute=lambda self: self._compute_display_up_to()
     )
 
+    # ----------------------- COMPUTED FIELD METHODS --------------------------
+
     @api.multi
     @api.depends('lead_id', 'stage_id')
     def _compute_display_name(self):
@@ -165,6 +167,8 @@ class CrmLeadChangelogStageUpdate(models.Model):
             year = fields.Datetime.from_string(record.up_to).year
             record.display_up_to = year < 9999 and record.up_to or 'infinity'
 
+    # --------------------------- ONCHANGE EVENTS -----------------------------
+
     @api.one
     @api.onchange('lead_id')
     def _onchange_lead_id(self):
@@ -175,6 +179,7 @@ class CrmLeadChangelogStageUpdate(models.Model):
     def _onchange_stage_id(self):
         self._compute_display_name()
 
+    # ------------------------- OVERWRITTEN METHODS ---------------------------
 
     def init(self, cr):
         """ Build database view which will be used as module origin
@@ -183,38 +188,38 @@ class CrmLeadChangelogStageUpdate(models.Model):
         """
 
         self._sql_query = """
-            SELECT
-                ROW_NUMBER() OVER() AS "id",
-                create_uid,
-                create_date,
-                write_uid,
-                write_date,
-                lead_id,
-                LAG (stage_id, 1, NULL) OVER stage_w AS prev_stage_id,
-                stage_id,
-                LEAD (stage_id, 1, NULL) OVER stage_w AS next_stage_id,
-                NOT(LAG (stage_id, 1, 0) OVER stage_w)::BOOLEAN AS is_initial,
-                NOT(LEAD(stage_id, 1, 0) OVER stage_w)::BOOLEAN AS is_current,
-                RANK () OVER stage_w AS "sequence",
-                "date",
-                LEAD ("date", 1,'9999-12-31 00:00:00' :: TIMESTAMP)
-                    OVER stage_w AS "up_to"
-            FROM
-                (
-                    SELECT
-                        *
-                    FROM
-                        crm_lead_changelog
-                    WHERE
-                        stage_id IS NOT NULL
-                ) AS T1 WINDOW stage_w AS (
-                    PARTITION BY lead_id
-                    ORDER BY
-                        DATE ASC
-                )
-            ORDER BY
-                lead_id ASC,
-                "date" DESC
+        SELECT
+            ROW_NUMBER() OVER() AS "id",
+            create_uid,
+            create_date,
+            write_uid,
+            write_date,
+            lead_id,
+            LAG (stage_id, 1, NULL) OVER stage_w AS prev_stage_id,
+            stage_id,
+            LEAD (stage_id, 1, NULL) OVER stage_w AS next_stage_id,
+            NOT(LAG (stage_id, 1, 0) OVER stage_w)::BOOLEAN AS is_initial,
+            NOT(LEAD(stage_id, 1, 0) OVER stage_w)::BOOLEAN AS is_current,
+            RANK () OVER stage_w AS "sequence",
+            "date",
+            LEAD ("date", 1,'9999-12-31 00:00:00' :: TIMESTAMP)
+                OVER stage_w AS "up_to"
+        FROM
+            (
+                SELECT
+                    *
+                FROM
+                    crm_lead_changelog
+                WHERE
+                    stage_id_changed IS TRUE
+            ) AS T1 WINDOW stage_w AS (
+                PARTITION BY lead_id
+                ORDER BY
+                    DATE ASC
+            )
+        ORDER BY
+            lead_id ASC,
+            "date" DESC
         """
 
         drop_view_if_exists(cr, self._table)

@@ -183,38 +183,38 @@ class CrmLeadChangelogUserUpdate(models.Model):
         """
 
         self._sql_query = """
-            SELECT
-                ROW_NUMBER() OVER() AS "id",
-                create_uid,
-                create_date,
-                write_uid,
-                write_date,
-                lead_id,
-                LAG (user_id, 1, NULL) OVER user_w AS prev_user_id,
-                user_id,
-                LEAD (user_id, 1, NULL) OVER user_w AS next_user_id,
-                NOT(LAG (user_id, 1, 0) OVER user_w)::BOOLEAN AS is_initial,
-                NOT(LEAD(user_id, 1, 0) OVER user_w)::BOOLEAN AS is_current,
-                RANK () OVER user_w AS "sequence",
-                "date",
-                LEAD ("date", 1,'9999-12-31 00:00:00' :: TIMESTAMP)
-                    OVER user_w AS "up_to"
-            FROM
-                (
-                    SELECT
-                        *
-                    FROM
-                        crm_lead_changelog
-                    WHERE
-                        user_id IS NOT NULL
-                ) AS T1 WINDOW user_w AS (
-                    PARTITION BY lead_id
-                    ORDER BY
-                        DATE ASC
-                )
-            ORDER BY
-                lead_id ASC,
-                "date" DESC
+        SELECT
+            ROW_NUMBER() OVER() AS "id",
+            create_uid,
+            create_date,
+            write_uid,
+            write_date,
+            lead_id,
+            LAG (user_id, 1, NULL) OVER user_w AS prev_user_id,
+            user_id,
+            LEAD (user_id, 1, NULL) OVER user_w AS next_user_id,
+            NOT(LAG (user_id, 1, 0) OVER user_w)::BOOLEAN AS is_initial,
+            NOT(LEAD(user_id, 1, 0) OVER user_w)::BOOLEAN AS is_current,
+            RANK () OVER user_w AS "sequence",
+            "date",
+            LEAD ("date", 1,'9999-12-31 00:00:00' :: TIMESTAMP)
+                OVER user_w AS "up_to"
+        FROM
+            (
+                SELECT
+                    *
+                FROM
+                    crm_lead_changelog
+                WHERE
+                    user_id_changed IS TRUE
+            ) AS T1 WINDOW user_w AS (
+                PARTITION BY lead_id
+                ORDER BY
+                    DATE ASC
+            )
+        ORDER BY
+            lead_id ASC,
+            "date" DESC
         """
 
         drop_view_if_exists(cr, self._table)

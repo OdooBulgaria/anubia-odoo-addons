@@ -5,7 +5,6 @@
 ################################################################
 
 from openerp import models, fields, api
-from openerp.tools.translate import _
 
 import logging
 
@@ -20,6 +19,8 @@ class CrmLead(models.Model):
 
     _inherit = 'crm.lead'
 
+    _fnames_to_track = ('user_id', 'stage_id', 'crm_reason_id')
+
     # --------------------------- ENTITY FIELDS -------------------------------
 
     changelog_ids = fields.One2many(
@@ -32,23 +33,6 @@ class CrmLead(models.Model):
     )
 
     # --------------------------- COMPUTED FIELDS -----------------------------
-
-    stage_changelog_ids = fields.One2many(
-        string='Stage of case changelog',
-        required=False,
-        readonly=True,
-        index=False,
-        default=None,
-        help='Changes made in stage of case',
-        comodel_name='crm.lead.changelog',
-        inverse_name='lead_id',
-        domain=[('stage_id', '<>', False)],
-        context={},
-        auto_join=False,
-        limit=None,
-        compute=lambda self: self._compute_stage_changelog_ids(),
-        search=lambda self, op, vl: self._search_stage_changelog_ids(op, vl)
-    )
 
     user_changelog_ids = fields.One2many(
         string='Salesperson changelog',
@@ -67,7 +51,52 @@ class CrmLead(models.Model):
         search=lambda self, op, vl: self._search_user_changelog_ids(op, vl)
     )
 
+    stage_changelog_ids = fields.One2many(
+        string='Stage of case changelog',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help='Changes made in stage of case',
+        comodel_name='crm.lead.changelog',
+        inverse_name='lead_id',
+        domain=[('stage_id', '<>', False)],
+        context={},
+        auto_join=False,
+        limit=None,
+        compute=lambda self: self._compute_stage_changelog_ids(),
+        search=lambda self, op, vl: self._search_stage_changelog_ids(op, vl)
+    )
+
+    reason_changelog_ids = fields.One2many(
+        string='Reason changelog',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help='Changes made in reason',
+        comodel_name='crm.lead.changelog',
+        inverse_name='lead_id',
+        domain=[('reason_id', '<>', False)],
+        context={},
+        auto_join=False,
+        limit=None,
+        compute=lambda self: self._compute_reason_changelog_ids(),
+        search=lambda self, op, vl: self._search_reason_changelog_ids(op, vl)
+    )
+
     # --------------------------- COMPUTE METHODS -----------------------------
+
+    @api.multi
+    @api.depends('changelog_ids')
+    def _compute_user_changelog_ids(self):
+        """ Fills ``user_changelog_ids`` with related changelogs filtering
+        those to which have assigned ``user_id``
+        """
+
+        for record in self:
+            record.user_changelog_ids = record.changelog_ids.filtered(
+                lambda x: x.user_id)
 
     @api.multi
     @api.depends('changelog_ids')
@@ -82,14 +111,14 @@ class CrmLead(models.Model):
 
     @api.multi
     @api.depends('changelog_ids')
-    def _compute_user_changelog_ids(self):
-        """ Fills ``user_changelog_ids`` with related changelogs filtering
-        those to which have assigned ``user_id``
+    def _compute_reason_changelog_ids(self):
+        """ Fills ``reason_changelog_ids`` with related changelogs filtering
+        those to which have assigned ``reason_id``
         """
 
         for record in self:
             record.user_changelog_ids = record.changelog_ids.filtered(
-                lambda x: x.user_id)
+                lambda x: x.reason_id)
 
     # --------------------------- SEARCH METHODS ------------------------------
 
@@ -103,23 +132,6 @@ class CrmLead(models.Model):
         changelog_obj.check_access_rights('read')
 
         changelog_domain = [('date', operator, value)]
-        changelog_set = changelog_obj.search(changelog_domain)
-
-        _ids = [x.lead_id and x.lead_id.id or 0 for x in changelog_set]
-
-        return [('id', 'in', [_ids])]
-
-    @api.model
-    def _search_stage_changelog_ids(self, operator, value):
-        """ Search method for computed field ``user_changelog_ids``
-        Searches ``value`` in all related changelogs in which the ``stage_id``
-        has changed
-        """
-
-        changelog_obj = self.env['crm.lead.changelog']
-        changelog_obj.check_access_rights('read')
-
-        changelog_domain = [('stage_id', operator, value)]
         changelog_set = changelog_obj.search(changelog_domain)
 
         _ids = [x.lead_id and x.lead_id.id or 0 for x in changelog_set]
@@ -144,6 +156,41 @@ class CrmLead(models.Model):
 
         return [('id', 'in', [_ids])]
 
+    @api.model
+    def _search_stage_changelog_ids(self, operator, value):
+        """ Search method for computed field ``user_changelog_ids``
+        Searches ``value`` in all related changelogs in which the ``stage_id``
+        has changed
+        """
+
+        changelog_obj = self.env['crm.lead.changelog']
+        changelog_obj.check_access_rights('read')
+
+        changelog_domain = [('stage_id', operator, value)]
+        changelog_set = changelog_obj.search(changelog_domain)
+
+        _ids = [x.lead_id and x.lead_id.id or 0 for x in changelog_set]
+
+        return [('id', 'in', [_ids])]
+
+    @api.model
+    def _search_reason_changelog_ids(self, operator, value):
+        """ Search method for ``reason_changelog_ids`` computed field.
+
+        Searches ``value`` in all related changelogs in which the ``reason_id``
+        has changed.
+        """
+
+        changelog_obj = self.env['crm.lead.changelog']
+        changelog_obj.check_access_rights('read')
+
+        changelog_domain = [('reason_id', operator, value)]
+        changelog_set = changelog_obj.search(changelog_domain)
+
+        _ids = [x.lead_id and x.lead_id.id or 0 for x in changelog_set]
+
+        return [('id', 'in', [_ids])]
+
     # -------------------------- ONCHANGE ENVENTS -----------------------------
 
     @api.onchange('changelog_ids')
@@ -151,8 +198,30 @@ class CrmLead(models.Model):
         """ Recomputes those fields which depend from ``changelog_ids``
         """
 
-        self._compute_stage_changelog_ids()
         self._compute_user_changelog_ids()
+        self._compute_stage_changelog_ids()
+        self._compute_reason_changelog_ids()
+
+    @api.onchange('user_id')
+    def _onchange_user_id(self):
+        """ Recomputes those fields which depend from ``user_id``
+        """
+
+        self._compute_user_changelog_ids()
+
+    @api.onchange('stage_id')
+    def _onchange_stage_id(self):
+        """ Recomputes those fields which depend from ``stage_id``
+        """
+
+        self._compute_stage_changelog_ids()
+
+    @api.onchange('crm_reason_id')
+    def _onchange_crm_reason_id(self):
+        """ Recomputes those fields which depend from ``crm_reason_id``
+        """
+
+        self._compute_reason_changelog_ids()
 
     # ------------------------ METHODS OVERWRITTEN ----------------------------
 
@@ -165,11 +234,8 @@ class CrmLead(models.Model):
         # STEP 1: Calling parent method to perform the changes in the leads
         result = super(CrmLead, self).create(values)
 
-        # STEP 2: Update the changelog before the leads are changed
-        stage_id, user_id, reason_id = self._changes_to_register(values)
-        # needless, stage_id always appears on create
-        if stage_id or user_id or reason_id:
-            result._update_changelog(stage_id, user_id, reason_id)
+        # STEP 2: Update the changelog after the leads are changed
+        self._update_changelog(values)
 
         return result
 
@@ -179,67 +245,58 @@ class CrmLead(models.Model):
         ``user_id`` and ``reason_id``.
         """
 
-        values = self._update_lead_reason(values)
+        # STEP 1: Calling parent method to perform the changes in the leads
+        result = super(CrmLead, self).write(values)
 
-        # STEP 1: Update the changelog before the leads are changed
-        stage_id, user_id, reason_id = self._changes_to_register(values)
-        if stage_id or user_id or reason_id:
-            self._update_changelog(stage_id, user_id, reason_id)
+        # STEP 2: Update the changelog after the leads are changed
+        self._update_changelog(values)
 
-        # STEP 2: Calling parent method to perform the changes in the leads
-        return super(CrmLead, self).write(values)
+        return result
 
     # -------------------------- AUXILIARY METHODS ----------------------------
 
     @api.model
-    def _changes_to_register(self, values):
-        """ Return a tuple with ``stage_id``, ``user_id`` and ``reason_id``
-            values (Integers)
+    def _get_fields_to_track(self, values):
+        fnames = self._fnames_to_track
+        values = dict((k, v) for k, v in values.items() if k in fnames)
 
-        :param values: dictionary from create or write methods.
-        :return: tuple (stage_id, user_id, reason_id); each one of the item
-            could be False
-        """
+        # PATCH: fields should have the same name
+        if 'crm_reason_id' in values:
+            values['reason_id'] = values.pop('crm_reason_id')
 
-        return values.get('stage_id', False), \
-            values.get('user_id', False), \
-            values.get('crm_reason_id', False)
+        return values
 
     @api.multi
-    def _update_changelog(self, stage_id, user_id, reason_id):
+    def _update_changelog(self, values):
         """ Create a changelog record for each one of the leads in recordset
-
-        :param stage_id (integer): id of the stage or False
-        :param user_id (integer): id of the user (salesperson) or False
-        :param reason_id (integer): id of the reason or False
         """
 
-        log_obj = self.env['crm.lead.changelog']
+        fields_to_track = self._get_fields_to_track(values)
 
-        values = {
-            'stage_id': stage_id,
-            'user_id': user_id,
-            'reason_id': reason_id
-        }
-        values.update({'create_uid': self.env.uid, 'write_uid': self.env.uid})
+        self._log(0, 'fields_to_track {}', fields_to_track)
 
-        for record in self:
-            values.update({'lead_id': record.id})
-            log_obj.create(values)
+        if fields_to_track:
 
-    def _update_lead_reason(self, values):
-        """ If stage have been changed ('stage_id' in values), it checks if
-            current reason is valid for new stage, otherwise it changes it.
+            log_obj = self.env['crm.lead.changelog']
 
-            :param self: recordset of crm.lead
-            :return: updated dictionary
-        """
-        stage_id = values.get('stage_id', False)
-        if stage_id:
+            # TODO: Check if lines below works
+            fields_to_track.update(
+                {'create_uid': self.env.uid, 'write_uid': self.env.uid}
+            )
+
             for record in self:
-                current_reason = record.crm_reason_id
-                new_stage = self.env['crm.case.stage'].browse(stage_id)
-                if current_reason not in new_stage.crm_reason_ids:
-                    values['crm_reason_id'] = \
-                        new_stage.default_crm_reason_id.id
-        return values
+                fields_to_track.update({'lead_id': record.id})
+                log_obj.create(fields_to_track)
+
+    def _log(self, level, msg_format, *args, **kwargs):
+        """ Outputs an formated string in log
+
+            :param level (int): 0=> debug, 1=> info, 2=> warning, 3=> error
+            :param message (basestring): name of the message
+        """
+
+        methods = ['debug', 'info', 'warning', 'error']
+        log = getattr(_logger, methods[level])
+
+        msg = msg_format.format(*args, **kwargs)
+        log(msg)

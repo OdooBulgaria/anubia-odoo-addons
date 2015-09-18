@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <openerp>
-    <data noupdate="0">
+    <data noupdate="1">
 
         <!-- VIEWS: "Changes made in reason over leads/opportunities"
 
@@ -146,7 +146,8 @@
             <field name="name">Changes made in reason over leads/opportunities</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_crm_lead_changelog_reason_update_act_window" />
-            <field name="parent_id" ref="base.next_id_64" />
+            <field name="parent_id" ref="menu_leads_opportunities_changelog" />
         </record>
+
     </data>
 </openerp>

@@ -67,6 +67,8 @@
         'report/crm_lead_changelog_table.xml'
     ],
     'demo': [
+        # 'demo/crm_lead_demo.xml',
+        # 'demo/crm_lead_changelog_demo.xml'
     ],
     'js': [
     ],

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <!-- Changelog for lead 14: Interest in your Graphic Design Project
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <record id="crm_lead_changelog_demo_01" model="crm.lead.changelog">
+            <field name="lead_id" ref="crm.crm_case_14" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="stage_id" ref="crm.stage_lead1" />
+            <field name="reason_id" eval="None" /> <!-- Test None reason  -->
+            <field name="date" eval="(DateTime.today() - relativedelta(days=1, weeks=3)).strftime('%Y-%m-%d')" /> <!-- one day and a week ago -->
+        </record>
+
+        <!-- Changelog for lead 14: Interest in your Graphic Design Project
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <record id="crm_lead_changelog_demo_02" model="crm.lead.changelog">
+            <field name="lead_id" ref="crm.crm_case_14" />
+            <field name="user_id" ref="base.user_demo" />
+            <field name="stage_id" ref="crm.stage_lead3" />
+            <field name="reason_id" eval="None" /> <!-- Test None reason  -->
+            <field name="date" eval="(DateTime.today() - relativedelta(days=1, weeks=3)).strftime('%Y-%m-%d')" /> <!-- one day and a week ago -->
+        </record>
+
+        <!-- Changelog for lead 27: Interest in your products
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <record id="crm_lead_changelog_demo_03" model="crm.lead.changelog">
+            <field name="lead_id" ref="crm.crm_case_21" />
+            <field name="user_id" ref="base.user_demo" />
+            <field name="stage_id" ref="crm.stage_lead1" />
+            <field name="date" eval="(DateTime.today() - relativedelta(weeks=2)).strftime('%Y-%m-%d')" /> <!-- two weeks ago -->
+        </record>
+
+        <record id="crm_lead_changelog_demo_04" model="crm.lead.changelog">
+            <field name="lead_id" ref="crm.crm_case_21" />
+            <field name="user_id" eval="None" /> <!-- Test None user  -->
+            <field name="stage_id" ref="crm.stage_lead3" />
+            <field name="date" eval="(DateTime.today() - relativedelta(weeks=1)).strftime('%Y-%m-%d')" /> <!-- one week ago -->
+        </record>
+
+        <record id="crm_lead_changelog_demo_05" model="crm.lead.changelog">
+            <field name="lead_id" ref="crm.crm_case_21" />
+            <field name="user_id"  ref="base.user_root" /> <!-- Test None user  -->
+            <field name="stage_id" ref="crm.stage_lead4" />
+            <field name="date" eval="(DateTime.today() - relativedelta(weeks=1)).strftime('%Y-%m-%d')" /> <!-- one week ago -->
+        </record>
+
+        <!-- Changelog for lead 21: “Resource Planning” project develpment
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="crm_lead_changelog_demo_06" model="crm.lead.changelog">
+            <field name="lead_id" ref="crm.crm_case_24" />
+            <field name="user_id" ref="base.user_demo" />
+            <field name="stage_id" ref="crm.stage_lead1" />
+            <field name="date" eval="(DateTime.today() - relativedelta(days=7)).strftime('%Y-%m-%d')" /> <!-- seven days ago -->
+        </record>
+
+
+        <record id="crm_lead_changelog_demo_07" model="crm.lead.changelog">
+            <field name="lead_id" ref="crm.crm_case_24" />
+            <field name="stage_id" ref="crm.stage_lead3" />
+            <field name="date" eval="(DateTime.today() - relativedelta(days=6)).strftime('%Y-%m-%d')" /> <!-- six days ago -->
+        </record>
+
+        <record id="crm_lead_changelog_demo_08" model="crm.lead.changelog">
+            <field name="lead_id" ref="crm.crm_case_24" />
+            <field name="stage_id" ref="crm.stage_lead4" />
+            <field name="date" eval="(DateTime.today() - relativedelta(days=5)).strftime('%Y-%m-%d')" /> <!-- five days ago -->
+        </record>
+
+        <record id="crm_lead_changelog_demo_09" model="crm.lead.changelog">
+            <field name="lead_id" ref="crm.crm_case_24" />
+            <field name="stage_id" ref="crm.stage_lead5" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="date" eval="(DateTime.today() - relativedelta(days=4)).strftime('%Y-%m-%d')" /> <!-- four days ago -->
+        </record>
+
+        <record id="crm_lead_changelog_demo_10" model="crm.lead.changelog">
+            <field name="lead_id" ref="crm.crm_case_24" />
+            <field name="user_id" ref="base.user_demo" />
+            <field name="stage_id" eval="None" /> <!-- Test None stage -->
+            <field name="date" eval="(DateTime.today() - relativedelta(days=3)).strftime('%Y-%m-%d')" /> <!-- tree days ago -->
+        </record>
+
+        <record id="crm_lead_changelog_demo_11" model="crm.lead.changelog">
+            <field name="lead_id" ref="crm.crm_case_24" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="date" eval="(DateTime.today() - relativedelta(days=2)).strftime('%Y-%m-%d')" /> <!-- two days ago -->
+        </record>
+
+    </data>
+</openerp>

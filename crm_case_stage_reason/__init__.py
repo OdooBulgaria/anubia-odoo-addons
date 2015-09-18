@@ -6,8 +6,3 @@
 
 from . import models
 from . import tests
-
-# --------------------------- INSTALLATION HOOKS ------------------------------
-
-from logging import getLogger
-_logger = getLogger(__name__)

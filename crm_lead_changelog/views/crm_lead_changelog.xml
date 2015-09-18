@@ -18,5 +18,11 @@
             </field>
         </record>
 
+        <record id="menu_leads_opportunities_changelog" model="ir.ui.menu" >
+            <field name="name">Leads/Opportunities changelog</field>
+            <field name="sequence" eval="10" />
+            <field name="parent_id" ref="base.menu_reporting" />
+        </record>
+
     </data>
 </openerp>

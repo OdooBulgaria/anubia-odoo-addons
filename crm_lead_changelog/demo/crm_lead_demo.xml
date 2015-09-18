@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="crm_lead_changelog_lead_demo_01" model="crm.lead">
+            <field name="name">A guy who came to request information</field>
+            <field name="user_id" ref="base.user_demo" />
+            <field name="stage_id" ref="crm.stage_lead1" />
+            <field name="type">opportunity</field>
+        </record>
+
+        <record id="crm_lead_changelog_lead_demo_01" model="crm.lead">
+            <field name="stage_id" ref="crm.stage_lead7" />
+            <field name="reason_id" eval="None" /> <!-- Real None reason -->
+        </record>
+
+        <record id="crm_lead_changelog_lead_demo_01" model="crm.lead">
+            <field name="reason_id" ref="crm_case_stage_reason.crm_stage_reason_demo_5" />
+        </record>
+
+        <record id="crm_lead_changelog_lead_demo_01" model="crm.lead">
+            <field name="reason_id" ref="crm_case_stage_reason.crm_stage_reason_demo_4" />
+        </record>
+
+    </data>
+</openerp>
