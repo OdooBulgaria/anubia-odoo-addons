@@ -198,7 +198,7 @@ class CrmLeadChangelog(models.Model):
     # ----------------------------- SQL STRINGS -------------------------------
 
     _sql_ensure_changelog = """
-       INSERT INTO crm_lead_changelog (
+              INSERT INTO crm_lead_changelog (
             lead_id,
             user_id,
             stage_id,
@@ -216,18 +216,18 @@ class CrmLeadChangelog(models.Model):
             user_id,
             stage_id,
             crm_reason_id,
-            create_date,-- first changelog always match with the lead creation
-            NULL,       -- allow to recognize preexisting leads in changelog
-            NULL,       -- allow to recognize preexisting leads in changelog
-            create_uid, -- first changelog always match with the lead creation
             create_date, -- first changelog always match with the lead creation
-            user_id::BOOLEAN,
-            stage_id::BOOLEAN,
-            crm_reason_id::BOOLEAN
+            NULL,        -- allow to recognize preexisting leads in changelog
+            NULL,        -- allow to recognize preexisting leads in changelog
+            create_uid,  -- first changelog always match with the lead creation
+            create_date, -- first changelog always match with the lead creation
+            TRUE,
+            TRUE,
+            TRUE
         FROM
             crm_lead
         WHERE
-            crm_lead. ID NOT IN (
+            crm_lead."id" NOT IN (
                 SELECT
                     lead_id
                 FROM

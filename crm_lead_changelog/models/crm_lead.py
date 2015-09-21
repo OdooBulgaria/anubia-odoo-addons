@@ -235,7 +235,8 @@ class CrmLead(models.Model):
         result = super(CrmLead, self).create(values)
 
         # STEP 2: Update the changelog after the leads are changed
-        self._update_changelog(values)
+        if result:
+            self._update_changelog(values, force_all=True)
 
         return result
 
@@ -256,9 +257,22 @@ class CrmLead(models.Model):
     # -------------------------- AUXILIARY METHODS ----------------------------
 
     @api.model
-    def _get_fields_to_track(self, values):
+    def _get_fields_to_track(self, _in_values, force_all=False):
+        """ Choose the field values to be saved in new crm.lead.changelog
+        record.
+
+        :param _in_values: dictionary fom crm.lead,create or crm.lead,write
+        :param force_all: if True it adds missing fields with None value
+        :return: dictionary with values to create new crm.lead.changelog record
+        """
+
         fnames = self._fnames_to_track
-        values = dict((k, v) for k, v in values.items() if k in fnames)
+
+        values = dict((name, None) for name in fnames) if force_all else {}
+
+        for key, value in _in_values.items():
+            if key in fnames:
+                values.update({key: value})
 
         # PATCH: fields should have the same name
         if 'crm_reason_id' in values:
@@ -267,11 +281,12 @@ class CrmLead(models.Model):
         return values
 
     @api.multi
-    def _update_changelog(self, values):
+    def _update_changelog(self, values, force_all=False):
         """ Create a changelog record for each one of the leads in recordset
         """
 
-        fields_to_track = self._get_fields_to_track(values)
+        fields_to_track = self._get_fields_to_track(values, force_all)
+        crm_lead_changelog_set = self.env['crm.lead.changelog']
 
         self._log(0, 'fields_to_track {}', fields_to_track)
 
@@ -286,7 +301,9 @@ class CrmLead(models.Model):
 
             for record in self:
                 fields_to_track.update({'lead_id': record.id})
-                log_obj.create(fields_to_track)
+                crm_lead_changelog_set += log_obj.create(fields_to_track)
+
+        return crm_lead_changelog_set
 
     def _log(self, level, msg_format, *args, **kwargs):
         """ Outputs an formated string in log
