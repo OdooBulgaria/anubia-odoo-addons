@@ -77,7 +77,7 @@ class TestCrmLead(TransactionCase):
         msg = msg_format.format(*args, **kwargs)
         log(msg)
 
-    def test__values_to_update(self):
+    def test__ensure_reason_for_stage(self):
         """ Checks if the _values_to_update works properly
 
         | stage_id      | crm_reason_id | Result         |
@@ -94,7 +94,7 @@ class TestCrmLead(TransactionCase):
         """
 
         # Deliberate access to the private methods will be tested
-        values_to_update = getattr(self._lead_obj, '_values_to_update')
+        values_to_update = getattr(self._lead_obj, '_ensure_reason_for_stage')
 
         # STEP 1: Define the expected results
         results = [
@@ -127,12 +127,12 @@ class TestCrmLead(TransactionCase):
             # STEP 4: Counter keep pointer to the expected results list
             counter += 1
 
-    def test__reasons_from_stage(self):
+    def test__get_reasons_from_stage(self):
         """ Checks if the _reasons_from_stage works properly
         """
 
         # Deliberate access to the private methods will be tested
-        reasons_from_stage = getattr(self._lead_obj, '_reasons_from_stage')
+        reasons_from_stage = getattr(self._lead_obj, '_get_reasons_from_stage')
 
         # STEP 1: Load all stages
         stage_domain = []
@@ -164,12 +164,12 @@ class TestCrmLead(TransactionCase):
                 msg='_reasons_from_stage(%s) wrong default reason!' % stage.id
             )
 
-    def test__stages_from_reason(self):
+    def test__get_stages_from_reason(self):
         """ Checks if the _stages_from_reason works properly
         """
 
         # Deliberate access to the private methods will be tested
-        stages_from_reason = getattr(self._lead_obj, '_stages_from_reason')
+        stages_from_reason = getattr(self._lead_obj, '_get_stages_from_reason')
 
         # STEP 1: Load all reasons
         reason_domain = []
@@ -193,7 +193,7 @@ class TestCrmLead(TransactionCase):
             )
 
     def _expected_values(self, lead_dict, values, expected):
-        """ Compares result from _ensure_values method with an expected
+        """ Compares result from _ensure_reason_for_stage method with an expected
         dictionary using a dictionary of different lead records
 
         :param lead_dict: dictionary {name:crm.lead,...}
@@ -201,11 +201,11 @@ class TestCrmLead(TransactionCase):
         :param expected: dictionary with the values will be expected as result
         """
 
-        msg = u'%s._ensure_values fails with %s'
+        msg = u'%s._ensure_reason_for_stage fails with %s'
 
         for key, lead_obj in lead_dict.iteritems():
-            self._log(0, '{}._ensure_values({}) (expecting...)', key, values)
-            ensure_values = getattr(lead_obj, '_ensure_values')
+            self._log(0, '{}._ensure_reason_for_stage({}) (expecting...)', key, values)
+            ensure_values = getattr(lead_obj, '_ensure_reason_for_stage')
             result = ensure_values(values)
             self.assertDictEqual(expected, result, msg % (key, values))
 
@@ -216,11 +216,11 @@ class TestCrmLead(TransactionCase):
         :param values: dictionary with the values will be passed to the method
         """
 
-        msg = u'%s._ensure_values fails with %s'
+        msg = u'%s._ensure_reason_for_stage fails with %s'
 
         for key, lead_obj in lead_dict.iteritems():
-            self._log(0, '{}._ensure_values({}) (should fail)', key, values)
-            ensure_values = getattr(lead_obj, '_ensure_values')
+            self._log(0, '{}._ensure_reason_for_stage({}) (should fail)', key, values)
+            ensure_values = getattr(lead_obj, '_ensure_reason_for_stage')
             try:
                 result = ensure_values(values)
             except AssertionError as ex:
@@ -228,8 +228,8 @@ class TestCrmLead(TransactionCase):
                 result = None
             self.assertIsNone(result, msg % (key, values))
 
-    def test__ensure_values(self):
-        """ Checks if the ``_ensure_values`` works properly
+    def test__ensure_reason_for_stage(self):
+        """ Checks if the ``_ensure_reason_for_stage`` works properly
 
         It tests the nine cases shown in the following table:
 
