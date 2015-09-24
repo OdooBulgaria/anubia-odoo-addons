@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <!-- Basic Company  -->
+        <record id="base.main_company" model="res.company">
+            <field name="paperformat_id"
+                   ref="custom_reports_00.paperformat_euro_mod00"/>
+        </record>
+    </data>
+</openerp>

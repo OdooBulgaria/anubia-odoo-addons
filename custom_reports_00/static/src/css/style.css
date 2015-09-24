@@ -1,0 +1,86 @@
+/*
+    Document   : style
+    Created on : 25-jun-2015, 17:30:00
+    Author     : Alejandro Santana <alejandrosantana@anubia.es>
+    Description:
+        Customization CSS for adding:
+        - corporate fonts
+        - corporate colors
+        - odoo logo formatting (using similar free fonts).
+*/
+
+@font-face {
+    font-family: "comfortaa-light";
+    src: url('/custom_reports_00/static/src/font/comfortaa/Comfortaa-Light.ttf') format("truetype");
+}
+@font-face {
+    font-family: "comfortaa-regular";
+    src: url('/custom_reports_00/static/src/font/comfortaa/Comfortaa-Regular.ttf') format("truetype");
+}
+@font-face {
+    font-family: "comfortaa-bold";
+    src: url('/custom_reports_00/static/src/font/comfortaa/Comfortaa-Bold.ttf') format("truetype");
+}
+/* Beware that Qweb seems to accept only 1 font-family, not a list. */
+.myfont-light {
+    font-family: "comfortaa-light";
+}
+.myfont {
+    font-family: "comfortaa-regular";
+}
+.myfont-bold {
+    font-family: "comfortaa-bold";
+}
+
+.corp_color {
+    color: #00ccff;
+}
+.corp_bg_color {
+    background-color: #00ccff;
+    color: #fff;
+}
+.corp_color_bottomline {
+    border-bottom: 1px solid #00ccff;
+    margin: 0 0 2mm 0;
+}
+.dashed {
+    border-style: dashed;
+}
+.main_color {
+    color: #1e1e1e;
+}
+.header {
+    font-family: "comfortaa-regular";
+    font-size: 9pt;
+    margin-bottom: 2mm;
+}
+.tagline {
+    font-family: "comfortaa-regular";
+    font-size: 10pt;
+    margin-top: 20pt;
+}
+.footer {
+    font-family: "comfortaa-regular";
+    font-size: 8pt;
+    border-top: 1px dashed #00ccff;
+    padding: 0;
+}
+.footer div {
+    padding-top: 2mm;
+}
+
+.invoice_tbody td .w20mm
+    width: 20mm;
+    border: 1px solid red;
+    word-wrap: break-word;
+}
+
+.odoo_logo {
+    display: inline-block;
+    font-family: "comfortaa-bold" !important;
+    font-size: 150%;
+    color: #8f8f8f !important;
+}
+.odoo_logo::first-letter {
+    color: #a24689 !important;
+}

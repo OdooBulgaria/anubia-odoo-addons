@@ -23,50 +23,42 @@
 ##############################################################################
 
 {
-    'name': 'Custom reports 02',
+    'name': 'Custom reports 00',
     'version': '0.1',
     'category': 'Customization',
-    'description': '''
-        This module customizes invoice report for an specific customer
-        ==============================================================
-        
-            - Invoice report: allows to remove tax details in customer invoices (by specific customer request).
-        
-        **DISCLAIMER:**
-        
-        This module might result in illegal document in many cases, by hiding tax details.
-        This is done as a request for a specific customer with unique legal circumstances and under their sole responsability.
-        Therefore, use this module wisely and under your responsability. 
-        ''',
     # 'complexity': 'normal',
     'license': 'AGPL-3',
     'author': 'Alejandro Santana <alejandrosantana@anubia.es>',
     'maintainer': 'Anubía, soluciones en la nube, SL',
     'website': 'http://www.anubia.es',
-    'contributors': [
-        'Alejandro Santana <alejandrosantana@anubia.es>',
-    ],
     'depends': [
         'account',
-        'base_setup',
+        'crm',
         'report',
+        'sale',
     ],
     'external_dependencies': {
         'python': [],
     },
     'data': [
-        'account_report.xml',
+        'data/report_paperformat.xml',
+        'data/base_data.xml',
+        'views/ir_qweb.xml',
+        'views/layouts.xml',
+        'views/report_saleorder.xml',
         'views/report_invoice.xml',
-        'views/account_invoice_view.xml',
     ],
     'demo': [],
     'test': [],
     'qweb': [],
     'images': [],
-    'css': [],
+    'css': [
+        'static/src/css/style.css',
+    ],
     'js': [],
     'installable': True,
     'application': False,
     'auto_install': False,
+    # 'bootstrap': True,
     # 'certificate': 'certificate',
 }

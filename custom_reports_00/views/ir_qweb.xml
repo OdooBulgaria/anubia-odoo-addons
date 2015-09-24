@@ -1,0 +1,11 @@
+<openerp>
+    <data>
+        <template id="contact" inherit_id="base.contact">
+            <xpath expr="//address" position="inside">
+                <div itemprop="vatID" itemscope="itemscope" itemtype="http://schema.org/Text">
+                    <div t-if="vat and 'vat' in fields" class='css_editable_mode_hidden'><i t-if="not options.get('no_marker')" class='fa fa-info-circle'/> <span itemprop="vatID" t-raw="vat"/></div>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</openerp>

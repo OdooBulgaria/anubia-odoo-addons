@@ -1,6 +1,18 @@
+# Files to be ignored by Git
+# --------------------------
+
+# Temp files
+*~
+.*~
+.~*
+*.tmp
+*.temp
+*.swp
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.o
 
 # C extensions
 *.so
@@ -13,7 +25,7 @@ build/
 develop-eggs/
 dist/
 eggs/
-lib/
+#lib/
 lib64/
 parts/
 sdist/
@@ -37,6 +49,44 @@ coverage.xml
 # Translations
 *.mo
 
+# Customized config files
+*.custom
+
+# Log files
+*.log
+
+# Archives
+*.gz
+*.bz2
+*.zip
+*.tar
+
+# Dump files
+*.dump
+
+# Old and backup files
+*.old
+*.bkp
+
+# Sphinx documentation
+docs/_build/
+
+# Bzr-related
+.bzr
+.bzr/*
+.bzrignore
+
+# IDEs-related
+*.metadata
+*.settings
+*.prefs
+*.project
+*.pydevproject
+*.nja
+*.eric5project
+*.e4p
+*.e5p
+
 # Pycharm
 .idea
 
@@ -54,6 +104,8 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-# Backup files
-*~
-*.swp
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+.gitmessage
