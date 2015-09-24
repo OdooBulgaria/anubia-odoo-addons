@@ -5,10 +5,12 @@ from openerp import models, fields
 from openerp.tools import html_escape as escape
 from openerp.addons.base.ir.ir_qweb import HTMLSafe
 
+
 class Contact(models.AbstractModel):
     _inherit = 'ir.qweb.field.contact'
 
-    def record_to_html(self, cr, uid, field_name, record, options=None, context=None):
+    def record_to_html(self, cr, uid,
+                       field_name, record, options=None, context=None):
         if context is None:
             context = {}
 
