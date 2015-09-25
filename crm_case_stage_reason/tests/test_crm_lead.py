@@ -4,6 +4,8 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
+#pylint: disable=I0011,C0103,F0401
+
 from openerp.tests.common import TransactionCase
 
 from logging import getLogger
@@ -77,8 +79,8 @@ class TestCrmLead(TransactionCase):
         msg = msg_format.format(*args, **kwargs)
         log(msg)
 
-    def test__ensure_reason_for_stage(self):
-        """ Checks if the _values_to_update works properly
+    def test__get_stage_and_reason_values(self):
+        """ Checks if the _get_stage_and_reason_values works properly
 
         | stage_id      | crm_reason_id | Result         |
         | ------------- | ------------- | -------------- |
@@ -94,7 +96,8 @@ class TestCrmLead(TransactionCase):
         """
 
         # Deliberate access to the private methods will be tested
-        values_to_update = getattr(self._lead_obj, '_ensure_reason_for_stage')
+        get_stage_and_reason_values = getattr(
+            self._lead_obj, '_get_stage_and_reason_values')
 
         # STEP 1: Define the expected results
         results = [
@@ -113,7 +116,7 @@ class TestCrmLead(TransactionCase):
         for values in self._chances:
 
             # STEP 2: Compute results calling method and print results
-            obtained = values_to_update(values),
+            obtained = get_stage_and_reason_values(values),
             expected = results[counter],
             self._log(0, 'obtainded {} / expected {}', obtained, expected)
 
@@ -121,7 +124,7 @@ class TestCrmLead(TransactionCase):
             self.assertTupleEqual(
                 obtained,
                 expected,
-                msg='_values_to_update(%s) fails!' % (values)
+                msg='_get_stage_and_reason_values(%s) fails!' % (values)
             )
 
             # STEP 4: Counter keep pointer to the expected results list

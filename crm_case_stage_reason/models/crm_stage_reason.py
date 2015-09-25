@@ -54,12 +54,3 @@ class CrmStageReason(models.Model):
         required=False,
         default=False,
     )
-
-    force_invalid = fields.Boolean(
-        string='Force invalid',
-        required=False,
-        readonly=False,
-        index=False,
-        default=False,
-        help='Force an ivalid state form lead/opportunity'
-    )

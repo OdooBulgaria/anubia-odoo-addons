@@ -79,7 +79,7 @@ class CrmLeadChangelogStageUpdate(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        help='Stage of case assigned to the lead in the net change'
+        help='Stage of case assigned to the lead in the next change'
     )
 
     is_initial = fields.Boolean(

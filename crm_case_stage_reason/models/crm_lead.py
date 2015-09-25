@@ -36,17 +36,6 @@ class CrmLead(models.Model):
         domain="[('crm_stages_ids', '=', stage_id)]",
     )
 
-
-    is_invalid = fields.Boolean(
-        string='Is not valid',
-        required=False,
-        readonly=False,
-        index=False,
-        default=True,
-        help='Checked when lead/opportunity is not valid, unchecked otherwise'
-    )
-
-
     # -------------------------------- CRUD -----------------------------------
 
     @api.model
@@ -55,7 +44,6 @@ class CrmLead(models.Model):
         and foce the ``is_invalid`` for certain reasons.
         """
 
-        self._ensure_is_invalid_in_values(values)
         self._ensure_reason_for_stage(values)
 
         return super(CrmLead, self).create(values)
@@ -66,38 +54,11 @@ class CrmLead(models.Model):
         and foce the ``is_invalid`` for certain reasons.
         """
 
-        self._ensure_is_invalid_in_values(values)
         self._ensure_reason_for_stage(values)
 
         return super(CrmLead, self).write(values)
 
     # -------------------------- AUXILIAR METHODS -----------------------------
-
-    @classmethod
-    def _get_reason_which_has_been_set(cls, values):
-        """ Determines if user has set the lead/opportunity reason to a non
-        NULL value
-
-        :param values: ``values`` given to the ``write`` or ``create`` method
-        :return: True when new non null values has been set of False otherwise
-        """
-
-        return 'crm_reason_id' in values and values['crm_reason_id'] or None
-
-    def _ensure_is_invalid_in_values(self, _in_out_values):
-        """ Updates de values dictionary to ensure is_invalid
-        """
-
-        reason_id = self._get_reason_which_has_been_set(_in_out_values)
-
-        if reason_id:
-            reason_obj = self.env['crm.stage.reason']
-            reason_set = reason_obj.browse(reason_id)
-
-            if reason_set.force_invalid:
-                _in_out_values.update({'is_invalid': True})
-
-        return _in_out_values
 
     @classmethod
     def _get_stage_and_reason_values(cls, values):

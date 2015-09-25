@@ -120,7 +120,7 @@ class CrmLeadChangelogUpdate(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        help=('Stage of case who has been assigned to the lead in the next '
+        help=('Stage of case which has been assigned to the lead in the next '
               'change')
     )
 
@@ -163,7 +163,7 @@ class CrmLeadChangelogUpdate(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        help='Reason who has been assigned to the lead in the next change'
+        help='Reason which has been assigned to the lead in the next change'
     )
 
     item_id = fields.Reference(
@@ -318,7 +318,10 @@ class CrmLeadChangelogUpdate(models.Model):
                     NULL::integer AS prev_reason_id,
                     NULL::integer AS reason_id,
                     NULL::integer AS next_reason_id,
-                    concat('res.users,', t1.user_id) AS item_id,
+                        CASE
+                            WHEN (t1.user_id IS NULL) THEN NULL::text
+                            ELSE concat('res.users,', t1.user_id)
+                        END AS item_id,
                     'user_id'::text AS ctype,
                     (NOT (lag(t1.user_id, 1, 0)
                         OVER user_w)::boolean) AS is_initial,
@@ -360,7 +363,10 @@ class CrmLeadChangelogUpdate(models.Model):
                     NULL::integer AS prev_reason_id,
                     NULL::integer AS reason_id,
                     NULL::integer AS next_reason_id,
-                    concat('crm.case.stage,', t1.stage_id) AS item_id,
+                        CASE
+                            WHEN (t1.stage_id IS NULL) THEN NULL::text
+                            ELSE concat('crm.case.stage,', t1.stage_id)
+                        END AS item_id,
                     'stage_id'::text AS ctype,
                     (NOT (lag(t1.stage_id, 1, 0)
                         OVER stage_w)::boolean) AS is_initial,
@@ -402,7 +408,10 @@ class CrmLeadChangelogUpdate(models.Model):
                     t1.reason_id,
                     lead(t1.reason_id, 1, NULL::integer)
                         OVER reason_w AS next_reason_id,
-                    concat('crm.stage.reason,', t1.reason_id) AS item_id,
+                        CASE
+                            WHEN (t1.reason_id IS NULL) THEN NULL::text
+                            ELSE concat('crm.stage.reason,', t1.reason_id)
+                        END AS item_id,
                     'reason_id'::text AS ctype,
                     (NOT (lag(t1.reason_id, 1, 0)
                         OVER reason_w)::boolean) AS is_initial,

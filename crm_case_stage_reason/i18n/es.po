@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* crm_case_stage_reason
+#   * crm_case_stage_reason
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-08-26 17:36+0000\n"
-"PO-Revision-Date: 2015-08-26 19:46+0100\n"
+"PO-Revision-Date: 2015-09-25 19:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Generator: Poedit 1.8.4\n"
 
 #. module: crm_case_stage_reason
 #: model:ir.actions.act_window,help:crm_case_stage_reason.action_crm_stage_reason_tree
@@ -23,17 +23,18 @@ msgid ""
 "<p class=\"oe_view_nocontent_create\">\n"
 "                    Click to add a new reason for lead/opportunity stages.\n"
 "                </p><p>\n"
-"                    With just a quick glance on the Odoo lead/opportunity "
-"reasons\n"
-"                    screen, you can easily find all the information you need "
-"for\n"
+"                    With just a quick glance on the Odoo lead/opportunity reasons\n"
+"                    screen, you can easily find all the information you need for\n"
 "                    each stage reason.\n"
 "                </p>\n"
 "            "
 msgstr ""
 "<p class=\"oe_view_nocontent_create\">\n"
-"                    Click para añadir una nueva razón sobre una etapa de una "
-"iniciativa/oportunidad.\n"
+"                    Haga clic para agregar una nueva razón de etapa del caso para las iniciativas/oportunidades.\n"
+"                </p><p>\n"
+"                    Con una rápido vistazo a la vista de razones para las iniciativas/oportunidades .\n"
+"                    usted puede encontrar fácilmente toda la información que necesita para cada\n"
+"                    una de las razones.\n"
 "                </p>\n"
 "            "
 
@@ -43,7 +44,7 @@ msgid "Active"
 msgstr "Activo"
 
 #. module: crm_case_stage_reason
-#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_1
+#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_9
 msgid "Agreement"
 msgstr "Acuerdo"
 
@@ -55,22 +56,27 @@ msgstr "Razones disponibles"
 #. module: crm_case_stage_reason
 #: field:crm.stage.reason,crm_stages_ids:0
 msgid "Available stages"
-msgstr "Etapas disponibles"
+msgstr "Etapas de los casos disponibles"
+
+#. module: crm_case_stage_reason
+#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_3
+msgid "Business venture"
+msgstr "Emprendimiento de negocio"
 
 #. module: crm_case_stage_reason
 #: model:ir.actions.act_window,name:crm_case_stage_reason.action_crm_stage_reason_tree
 msgid "CRM Lead/Opportunity Reason Tree"
-msgstr "Razones"
-
-#. module: crm_case_stage_reason
-#: view:crm.stage.reason:crm_case_stage_reason.view_crm_stage_reason_form
-msgid "CRM reason for lead/opportunity stages"
-msgstr "Razón para la etapa"
+msgstr "Lista de razones para Iniciativas/Oportunidades"
 
 #. module: crm_case_stage_reason
 #: view:crm.stage.reason:crm_case_stage_reason.view_crm_stage_reason_tree
 msgid "CRM stage reasons"
 msgstr "Razones"
+
+#. module: crm_case_stage_reason
+#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_2
+msgid "Contact form"
+msgstr "Formulario de contacto"
 
 #. module: crm_case_stage_reason
 #: field:crm.stage.reason,create_uid:0
@@ -83,6 +89,11 @@ msgid "Created on"
 msgstr "Creado en"
 
 #. module: crm_case_stage_reason
+#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_1
+msgid "Customer call"
+msgstr "Llamada del cliente"
+
+#. module: crm_case_stage_reason
 #: field:crm.case.stage,default_crm_reason_id:0
 msgid "Default reason"
 msgstr "Razón por defecto"
@@ -91,7 +102,7 @@ msgstr "Razón por defecto"
 #: code:addons/crm_case_stage_reason/models/crm_case_stage.py:76
 #, python-format
 msgid "Default reason not available for this stage of case"
-msgstr "Razón por defecto no está disponible para esta etapa del caso"
+msgstr "La razón por defecto no está disponible para esta etapa del caso"
 
 #. module: crm_case_stage_reason
 #: view:crm.stage.reason:crm_case_stage_reason.view_crm_stage_reason_form
@@ -100,12 +111,17 @@ msgid "Description"
 msgstr "Descripción"
 
 #. module: crm_case_stage_reason
+#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_8
+msgid "General terms not accepted"
+msgstr "Términos generales no aceptados"
+
+#. module: crm_case_stage_reason
 #: field:crm.stage.reason,id:0
 msgid "ID"
 msgstr "ID"
 
 #. module: crm_case_stage_reason
-#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_3
+#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_4
 msgid "Invalid customer profile"
 msgstr "Perfil de cliente no válido"
 
@@ -127,7 +143,12 @@ msgstr "Iniciativa/Oportunidad"
 #. module: crm_case_stage_reason
 #: view:crm.stage.reason:crm_case_stage_reason.view_crm_stage_reason_form
 msgid "Lead/Opportunity reason"
-msgstr "Razón de la etapa"
+msgstr "Razón de la etapa del caso"
+
+#. module: crm_case_stage_reason
+#: view:crm.stage.reason:crm_case_stage_reason.view_crm_stage_reason_form
+msgid "New name for this reason"
+msgstr "Nuevo nombre para esta razón"
 
 #. module: crm_case_stage_reason
 #: field:crm.lead,crm_reason_id:0 field:crm.stage.reason,name:0
@@ -138,6 +159,11 @@ msgstr "Razón"
 #: model:crm.stage.reason,description:crm_case_stage_reason.crm_stage_reason_demo_1
 msgid "Reason demo 1"
 msgstr "Razón demo 1"
+
+#. module: crm_case_stage_reason
+#: model:crm.stage.reason,description:crm_case_stage_reason.crm_stage_reason_demo_10
+msgid "Reason demo 10"
+msgstr "Razón demo 10"
 
 #. module: crm_case_stage_reason
 #: model:crm.stage.reason,description:crm_case_stage_reason.crm_stage_reason_demo_2
@@ -160,11 +186,31 @@ msgid "Reason demo 5"
 msgstr "Razón demo 5"
 
 #. module: crm_case_stage_reason
+#: model:crm.stage.reason,description:crm_case_stage_reason.crm_stage_reason_demo_6
+msgid "Reason demo 6"
+msgstr "Razón demo 6"
+
+#. module: crm_case_stage_reason
+#: model:crm.stage.reason,description:crm_case_stage_reason.crm_stage_reason_demo_7
+msgid "Reason demo 7"
+msgstr "Razón demo 7"
+
+#. module: crm_case_stage_reason
+#: model:crm.stage.reason,description:crm_case_stage_reason.crm_stage_reason_demo_8
+msgid "Reason demo 8"
+msgstr "Razón demo 8"
+
+#. module: crm_case_stage_reason
+#: model:crm.stage.reason,description:crm_case_stage_reason.crm_stage_reason_demo_9
+msgid "Reason demo 9"
+msgstr "Razón demo 9"
+
+#. module: crm_case_stage_reason
 #: code:addons/crm_case_stage_reason/models/crm_stage_reason.py:19
 #: model:ir.model,name:crm_case_stage_reason.model_crm_stage_reason
 #, python-format
-msgid "Reason for case stage"
-msgstr "Razones para etapas"
+msgid "Reason for stage of case"
+msgstr "Razón para la etapa del caso"
 
 #. module: crm_case_stage_reason
 #: model:ir.ui.menu,name:crm_case_stage_reason.menu_crm_stage_reason
@@ -172,14 +218,14 @@ msgid "Reasons"
 msgstr "Razones"
 
 #. module: crm_case_stage_reason
-#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_4
+#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_10
 msgid "Rejected"
 msgstr "Rechazado"
 
 #. module: crm_case_stage_reason
-#: view:crm.stage.reason:crm_case_stage_reason.view_crm_stage_reason_form
-msgid "Short name for the reason."
-msgstr "Nombre corto para esta razón."
+#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_6
+msgid "Specific Requirements"
+msgstr "Requisitos específicos"
 
 #. module: crm_case_stage_reason
 #: code:addons/crm_case_stage_reason/models/crm_case_stage.py:25
@@ -191,13 +237,13 @@ msgstr "Etapa del caso"
 #. module: crm_case_stage_reason
 #: model:ir.actions.act_window,name:crm_case_stage_reason.crm_case_stage_act
 msgid "Stages"
-msgstr "Estados"
+msgstr "Etapas de los casos"
 
 #. module: crm_case_stage_reason
-#: code:addons/crm_case_stage_reason/models/crm_lead.py:110
+#: code:addons/crm_case_stage_reason/models/crm_lead.py:133
 #, python-format
 msgid "The given reason is not valid for some of the stages of cases"
-msgstr "La razón dada no es válido para algunas de las etapas"
+msgstr "La razón dada no es válida para algunas de las etapas de los casos"
 
 #. module: crm_case_stage_reason
 #: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_5
@@ -205,16 +251,6 @@ msgid "Unable to contact"
 msgstr "No puede ser contactado"
 
 #. module: crm_case_stage_reason
-#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_2
+#: model:crm.stage.reason,name:crm_case_stage_reason.crm_stage_reason_demo_7
 msgid "Valued customer"
 msgstr "Cliente valioso"
-
-#~ msgid "Default reason must belong to the allow list of reasons"
-#~ msgstr ""
-#~ "La razón por defecto debe formar parte de la lista de razones permitida"
-
-#~ msgid "Not valid"
-#~ msgstr "No válido"
-
-#~ msgid "Valid"
-#~ msgstr "Válido"

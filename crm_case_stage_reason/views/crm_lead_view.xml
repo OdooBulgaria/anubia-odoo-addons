@@ -6,6 +6,23 @@
         <!-- VIEWS -->
 
         <!-- Form View  -->
+        <record model="ir.ui.view" id="crm_case_form_view_leads">
+            <field name="name">Opportunities</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+            <field name="arch" type="xml">
+                <!-- Add stage/reason fields group -->
+                <xpath expr="//field[@name='user_id']/.." position="after">
+                    <group>
+                        <field name="stage_id" readonly="1"/>
+                        <field name="crm_reason_id"
+                               options="{'no_open': True, 'no_create_edit': True}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Form View  -->
         <record model="ir.ui.view" id="crm_case_form_view_oppor">
             <field name="name">Opportunities</field>
             <field name="model">crm.lead</field>

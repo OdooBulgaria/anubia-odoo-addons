@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <openerp>
-    <data noupdate="0">
+    <data noupdate="1">
 
         <!-- VIEWS -->
 
@@ -13,16 +13,18 @@
             <field name="arch" type="xml">
                 <form string="Lead/Opportunity reason">
                     <sheet>
-                        <h1>
-                            CRM reason for lead/opportunity stages
-                        </h1>
-                        <group col="4">
-                            <field name="name" readonly="0"
-                                   help="Short name for the reason."/>
-                            <newline/>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" />
+                            <h1>
+                                <field name="name" class="oe_field_name"
+                                    placeholder="New name for this reason" />
+                            </h1>
+                        </div>
+
+                        <group col="2" class="oe_crm_case_stage_reason_middle_group">
                             <field name="active"/>
                         </group>
-                        <separator/>
+
                         <notebook>
                             <page id="notes" string="Description">
                                 <br/>
