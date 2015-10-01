@@ -1,0 +1,90 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * crm_period
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-01 14:37+0000\n"
+"PO-Revision-Date: 2015-10-01 14:37+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: crm_period
+#: model:ir.actions.act_window,name:crm_period.action_crm_period
+msgid "CRM Period"
+msgstr "Cierre comercial"
+
+#. module: crm_period
+#: field:crm.period,create_uid:0
+msgid "Created by"
+msgstr "Created by"
+
+#. module: crm_period
+#: field:crm.period,create_date:0
+msgid "Created on"
+msgstr "Created on"
+
+#. module: crm_period
+#: view:crm.period:crm_period.view_crm_period_form
+msgid "Enter the new value for first date"
+msgstr "Introducir el nuevo valor para la fecha inicial"
+
+#. module: crm_period
+#: view:crm.period:crm_period.view_crm_period_form
+msgid "Enter the new value for last date"
+msgstr "Introducir el nuevo valor para la fecha final"
+
+#. module: crm_period
+#: view:crm.period:crm_period.view_crm_period_form
+msgid "Enter the new value for name"
+msgstr "Introducir el nuevo valor para el nombre"
+
+#. module: crm_period
+#: view:crm.period:crm_period.view_crm_period_form
+#: field:crm.period,first_date:0
+msgid "First date"
+msgstr "Fecha inicial"
+
+#. module: crm_period
+#: field:crm.period,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: crm_period
+#: field:crm.period,write_uid:0
+msgid "Last Updated by"
+msgstr "Last Updated by"
+
+#. module: crm_period
+#: field:crm.period,write_date:0
+msgid "Last Updated on"
+msgstr "Last Updated on"
+
+#. module: crm_period
+#: view:crm.period:crm_period.view_crm_period_form
+#: field:crm.period,last_date:0
+msgid "Last date"
+msgstr "Última fecha"
+
+#. module: crm_period
+#: view:crm.period:crm_period.view_crm_period_form
+#: field:crm.period,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: crm_period
+#: view:crm.period:crm_period.view_crm_period_form
+#: view:crm.period:crm_period.view_crm_period_tree
+msgid "Period"
+msgstr "Cierre comercial"
+
+#. module: crm_period
+#: model:ir.ui.menu,name:crm_period.menu_crm_period
+msgid "Periods"
+msgstr "Cierres comerciales"
