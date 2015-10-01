@@ -43,7 +43,7 @@ CRM Period.
     'website': 'http://www.anubia.es',
 
     'license': 'AGPL-3',
-    'category': 'Calendar',
+    'category': 'CRM',
 
     'depends': [
         'crm',
