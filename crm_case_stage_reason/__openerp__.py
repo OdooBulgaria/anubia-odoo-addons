@@ -52,6 +52,8 @@
     'data': [
         'security/ir_model_access.xml',
 
+        'views/crm_case_stage_reason.xml',
+
         'views/crm_case_stage_view.xml',
         'views/crm_lead_view.xml',
         'views/crm_stage_reason_view.xml'
